@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: installQt
+      run: apt install qtcreator
     - name: mkdir_build
       run: mkdir build
     - name: cd_build
