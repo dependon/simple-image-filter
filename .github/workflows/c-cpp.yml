@@ -13,6 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: installCppcheck
+      run: sudo apt install cppcheck --fix-missing
+    - name: cppcheck
+      run: cppcheck .
     - name: installQt
       run: sudo apt install qt5-default --fix-missing
     - name: mkdir_build
