@@ -130,6 +130,15 @@ void ImageView::RotateImage(const int &index)
 
     autoFit();
     m_rotateAngel += index;
+    if(!m_FilterImage)
+    {
+        m_FilterImage=new QImage(image());
+    }else {
+        delete m_FilterImage;
+        m_FilterImage=nullptr;
+        m_FilterImage=new QImage(image());
+    }
+
 }
 void ImageView::savecurrentPic()
 {
