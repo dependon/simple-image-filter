@@ -23,8 +23,8 @@ void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy,
     double c=-0.5/(photometricStandardDeviation * photometricStandardDeviation); //-1/2 *光度标准偏差的平方
     double mu=spatialDecay/(2-spatialDecay);
 
-    double *exptable=new double[256];;
-    double *g_table=new double[256];;
+    double *exptable=new double[256];
+    double *g_table=new double[256];
     for (int i=0;i<=255;i++)
     {
         exptable[i]=(1-spatialDecay)* exp(c*i*i);
@@ -199,19 +199,38 @@ void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy,
             n += width;
         }
     }
+    delete []data2Red;
+    data2Red=nullptr;
+    delete []data2Green ;
+    data2Green=nullptr;
+    delete []data2Blue;
+    data2Blue=nullptr;
 
+    delete []pRed;
+    pRed=nullptr;
+    delete []rRed;
+    rRed=nullptr;
+    delete []gRed;
+    gRed=nullptr;
 
-    delete pRed;
-    delete rRed;
-    delete gRed;
+    delete []pGreen;
+    pGreen=nullptr;
+    delete []rGreen;
+    rGreen=nullptr;
+    delete []gGreen;
+    gGreen=nullptr;
 
-    delete pGreen;
-    delete rGreen;
-    delete gGreen;
+    delete []pBlue;
+    pBlue=nullptr;
+    delete []rBlue;
+    rBlue=nullptr;
+    delete []gBlue;
+    gBlue=nullptr;
 
-    delete pBlue;
-    delete rBlue;
-    delete gBlue;
+    delete []exptable;
+    exptable=nullptr;
+    delete []g_table;
+    g_table=nullptr;
 }
 
 void QImageAPI::warnImage(QImage *img, QImage *imgCopy, int index)

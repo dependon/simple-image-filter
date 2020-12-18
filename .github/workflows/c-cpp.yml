@@ -17,17 +17,6 @@ jobs:
       run: sudo apt install cppcheck --fix-missing
     - name: cppcheck
       run: cppcheck .
-    - name: dns1
-      run: sudo echo "nameserver 223.5.5.5" >>/etc/resolv.conf
-    - name: dns2
-      run: sudo echo "nameserver 223.6.6.6" >>/etc/resolv.conf
-    - name: installQt
-      run: sudo apt install qt5-default --fix-missing
-    - name: mkdir_build
-      run: mkdir build
-    - name: cd_build
-      run: qmake ..
-    - name: make
-      run: make
+
 #     - name: make distcheck
 #       run: make distcheck
