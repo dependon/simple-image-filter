@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: installQt
-      run: sudo apt install qtcreator
+      run: sudo apt install qtcreator --fix-missing
     - name: mkdir_build
       run: mkdir build
     - name: cd_build
