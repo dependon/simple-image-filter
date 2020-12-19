@@ -1,4 +1,4 @@
-#include "imageapi.h"
+﻿#include "imageapi.h"
 
 
 int QImageAPI::Bound(int range_left, int data, int range_right)

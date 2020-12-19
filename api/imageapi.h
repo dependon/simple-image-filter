@@ -1,4 +1,4 @@
-#ifndef IIMAGEAPI_H
+﻿#ifndef IIMAGEAPI_H
 #define IIMAGEAPI_H
 
 #include <stdio.h>
@@ -7,7 +7,7 @@
 #include <math.h>
 #include <QVector>
 #include <QImage>
-
+#include <QColor>
 class QImageAPI {
 
 public:

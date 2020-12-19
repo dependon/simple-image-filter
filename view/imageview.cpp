@@ -1,4 +1,4 @@
-#include "imageview.h"
+﻿#include "imageview.h"
 #include "mainwidget.h"
 #include "imagethread.h"
 
@@ -13,7 +13,7 @@
 #include <qmath.h>
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
-
+#define devicePixelRatioF  devicePixelRatio
 ImageView::ImageView(QWidget *parent):
     QGraphicsView(parent)
 {
