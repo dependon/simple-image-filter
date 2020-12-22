@@ -14,49 +14,61 @@
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
-ImageView::ImageView(QWidget *parent):
-    QGraphicsView(parent)
+ImageView::ImageView(QWidget *parent, ViewId id):
+    QGraphicsView(parent),
+    m_cureentId(id)
 {
     setMouseTracking(true);
     setDragMode(ScrollHandDrag);
     QThreadPool::globalInstance()->setMaxThreadCount(1);
-    connect(App,&Application::sigFilterImage,this,&ImageView::openFilterImage);
+
+    if(Basic!=id){
+        connect(App,&Application::sigFilterImage,this,&ImageView::openFilterImage);
+    }
 }
 
 void ImageView::openImage(const QString &path)
 {
-    if(m_currentImage){
-        delete m_currentImage;
-        m_currentImage=nullptr;
-    }
-    m_currentImage=new QImage(path);
+    if(scene()){
 
-    if(!m_currentImage->isNull())
-    {
-        QPixmap pic=QPixmap::fromImage(*m_currentImage);
-        App->setStackWidget(1);
-        scene()->clear();
-        m_pixmapItem=new QGraphicsPixmapItem(pic);
-        m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
-        QRectF rect = m_pixmapItem->boundingRect();
-        setSceneRect(rect);
-        scene()->addItem(m_pixmapItem);
-        fitWindow();
-        m_currentPath=path;
-    }
-    else {
-//       App->setStackWidget(0);
+        if(m_currentImage){
+            delete m_currentImage;
+            m_currentImage=nullptr;
+        }
+        m_currentImage=new QImage(path);
+
+        if(!m_currentImage->isNull())
+        {
+            QPixmap pic=QPixmap::fromImage(*m_currentImage);
+            if(Basic!=m_cureentId){
+                App->setStackWidget(1);
+            }
+
+            scene()->clear();
+            m_pixmapItem=new QGraphicsPixmapItem(pic);
+            m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
+            QRectF rect = m_pixmapItem->boundingRect();
+            setSceneRect(rect);
+            scene()->addItem(m_pixmapItem);
+            fitWindow();
+            m_currentPath=path;
+        }
+        else {
+            //       App->setStackWidget(0);
+        }
     }
 }
 
 void ImageView::openFilterImage(QImage *img)
 {
-    if(!img->isNull())
+    if(!img->isNull() && scene())
     {
         QPixmap pic=QPixmap::fromImage(*img);
         if(!pic.isNull())
         {
-            App->setStackWidget(1);
+            if(Basic!=m_cureentId){
+                App->setStackWidget(1);
+            }
             scene()->clear();
             m_pixmapItem=new QGraphicsPixmapItem(pic);
             m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
@@ -91,11 +103,11 @@ void ImageView::fitWindow()
     resetTransform();
     scale(wrs, wrs);
 
-//    if (wrs - 1 > -0.01 && wrs - 1 < 0.01) {
-//        emit checkAdaptImageBtn();
-//    } else {
-//        emit disCheckAdaptImageBtn();
-//    }
+    //    if (wrs - 1 > -0.01 && wrs - 1 < 0.01) {
+    //        emit checkAdaptImageBtn();
+    //    } else {
+    //        emit disCheckAdaptImageBtn();
+    //    }
     m_isFitImage = false;
     m_isFitWindow = true;
 
@@ -112,7 +124,7 @@ void ImageView::fitImage()
 
 void ImageView::RotateImage(const int &index)
 {
-    if(!m_pixmapItem) return;
+    if(!m_pixmapItem && scene()) return;
     QPixmap pixmap = m_pixmapItem->pixmap();
     QMatrix rotate;
     rotate.rotate(index);
@@ -166,12 +178,14 @@ void ImageView::savecurrentPicAs()
 
 void ImageView::openImage(QImage *img)
 {
-    if(!img->isNull())
+    if(!img->isNull() && scene())
     {
         QPixmap pic=QPixmap::fromImage(*img);
         if(!pic.isNull())
         {
-            App->setStackWidget(1);
+            if(Basic!=m_cureentId){
+                App->setStackWidget(1);
+            }
             scene()->clear();
             m_pixmapItem=new QGraphicsPixmapItem(pic);
             m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
@@ -207,7 +221,9 @@ void ImageView::autoFit()
 
 void ImageView::mouseMoveEvent(QMouseEvent *event)
 {
-    App->sigMouseMove();
+    if(Basic!=m_cureentId){
+        App->sigMouseMove();
+    }
     return QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -333,6 +349,14 @@ const QImage ImageView::image()
         return QImage();
     }
 }
+
+void ImageView::setViewId(ViewId id)
+{
+    m_cureentId=id;
+    if(Basic==id){
+        disconnect(App,&Application::sigFilterImage,this,&ImageView::openFilterImage);
+    }
+}
 void ImageView::resizeEvent(QResizeEvent *event)
 {
 
@@ -387,11 +411,11 @@ void ImageView::setScaleValue(qreal v)
     }
 
     qreal rescale = imageRelativeScale() * devicePixelRatioF();
-//    if (rescale - 1 > -0.01 && rescale - 1 < 0.01) {
-//        emit checkAdaptImageBtn();
-//    } else {
-//        emit disCheckAdaptImageBtn();
-//    }
+    //    if (rescale - 1 > -0.01 && rescale - 1 < 0.01) {
+    //        emit checkAdaptImageBtn();
+    //    } else {
+    //        emit disCheckAdaptImageBtn();
+    //    }
 
 
 }

@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
     MainWidget widget(&w);
     for(int i = 1; i < argc; ++i)
     {
-         widget.openImage(argv[i]);
-         break;
+        widget.openImage(argv[i]);
+        break;
     }
 
     w.setCentralWidget(&widget);

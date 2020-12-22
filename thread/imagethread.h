@@ -1,3 +1,6 @@
+/*
+ *图像数据处理线程，通过创建线程池，对线程进行调用，数据通过全局信号发回图像显示界面
+*/
 #ifndef IMAGETHREAD_H
 #define IMAGETHREAD_H
 

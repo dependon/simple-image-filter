@@ -1,3 +1,6 @@
+/*
+ *用于后续自绘漂亮一点的菜单
+*/
 #ifndef STATUSBARWIDGET_H
 #define STATUSBARWIDGET_H
 

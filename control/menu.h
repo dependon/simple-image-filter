@@ -1,3 +1,6 @@
+/*
+ *用于后续自绘漂亮一点的菜单
+*/
 #ifndef MENU_H
 #define MENU_H
 

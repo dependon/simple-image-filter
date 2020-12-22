@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QMimeData>
 #include <QPropertyAnimation>
+#include <QSlider>
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWidget)
@@ -30,11 +31,16 @@ bool MainWidget::Init()
     {
         QGraphicsScene *scene=new QGraphicsScene(ui->mainImageView);
         ui->mainImageView->setScene(scene);
+
+        QGraphicsScene *basicScene=new QGraphicsScene(ui->basicImageView);
+        ui->basicImageView->setScene(basicScene);
+        ui->basicImageView->setViewId(ViewId::Basic);
     }
     if(!m_statusbarWidget)
     {
         m_statusbarWidget = new StatusBarWidget(this);
         QHBoxLayout *layout=new QHBoxLayout(m_statusbarWidget);
+
         m_statusbarWidget->setLayout(layout);
         m_statusbarWidget->setFixedSize(6*90,90);
         m_statusbarWidget->move((this->width() - m_statusbarWidget->width()) / 2,
@@ -99,6 +105,9 @@ void MainWidget::initBtn()
         m_statusbarWidget->layout()->addWidget(m_saveBtn);
         connect(m_saveBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::savecurrentPic);
 
+        m_lightSlider = new QSlider(Qt::Vertical);//这个初始值，是让这个控件水平布局
+        m_lightSlider->setRange(0,300);
+
     }
 
 }
@@ -116,7 +125,7 @@ void MainWidget::initConnect()
                 animation->setDuration(200);
                 animation->setEasingCurve(QEasingCurve::NCurveTypes);
                 animation->setStartValue(
-                    QPoint((width() - m_statusbarWidget->width()) / 2, m_statusbarWidget->y()));
+                            QPoint((width() - m_statusbarWidget->width()) / 2, m_statusbarWidget->y()));
                 animation->setEndValue(QPoint((width() - m_statusbarWidget->width()) / 2,
                                               height() - m_statusbarWidget->height() - 10));
                 animation->start(QAbstractAnimation::DeleteWhenStopped);
@@ -126,7 +135,7 @@ void MainWidget::initConnect()
                 animation->setDuration(200);
                 animation->setEasingCurve(QEasingCurve::NCurveTypes);
                 animation->setStartValue(
-                    QPoint((width() - m_statusbarWidget->width()) / 2, m_statusbarWidget->y()));
+                            QPoint((width() - m_statusbarWidget->width()) / 2, m_statusbarWidget->y()));
                 animation->setEndValue(QPoint((width() - m_statusbarWidget->width()) / 2, height()));
                 animation->start(QAbstractAnimation::DeleteWhenStopped);
             }
@@ -215,7 +224,6 @@ void MainWidget::initMenu()
         m_leftMenu->addAction(m_inverseColorFilter);
         connect(m_inverseColorFilter,&QAction::triggered,ui->mainImageView,&ImageView::InverseColorImage);
 
-
     }
 
 }
@@ -257,6 +265,7 @@ void MainWidget::setCurrentWidget(const int &index)
 void MainWidget::openImage(const QString &path)
 {
     ui->mainImageView->openImage(path);
+    ui->basicImageView->openImage(path);
     setWindowTitle(QFileInfo(path).fileName());
 }
 
@@ -272,7 +281,7 @@ void MainWidget::showEvent(QShowEvent *event)
     {
         if (m_statusbarWidget->isVisible()) {
             m_statusbarWidget->move((this->width() - m_statusbarWidget->width()) / 2,
-                                  this->height() - m_statusbarWidget->height() );
+                                    this->height() - m_statusbarWidget->height() );
         }
     }
     return QWidget::showEvent(event);
@@ -284,7 +293,7 @@ void MainWidget::resizeEvent(QResizeEvent *event)
     {
         if (m_statusbarWidget->isVisible()) {
             m_statusbarWidget->move((this->width() - m_statusbarWidget->width()) / 2,
-                                  this->height() - m_statusbarWidget->height() );
+                                    this->height() - m_statusbarWidget->height() );
         }
     }
     return QWidget::resizeEvent(event);
@@ -321,6 +330,7 @@ bool MainWidget::eventFilter(QObject *obj, QEvent *event)
 
         if (!paths.isEmpty()) {
             ui->mainImageView->openImage(paths.at(0));
+            ui->basicImageView->openImage(paths.at(0));
         }
 
         event->accept();
