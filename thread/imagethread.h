@@ -13,17 +13,7 @@
 #include <QRunnable>
 
 
-enum MenuItemId {
-    IdNormal,
-    IdBEEP,
-    IdWarn,
-    IdCool,
-    IdGrayScale,
-    IdInverseColor,
-    Idold,
-    IdlightContrast,
 
-};
 struct ImageFilterInfo{
     MenuItemId id;
     double spatialDecay{0.02};
@@ -41,11 +31,13 @@ class ImageRunnable :public QObject, public QRunnable
 public :
     ImageRunnable();
     ~ImageRunnable();
-    void setData(QImage *img,ImageFilterInfo info);
+//    void setData(QImage *img,ImageFilterInfo info);
+    void setData(QImage &img, ImageFilterInfo info);
 protected:
     virtual void run();
 private:
     ImageFilterInfo m_info;
     QImage *m_img {nullptr};
+    QImage m_iimg{nullptr};
 };
 #endif // IMAGETHREAD_H

@@ -21,8 +21,8 @@ public:
     ImageView(QWidget *parent = nullptr ,ViewId id=Normal);
     //通过路径打开图片
     void openImage(const QString& path);
-    //显示该img
-    void openFilterImage(QImage *img);
+//    //显示该img
+//    void openFilterImage(QImage *img);
 
     //用于鼠标滚轮滑动
     qreal windowRelativeScale() const;
@@ -38,6 +38,7 @@ public:
     const QImage image();
     //设置view模式
     void setViewId(ViewId id);
+
 public slots:
     //适应窗口大小
     void fitWindow();
@@ -51,6 +52,7 @@ public slots:
     void savecurrentPicAs();
     //打开该图片
     void openImage(QImage* img);
+    void openFilterImage(QImage img,isChange is);
     //老照片滤镜
     void oldIMage();
     //重置图片
@@ -81,7 +83,8 @@ private:
     qreal m_scal = 1.0;
     int   m_rotateAngel=0;//旋转角度
     QImage *m_currentImage{nullptr};//当前原始图像
-    QImage *m_FilterImage{nullptr};//当前处理的图像
+    QImage m_FilterImage{nullptr};//当前处理的图像
+    QImage m_lightContrastImage{nullptr};//亮度曝光度图像
     ViewId m_cureentId{Normal};//当前模式
 };
 

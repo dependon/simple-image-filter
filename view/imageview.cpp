@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QThreadPool>
 #include <qmath.h>
+#include <QObject>
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
@@ -56,14 +57,18 @@ void ImageView::openImage(const QString &path)
         else {
             //       App->setStackWidget(0);
         }
+        m_FilterImage=image();
     }
 }
 
-void ImageView::openFilterImage(QImage *img)
+void ImageView::openFilterImage(QImage img, isChange is)
 {
-    if(!img->isNull() && scene())
+    if(!img.isNull() && scene())
     {
-        QPixmap pic=QPixmap::fromImage(*img);
+        if(Change==is){
+            m_FilterImage=img;
+        }
+        QPixmap pic=QPixmap::fromImage(img);
         if(!pic.isNull())
         {
             if(Basic!=m_cureentId){
@@ -142,14 +147,9 @@ void ImageView::RotateImage(const int &index)
 
     autoFit();
     m_rotateAngel += index;
-    if(!m_FilterImage)
-    {
-        m_FilterImage=new QImage(image());
-    }else {
-        delete m_FilterImage;
-        m_FilterImage=nullptr;
-        m_FilterImage=new QImage(image());
-    }
+
+    m_FilterImage=image();
+
 
 }
 void ImageView::savecurrentPic()
@@ -230,8 +230,8 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 void ImageView::oldIMage()
 {
     if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
+        if(!&m_FilterImage){
+            m_FilterImage=image();
         }
         ImageFilterInfo info;
         info.id=MenuItemId::Idold;
@@ -244,17 +244,14 @@ void ImageView::oldIMage()
 void ImageView::resetImage()
 {
     openImage(m_currentImage);
-    if(m_FilterImage){
-        delete m_FilterImage;
-        m_FilterImage=nullptr;
-    }
+    m_FilterImage=*m_currentImage;
 }
 
 void ImageView::BEEPImage(double spatialDecay, double photometricStandardDeviation)
 {
     if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
+        if(!&m_FilterImage){
+            m_FilterImage=image();
         }
         ImageFilterInfo info;
         info.id=MenuItemId::IdBEEP;
@@ -269,8 +266,8 @@ void ImageView::BEEPImage(double spatialDecay, double photometricStandardDeviati
 void ImageView::warnImage(int index)
 {
     if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
+        if(!&m_FilterImage){
+            m_FilterImage=image();
         }
         ImageFilterInfo info;
         info.id=MenuItemId::IdWarn;
@@ -284,8 +281,8 @@ void ImageView::warnImage(int index)
 void ImageView::coolImage(int index)
 {
     if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
+        if(!&m_FilterImage){
+            m_FilterImage=image();
         }
         ImageFilterInfo info;
         info.id=MenuItemId::IdCool;
@@ -299,8 +296,8 @@ void ImageView::coolImage(int index)
 void ImageView::GrayScaleImage()
 {
     if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
+        if(!&m_FilterImage){
+            m_FilterImage=image();
         }
         ImageFilterInfo info;
         info.id=MenuItemId::IdGrayScale;
@@ -312,16 +309,14 @@ void ImageView::GrayScaleImage()
 
 void ImageView::lightContrastImage(int light, int Contrast)
 {
-    if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
-        }
+    if(m_currentImage){   
+        QImage lightContrastImage(m_FilterImage);
         ImageFilterInfo info;
         info.id=MenuItemId::IdlightContrast;
         info.lightDecay=light;
         info.ContrastDecay=Contrast;
         ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        imgThread->setData(lightContrastImage,info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
@@ -329,8 +324,8 @@ void ImageView::lightContrastImage(int light, int Contrast)
 void ImageView::InverseColorImage()
 {
     if(m_currentImage){
-        if(!m_FilterImage){
-            m_FilterImage=new QImage(image());
+        if(!&m_FilterImage){
+            m_FilterImage=image();
         }
         ImageFilterInfo info;
         info.id=MenuItemId::IdInverseColor;

@@ -4,8 +4,11 @@
 #include <QWidget>
 
 class Menu;
+class QFrame;
 class QSlider;
 class PushButton;
+class QVBoxLayout;
+class QHBoxLayout;
 class StatusBarWidget;
 class QGraphicsPixmapItem;
 namespace Ui {
@@ -81,7 +84,12 @@ private:
     QAction *m_lightContrastImage{nullptr};    //对比度和亮度(右键菜单)
     QAction *m_inverseColorFilter{nullptr};    //反色滤镜(右键菜单)
 
-    QSlider *m_lightSlider {nullptr};
+    QSlider *m_lightSlider {nullptr};  //亮度slider
+    QSlider *m_contrastSlider {nullptr};//对比度slider
+
+    QVBoxLayout *m_Vlayout {nullptr};
+    QHBoxLayout *m_Hlayout {nullptr};
+    QFrame * m_layoutframe {nullptr};
 
 
 };

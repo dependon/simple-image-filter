@@ -39,10 +39,15 @@ bool MainWidget::Init()
     if(!m_statusbarWidget)
     {
         m_statusbarWidget = new StatusBarWidget(this);
-        QHBoxLayout *layout=new QHBoxLayout(m_statusbarWidget);
 
-        m_statusbarWidget->setLayout(layout);
-        m_statusbarWidget->setFixedSize(6*90,90);
+
+        m_Vlayout =new QVBoxLayout(m_statusbarWidget);
+        m_layoutframe=new QFrame(m_statusbarWidget);
+        m_Hlayout =new QHBoxLayout(m_layoutframe);
+        m_layoutframe->setLayout(m_Hlayout);
+        m_Vlayout->addWidget(m_layoutframe);
+        m_statusbarWidget->setLayout(m_Vlayout);
+        m_statusbarWidget->setFixedSize(6*90,170);
         m_statusbarWidget->move((this->width() - m_statusbarWidget->width()) / 2,
                                 this->height() - m_statusbarWidget->height() );
 
@@ -59,34 +64,50 @@ void MainWidget::initBtn()
 {
     if(m_statusbarWidget)
     {
+        m_lightSlider = new QSlider(Qt::Horizontal,this);//这个初始值，是让这个控件水平布局
+        m_lightSlider->setRange(0,300);
+        m_lightSlider->setValue(100);
+        m_contrastSlider = new QSlider(Qt::Horizontal,this);//这个初始值，是让这个控件水平布局
+        m_contrastSlider->setRange(0,300);
+        m_contrastSlider->setValue(150);
+
+        connect(m_lightSlider,&QSlider::valueChanged,this,[=]{
+           ui->mainImageView->lightContrastImage(m_lightSlider->value(),m_contrastSlider->value());
+        });
+        connect(m_contrastSlider,&QSlider::valueChanged,this,[=]{
+           ui->mainImageView->lightContrastImage(m_lightSlider->value(),m_contrastSlider->value());
+        });
+        m_Vlayout->addWidget(m_lightSlider);
+        m_Vlayout->addWidget(m_contrastSlider);
+
         m_openBtn=new PushButton(m_statusbarWidget);
         m_openBtn->setFixedSize(60,60);
         m_openBtn->setText(tr("open"));
-        m_statusbarWidget->layout()->addWidget(m_openBtn);
+        m_Hlayout->addWidget(m_openBtn);
         connect(m_openBtn,&QPushButton::clicked,this,&MainWidget::openImageFile);
 
         m_resetBtn =new PushButton(m_statusbarWidget);
         m_resetBtn->setFixedSize(60,60);
         m_resetBtn->setText(tr("reset"));
-        m_statusbarWidget->layout()->addWidget(m_resetBtn);
+        m_Hlayout->addWidget(m_resetBtn);
         connect(m_resetBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::resetImage);
 
         m_fitImageBtn=new PushButton(m_statusbarWidget);
         m_fitImageBtn->setFixedSize(60,60);
         m_fitImageBtn->setText(tr("fitImage"));
-        m_statusbarWidget->layout()->addWidget(m_fitImageBtn);
+        m_Hlayout->addWidget(m_fitImageBtn);
         connect(m_fitImageBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::fitImage);
 
         m_fitWindowBtn=new PushButton(m_statusbarWidget);
         m_fitWindowBtn->setFixedSize(60,60);
         m_fitWindowBtn->setText(tr("fitWindow"));
-        m_statusbarWidget->layout()->addWidget(m_fitWindowBtn);
+        m_Hlayout->addWidget(m_fitWindowBtn);
         connect(m_fitWindowBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::fitWindow);
 
         m_rotateRight=new PushButton();
         m_rotateRight->setFixedSize(60,60);
         m_rotateRight->setText(tr("rotate+90"));
-        m_statusbarWidget->layout()->addWidget(m_rotateRight);
+        m_Hlayout->addWidget(m_rotateRight);
         connect(m_rotateRight,&QPushButton::clicked,ui->mainImageView,[=]{
             ui->mainImageView->RotateImage(90);
         });
@@ -94,7 +115,7 @@ void MainWidget::initBtn()
         m_rotateLeft=new PushButton();
         m_rotateLeft->setFixedSize(60,60);
         m_rotateLeft->setText(tr("rotate-90"));
-        m_statusbarWidget->layout()->addWidget(m_rotateLeft);
+        m_Hlayout->addWidget(m_rotateLeft);
         connect(m_rotateLeft,&QPushButton::clicked,ui->mainImageView,[=]{
             ui->mainImageView->RotateImage(-90);
         });
@@ -102,11 +123,10 @@ void MainWidget::initBtn()
         m_saveBtn=new PushButton();
         m_saveBtn->setFixedSize(60,60);
         m_saveBtn->setText(tr("save"));
-        m_statusbarWidget->layout()->addWidget(m_saveBtn);
+        m_Hlayout->addWidget(m_saveBtn);
         connect(m_saveBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::savecurrentPic);
 
-        m_lightSlider = new QSlider(Qt::Vertical);//这个初始值，是让这个控件水平布局
-        m_lightSlider->setRange(0,300);
+
 
     }
 

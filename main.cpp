@@ -8,6 +8,7 @@ DWIDGET_USE_NAMESPACE
 using namespace Dtk::Core;
 int main(int argc, char *argv[])
 {
+    qRegisterMetaType<isChange>("isChange");
     Application a(argc, argv);
 
     DMainWindow w;
