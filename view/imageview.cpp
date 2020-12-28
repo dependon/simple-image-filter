@@ -230,9 +230,6 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 void ImageView::oldIMage()
 {
     if(m_currentImage){
-        if(!&m_FilterImage){
-            m_FilterImage=image();
-        }
         ImageFilterInfo info;
         info.id=MenuItemId::Idold;
         ImageRunnable* imgThread=new ImageRunnable();
@@ -250,9 +247,6 @@ void ImageView::resetImage()
 void ImageView::BEEPImage(double spatialDecay, double photometricStandardDeviation)
 {
     if(m_currentImage){
-        if(!&m_FilterImage){
-            m_FilterImage=image();
-        }
         ImageFilterInfo info;
         info.id=MenuItemId::IdBEEP;
         info.spatialDecay=spatialDecay;
@@ -266,9 +260,6 @@ void ImageView::BEEPImage(double spatialDecay, double photometricStandardDeviati
 void ImageView::warnImage(int index)
 {
     if(m_currentImage){
-        if(!&m_FilterImage){
-            m_FilterImage=image();
-        }
         ImageFilterInfo info;
         info.id=MenuItemId::IdWarn;
         info.warnImageDecay=index;
@@ -281,9 +272,6 @@ void ImageView::warnImage(int index)
 void ImageView::coolImage(int index)
 {
     if(m_currentImage){
-        if(!&m_FilterImage){
-            m_FilterImage=image();
-        }
         ImageFilterInfo info;
         info.id=MenuItemId::IdCool;
         info.coolImageDecay=index;
@@ -296,9 +284,6 @@ void ImageView::coolImage(int index)
 void ImageView::GrayScaleImage()
 {
     if(m_currentImage){
-        if(!&m_FilterImage){
-            m_FilterImage=image();
-        }
         ImageFilterInfo info;
         info.id=MenuItemId::IdGrayScale;
         ImageRunnable* imgThread=new ImageRunnable();
@@ -324,9 +309,6 @@ void ImageView::lightContrastImage(int light, int Contrast)
 void ImageView::InverseColorImage()
 {
     if(m_currentImage){
-        if(!&m_FilterImage){
-            m_FilterImage=image();
-        }
         ImageFilterInfo info;
         info.id=MenuItemId::IdInverseColor;
         ImageRunnable* imgThread=new ImageRunnable();
@@ -336,7 +318,6 @@ void ImageView::InverseColorImage()
 }
 const QImage ImageView::image()
 {
-    /*lmh0807,解决崩溃的问题*/
     if (m_pixmapItem) {
         return m_pixmapItem->pixmap().toImage();
     }
@@ -405,7 +386,7 @@ void ImageView::setScaleValue(qreal v)
         m_isFitWindow = false;
     }
 
-    qreal rescale = imageRelativeScale() * devicePixelRatioF();
+//    qreal rescale = imageRelativeScale() * devicePixelRatioF();
     //    if (rescale - 1 > -0.01 && rescale - 1 < 0.01) {
     //        emit checkAdaptImageBtn();
     //    } else {
