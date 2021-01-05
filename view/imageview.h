@@ -8,6 +8,7 @@
 #include <QGraphicsView>
 
 class QGraphicsPixmapItem;
+class ImageCropperDemo;
 //Normal表示正常模式，Basic模式不会接受全局信号
 enum ViewId {
     Normal,
@@ -48,6 +49,8 @@ public slots:
     void RotateImage(const int &index);
     //保存图片
     void savecurrentPic();
+    //裁剪图片
+    void scaleImage();
     //另存为
     void savecurrentPicAs();
     //打开该图片

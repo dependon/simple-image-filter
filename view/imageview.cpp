@@ -1,6 +1,7 @@
 ﻿#include "imageview.h"
 #include "mainwidget.h"
 #include "imagethread.h"
+#include "imagecropperdemo.h"
 
 #include <QPaintDevice>
 #include <QGraphicsPixmapItem>
@@ -155,6 +156,15 @@ void ImageView::RotateImage(const int &index)
 void ImageView::savecurrentPic()
 {
     image().save(m_currentPath);
+}
+
+void ImageView::scaleImage()
+{
+    ImageCropperDemo* dialog = new ImageCropperDemo(this);
+    if (m_pixmapItem) {
+        dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
+    }
+    dialog->exec();
 }
 void ImageView::savecurrentPicAs()
 {

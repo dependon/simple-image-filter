@@ -127,6 +127,13 @@ void MainWidget::initBtn()
         connect(m_saveBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::savecurrentPic);
 
 
+        m_scaleImageBtn=new PushButton();
+        m_scaleImageBtn->setFixedSize(60,60);
+        m_scaleImageBtn->setText(tr("scaleImage"));
+        m_Hlayout->addWidget(m_scaleImageBtn);
+        connect(m_scaleImageBtn,&QPushButton::clicked,ui->mainImageView,&ImageView::scaleImage);
+
+
 
     }
 

@@ -65,6 +65,7 @@ private:
     PushButton *m_rotateLeft{nullptr};   //向左旋转按钮按钮(下方状态栏)
     PushButton *m_saveBtn{nullptr};    //保存图片按钮(下方状态栏)
     PushButton *m_resetBtn{nullptr};    //还原原来的图片状态按钮(下方状态栏)
+    PushButton *m_scaleImageBtn{nullptr};    //还原原来的图片状态按钮(下方状态栏)
 
     Menu *m_leftMenu{nullptr};  //右键菜单
 
