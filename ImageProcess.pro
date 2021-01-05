@@ -43,7 +43,9 @@ SOURCES += \
         thread/imagethread.cpp \
         view/imageview.cpp \
         api/imageapi.cpp \
-    control/menu.cpp
+    control/menu.cpp \
+    view/imagecropperdemo.cpp \
+    view/imagecropperlabel.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -53,7 +55,9 @@ HEADERS += \
         thread/imagethread.h \
         view/imageview.h \
         api/imageapi.h \
-    control/menu.h
+    control/menu.h \
+    view/imagecropperdemo.h \
+    view/imagecropperlabel.h
 
 FORMS += \
         mainwidget.ui
