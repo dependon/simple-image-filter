@@ -412,7 +412,7 @@ void ImageCropperDemo::onUpdatePreview() {
 }
 
 void ImageCropperDemo::onSaveCroppedImage() {
-    App->sigFilterImage(labelPreviewImage->pixmap()->toImage());
+    App->sigFilterImage(imgCropperLabel->getCroppedImage().toImage());
     close();
 //    if (!pixmap) {
 //        QMessageBox::information(this, "Error", "There is no cropped image to save.", QMessageBox::Ok);
