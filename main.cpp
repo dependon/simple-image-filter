@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     Application a(argc, argv);
-
+    qRegisterMetaType<isChange>("isChange");
     MainWidget w;
     w.resize(800,600);
     w.show();
