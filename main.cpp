@@ -12,17 +12,16 @@ int main(int argc, char *argv[])
 
     qRegisterMetaType<isChange>("isChange");
     Application a(argc, argv);
-
+    a.loadTranslator();
     DMainWindow w;
     MainWidget widget(&w);
-    for(int i = 1; i < argc; ++i)
-    {
+    for (int i = 1; i < argc; ++i) {
         widget.openImage(argv[i]);
         break;
     }
 
     w.setCentralWidget(&widget);
-    w.resize(800,600);
+    w.resize(800, 600);
     w.show();
 
     return a.exec();
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
     Application a(argc, argv);
     qRegisterMetaType<isChange>("isChange");
     MainWidget w;
-    w.resize(800,600);
+    w.resize(800, 600);
     w.show();
 
     return a.exec();
