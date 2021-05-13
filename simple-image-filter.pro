@@ -8,7 +8,7 @@ QT       += core gui concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ImageProcess
+TARGET = simple-image-filter
 TEMPLATE = app
 CONFIG -= app_bundle
 CONFIG += c++11 link_pkgconfig
@@ -62,7 +62,27 @@ HEADERS += \
 FORMS += \
         mainwidget.ui
 
+
+
+#./translation/
+#TRANSLATIONS += simple-image-filter_zh_CN.ts
+
+CONFIG(release, debug|release) {
+    TRANSLATIONS = $$files($$PWD/*.ts)
+    #遍历目录中的ts文件，调用lrelease将其生成为qm文件
+    for(tsfile, TRANSLATIONS) {
+        qmfile = $$replace(tsfile, .ts$, .qm)
+        system(lrelease $$tsfile -qm $$qmfile) | error("Failed to lrelease")
+    }
+}
+
+APPSHAREDIR = /usr/share/simple-image-filter
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+
+translations.path = $$APPSHAREDIR/translations
+translations.files = $$PWD/*.qm
+
+
+!isEmpty(target.path): INSTALLS += target translations

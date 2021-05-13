@@ -24,59 +24,55 @@ ImageView::ImageView(QWidget *parent, ViewId id):
     setDragMode(ScrollHandDrag);
     QThreadPool::globalInstance()->setMaxThreadCount(1);
 
-    if(Basic!=id){
-        connect(App,&Application::sigFilterImage,this,&ImageView::openFilterImage);
+    if (Basic != id) {
+        connect(App, &Application::sigFilterImage, this, &ImageView::openFilterImage);
     }
 }
 
 void ImageView::openImage(const QString &path)
 {
-    if(scene()){
+    if (scene()) {
 
-        if(m_currentImage){
+        if (m_currentImage) {
             delete m_currentImage;
-            m_currentImage=nullptr;
+            m_currentImage = nullptr;
         }
-        m_currentImage=new QImage(path);
+        m_currentImage = new QImage(path);
 
-        if(!m_currentImage->isNull())
-        {
-            QPixmap pic=QPixmap::fromImage(*m_currentImage);
-            if(Basic!=m_cureentId){
+        if (!m_currentImage->isNull()) {
+            QPixmap pic = QPixmap::fromImage(*m_currentImage);
+            if (Basic != m_cureentId) {
                 App->setStackWidget(1);
             }
 
             scene()->clear();
-            m_pixmapItem=new QGraphicsPixmapItem(pic);
+            m_pixmapItem = new QGraphicsPixmapItem(pic);
             m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
             QRectF rect = m_pixmapItem->boundingRect();
             setSceneRect(rect);
             scene()->addItem(m_pixmapItem);
             fitWindow();
-            m_currentPath=path;
-        }
-        else {
+            m_currentPath = path;
+        } else {
             //       App->setStackWidget(0);
         }
-        m_FilterImage=image();
+        m_FilterImage = image();
     }
 }
 
 void ImageView::openFilterImage(QImage img, isChange is)
 {
-    if(!img.isNull() && scene())
-    {
-        if(Change==is){
-            m_FilterImage=img;
+    if (!img.isNull() && scene()) {
+        if (Change == is) {
+            m_FilterImage = img;
         }
-        QPixmap pic=QPixmap::fromImage(img);
-        if(!pic.isNull())
-        {
-            if(Basic!=m_cureentId){
+        QPixmap pic = QPixmap::fromImage(img);
+        if (!pic.isNull()) {
+            if (Basic != m_cureentId) {
                 App->setStackWidget(1);
             }
             scene()->clear();
-            m_pixmapItem=new QGraphicsPixmapItem(pic);
+            m_pixmapItem = new QGraphicsPixmapItem(pic);
             m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
             QRectF rect = m_pixmapItem->boundingRect();
             setSceneRect(rect);
@@ -130,7 +126,7 @@ void ImageView::fitImage()
 
 void ImageView::RotateImage(const int &index)
 {
-    if(!m_pixmapItem && scene()) return;
+    if (!m_pixmapItem && scene()) return;
     QPixmap pixmap = m_pixmapItem->pixmap();
     QMatrix rotate;
     rotate.rotate(index);
@@ -149,7 +145,7 @@ void ImageView::RotateImage(const int &index)
     autoFit();
     m_rotateAngel += index;
 
-    m_FilterImage=image();
+    m_FilterImage = image();
 
 
 }
@@ -160,7 +156,7 @@ void ImageView::savecurrentPic()
 
 void ImageView::scaleImage()
 {
-    ImageCropperDemo* dialog = new ImageCropperDemo(this);
+    ImageCropperDemo *dialog = new ImageCropperDemo(this);
     if (m_pixmapItem) {
         dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
     }
@@ -169,35 +165,29 @@ void ImageView::scaleImage()
 void ImageView::savecurrentPicAs()
 {
     QFileDialog fileDialog;
-    QString fileName = fileDialog.getSaveFileName(this,tr("Open File"),"/home",tr("png"));
-    if(fileName == "")
-    {
+    QString fileName = fileDialog.getSaveFileName(this, tr("Open File"), "/home", tr("png"));
+    if (fileName == "") {
         return;
     }
     QFile file(fileName);
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::warning(this,tr("错误"),tr("打开文件失败"));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("error"), tr("open file error"));
         return;
-    }
-    else
-    {
-        image().save(fileName,"png");
+    } else {
+        image().save(fileName, "png");
     }
 }
 
 void ImageView::openImage(QImage *img)
 {
-    if(!img->isNull() && scene())
-    {
-        QPixmap pic=QPixmap::fromImage(*img);
-        if(!pic.isNull())
-        {
-            if(Basic!=m_cureentId){
+    if (!img->isNull() && scene()) {
+        QPixmap pic = QPixmap::fromImage(*img);
+        if (!pic.isNull()) {
+            if (Basic != m_cureentId) {
                 App->setStackWidget(1);
             }
             scene()->clear();
-            m_pixmapItem=new QGraphicsPixmapItem(pic);
+            m_pixmapItem = new QGraphicsPixmapItem(pic);
             m_pixmapItem->setTransformationMode(Qt::SmoothTransformation);
             QRectF rect = m_pixmapItem->boundingRect();
             setSceneRect(rect);
@@ -231,7 +221,7 @@ void ImageView::autoFit()
 
 void ImageView::mouseMoveEvent(QMouseEvent *event)
 {
-    if(Basic!=m_cureentId){
+    if (Basic != m_cureentId) {
         App->sigMouseMove();
     }
     return QGraphicsView::mouseMoveEvent(event);
@@ -239,11 +229,11 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 
 void ImageView::oldIMage()
 {
-    if(m_currentImage){
+    if (m_currentImage) {
         ImageFilterInfo info;
-        info.id=MenuItemId::Idold;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        info.id = MenuItemId::Idold;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
@@ -251,78 +241,78 @@ void ImageView::oldIMage()
 void ImageView::resetImage()
 {
     openImage(m_currentImage);
-    m_FilterImage=*m_currentImage;
+    m_FilterImage = *m_currentImage;
 }
 
 void ImageView::BEEPImage(double spatialDecay, double photometricStandardDeviation)
 {
-    if(m_currentImage){
+    if (m_currentImage) {
         ImageFilterInfo info;
-        info.id=MenuItemId::IdBEEP;
-        info.spatialDecay=spatialDecay;
-        info.photometricStandardDeviation=photometricStandardDeviation;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        info.id = MenuItemId::IdBEEP;
+        info.spatialDecay = spatialDecay;
+        info.photometricStandardDeviation = photometricStandardDeviation;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
 
 void ImageView::warnImage(int index)
 {
-    if(m_currentImage){
+    if (m_currentImage) {
         ImageFilterInfo info;
-        info.id=MenuItemId::IdWarn;
-        info.warnImageDecay=index;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        info.id = MenuItemId::IdWarn;
+        info.warnImageDecay = index;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
 
 void ImageView::coolImage(int index)
 {
-    if(m_currentImage){
+    if (m_currentImage) {
         ImageFilterInfo info;
-        info.id=MenuItemId::IdCool;
-        info.coolImageDecay=index;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        info.id = MenuItemId::IdCool;
+        info.coolImageDecay = index;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
 
 void ImageView::GrayScaleImage()
 {
-    if(m_currentImage){
+    if (m_currentImage) {
         ImageFilterInfo info;
-        info.id=MenuItemId::IdGrayScale;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        info.id = MenuItemId::IdGrayScale;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
 
 void ImageView::lightContrastImage(int light, int Contrast)
 {
-    if(m_currentImage){   
+    if (m_currentImage) {
         QImage lightContrastImage(m_FilterImage);
         ImageFilterInfo info;
-        info.id=MenuItemId::IdlightContrast;
-        info.lightDecay=light;
-        info.ContrastDecay=Contrast;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(lightContrastImage,info);
+        info.id = MenuItemId::IdlightContrast;
+        info.lightDecay = light;
+        info.ContrastDecay = Contrast;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(lightContrastImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
 
 void ImageView::InverseColorImage()
 {
-    if(m_currentImage){
+    if (m_currentImage) {
         ImageFilterInfo info;
-        info.id=MenuItemId::IdInverseColor;
-        ImageRunnable* imgThread=new ImageRunnable();
-        imgThread->setData(m_FilterImage,info);
+        info.id = MenuItemId::IdInverseColor;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
@@ -330,17 +320,16 @@ const QImage ImageView::image()
 {
     if (m_pixmapItem) {
         return m_pixmapItem->pixmap().toImage();
-    }
-    else {
+    } else {
         return QImage();
     }
 }
 
 void ImageView::setViewId(ViewId id)
 {
-    m_cureentId=id;
-    if(Basic==id){
-        disconnect(App,&Application::sigFilterImage,this,&ImageView::openFilterImage);
+    m_cureentId = id;
+    if (Basic == id) {
+        disconnect(App, &Application::sigFilterImage, this, &ImageView::openFilterImage);
     }
 }
 void ImageView::resizeEvent(QResizeEvent *event)
@@ -377,20 +366,20 @@ void ImageView::scaleAtPoint(QPoint pos, qreal factor)
 void ImageView::setScaleValue(qreal v)
 {
     //由于矩阵被旋转，通过矩阵获取缩放因子，计算缩放比例错误，因此记录过程中的缩放因子来判断缩放比例
-    m_scal *=v;
+    m_scal *= v;
     qDebug() << m_scal;
     scale(v, v);
     //const qreal irs = imageRelativeScale() * devicePixelRatioF();
     // Rollback
-    if (v < 1 && /*irs <= MIN_SCALE_FACTOR)*/m_scal<0.03) {
+    if (v < 1 && /*irs <= MIN_SCALE_FACTOR)*/m_scal < 0.03) {
         const qreal minv = MIN_SCALE_FACTOR / m_scal;
         // if (minv < 1.09) return;
         scale(minv, minv);
-        m_scal *=minv;
-    } else if (v > 1 && /*irs >= MAX_SCALE_FACTOR*/m_scal>20) {
+        m_scal *= minv;
+    } else if (v > 1 && /*irs >= MAX_SCALE_FACTOR*/m_scal > 20) {
         const qreal maxv = MAX_SCALE_FACTOR / m_scal;
         scale(maxv, maxv);
-        m_scal *=maxv;
+        m_scal *= maxv;
     } else {
         m_isFitImage = false;
         m_isFitWindow = false;
