@@ -87,7 +87,7 @@ translations.files = $$PWD/*.qm
 desktop.path = /usr/share/applications/
 desktop.files = $$PWD/install/simple-image-filter.desktop
 
-icon.path =/opt/durapps/deepin-dreamscene-ui
+icon.path =/opt/durapps/simple-image-filter/
 icon.files=$$PWD/icon/icon.png
 
 !isEmpty(target.path): INSTALLS += target translations icon desktop
