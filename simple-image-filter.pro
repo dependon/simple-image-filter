@@ -86,3 +86,6 @@ translations.files = $$PWD/*.qm
 
 
 !isEmpty(target.path): INSTALLS += target translations
+
+RESOURCES += \
+    qrc.qrc
