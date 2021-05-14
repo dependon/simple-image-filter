@@ -79,13 +79,18 @@ CONFIG(release, debug|release) {
 APPSHAREDIR = /usr/share/simple-image-filter
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+else: unix:!android: target.path = /opt/durapps/simple-image-filter
 
 translations.path = $$APPSHAREDIR/translations
 translations.files = $$PWD/*.qm
 
+desktop.path = /usr/share/applications/
+desktop.files = $$PWD/install/simple-image-filter.desktop
 
-!isEmpty(target.path): INSTALLS += target translations
+icon.path =/opt/durapps/deepin-dreamscene-ui
+icon.files=$$PWD/icon/icon.png
+
+!isEmpty(target.path): INSTALLS += target translations icon desktop
 
 RESOURCES += \
     qrc.qrc

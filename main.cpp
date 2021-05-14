@@ -4,6 +4,7 @@
 #ifdef USE_DTK
 #include <DApplication>
 #include <DMainWindow>
+#include <DTitlebar>
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Core;
 
@@ -20,6 +21,8 @@ int main(int argc, char *argv[])
         break;
     }
 
+    w.setWindowIcon(QIcon(":/icon/icon.png"));
+    w.titlebar()->setIcon(QIcon(":/icon/icon.png"));
     w.setCentralWidget(&widget);
     w.resize(800, 600);
     w.show();

@@ -253,12 +253,12 @@ void MainWidget::initMenu()
         m_leftMenu->addAction(m_grayScaleFilter);
         connect(m_grayScaleFilter, &QAction::triggered, ui->mainImageView, &ImageView::GrayScaleImage);
 
-        m_lightContrastImage = new QAction(m_leftMenu);
-        m_lightContrastImage->setText(tr("lightContrastImage"));
-        m_leftMenu->addAction(m_lightContrastImage);
-        connect(m_lightContrastImage, &QAction::triggered, this, [ = ] {
-            ui->mainImageView->lightContrastImage();
-        });
+//        m_lightContrastImage = new QAction(m_leftMenu);
+//        m_lightContrastImage->setText(tr("lightContrastImage"));
+//        m_leftMenu->addAction(m_lightContrastImage);
+//        connect(m_lightContrastImage, &QAction::triggered, this, [ = ] {
+//            ui->mainImageView->lightContrastImage();
+//        });
 
         m_inverseColorFilter = new QAction(m_leftMenu);
         m_inverseColorFilter->setText(tr("inverseColorFilter"));

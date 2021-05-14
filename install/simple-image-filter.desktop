@@ -1,0 +1,18 @@
+[Desktop Entry]
+Categories=Application;
+Comment=simple-image-filter
+Comment[zh_CN]=简单图像处理工具
+Encoding=UTF-8
+Exec=/opt/durapps/simple-image-filter/simple-image-filter
+GenericName=simple-image-filter
+GenericName[zh_CN]=简单图像处理工具
+Icon=/opt/durapps/simple-image-filter/icon.png
+Name=simple-image-filter
+Name[zh_CN]=简单图像处理工具
+StartupNotify=false
+Terminal=false
+Type=Application
+Version=1.0.0.0
+X-Deepin-Vendor=user-custom
+X-Deepin-ManualID=simple-image-filter
+X-Deepin-Vendor=deepin
