@@ -45,7 +45,8 @@ SOURCES += \
         api/imageapi.cpp \
     control/menu.cpp \
     view/imagecropperdemo.cpp \
-    view/imagecropperlabel.cpp
+    view/imagecropperlabel.cpp \
+    control/openimagebutton.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -57,7 +58,8 @@ HEADERS += \
         api/imageapi.h \
     control/menu.h \
     view/imagecropperdemo.h \
-    view/imagecropperlabel.h
+    view/imagecropperlabel.h \
+    control/openimagebutton.h
 
 FORMS += \
         mainwidget.ui

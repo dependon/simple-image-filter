@@ -35,7 +35,7 @@
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -53,7 +53,7 @@
         </spacer>
        </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="openPicture">
+        <widget class="openImageButton" name="openPicture">
          <property name="text">
           <string>openPicture</string>
          </property>
@@ -129,6 +129,11 @@
    <class>ImageView</class>
    <extends>QGraphicsView</extends>
    <header location="global">imageview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>openImageButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">openimagebutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
