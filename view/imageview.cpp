@@ -317,6 +317,28 @@ void ImageView::InverseColorImage()
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
+
+void ImageView::LaplaceSharpenImage()
+{
+    if (m_currentImage) {
+        ImageFilterInfo info;
+        info.id = MenuItemId::IdLaplaceSharpen;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
+        QThreadPool::globalInstance()->start(imgThread);
+    }
+}
+
+void ImageView::soderImage()
+{
+    if (m_currentImage) {
+        ImageFilterInfo info;
+        info.id = MenuItemId::IdSobel;
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
+        QThreadPool::globalInstance()->start(imgThread);
+    }
+}
 const QImage ImageView::image()
 {
     if (m_pixmapItem) {

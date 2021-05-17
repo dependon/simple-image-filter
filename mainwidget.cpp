@@ -260,6 +260,16 @@ void MainWidget::initMenu()
 //            ui->mainImageView->lightContrastImage();
 //        });
 
+        m_laplaceSharpen = new QAction(m_leftMenu);
+        m_laplaceSharpen->setText(tr("LaplaceSharpen"));
+        m_leftMenu->addAction(m_laplaceSharpen);
+        connect(m_laplaceSharpen, &QAction::triggered, ui->mainImageView, &ImageView::LaplaceSharpenImage);
+
+        m_soder = new QAction(m_leftMenu);
+        m_soder->setText(tr("soder"));
+        m_leftMenu->addAction(m_soder);
+        connect(m_soder, &QAction::triggered, ui->mainImageView, &ImageView::soderImage);
+
         m_inverseColorFilter = new QAction(m_leftMenu);
         m_inverseColorFilter->setText(tr("inverseColorFilter"));
         m_leftMenu->addAction(m_inverseColorFilter);

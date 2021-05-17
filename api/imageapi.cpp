@@ -343,3 +343,123 @@ void QImageAPI::oldImage(QImage *img, QImage *imgCopy)
 
     }
 }
+
+QImage QImageAPI::LaplaceSharpen(const QImage &origin)
+{
+    int width = origin.width();
+    int height = origin.height();
+    QImage newImage = QImage(width, height, QImage::Format_RGB888);
+    int window[3][3] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
+
+    for (int x = 1; x < width; x++) {
+        for (int y = 1; y < height; y++) {
+            int sumR = 0;
+            int sumG = 0;
+            int sumB = 0;
+
+            //对每一个像素使用模板
+
+            for (int m = x - 1; m <= x + 1; m++)
+                for (int n = y - 1; n <= y + 1; n++) {
+                    if (m >= 0 && m < width && n < height) {
+                        sumR += QColor(origin.pixel(m, n)).red() * window[n - y + 1][m - x + 1];
+                        sumG += QColor(origin.pixel(m, n)).green() * window[n - y + 1][m - x + 1];
+                        sumB += QColor(origin.pixel(m, n)).blue() * window[n - y + 1][m - x + 1];
+                    }
+                }
+
+
+            int old_r = QColor(origin.pixel(x, y)).red();
+            sumR += old_r;
+            sumR = qBound(0, sumR, 255);
+
+            int old_g = QColor(origin.pixel(x, y)).green();
+            sumG += old_g;
+            sumG = qBound(0, sumG, 255);
+
+            int old_b = QColor(origin.pixel(x, y)).blue();
+            sumB += old_b;
+            sumB = qBound(0, sumB, 255);
+
+
+            newImage.setPixel(x, y, qRgb(sumR, sumG, sumB));
+        }
+    }
+
+    return newImage;
+}
+
+QImage QImageAPI::SobelEdge(const QImage &origin)
+{
+    double *Gx = new double[9];
+    double *Gy = new double[9];
+
+    /* Sobel */
+    Gx[0] = 1.0; Gx[1] = 0.0; Gx[2] = -1.0;
+    Gx[3] = 2.0; Gx[4] = 0.0; Gx[5] = -2.0;
+    Gx[6] = 1.0; Gx[7] = 0.0; Gx[8] = -1.0;
+
+    Gy[0] = -1.0; Gy[1] = -2.0; Gy[2] = - 1.0;
+    Gy[3] = 0.0; Gy[4] = 0.0; Gy[5] = 0.0;
+    Gy[6] = 1.0; Gy[7] = 2.0; Gy[8] = 1.0;
+
+    QRgb pixel;
+    QImage grayImage = GreyScale(origin);
+    int height = grayImage.height();
+    int width = grayImage.width();
+    QImage newImage = QImage(width, height, QImage::Format_RGB888);
+
+    /* 改写下面这行解决：某些编译器下不支持“变长数组”的问题 */
+    // float sobel_norm[width*height];
+
+
+    float *sobel_norm = new float[width * height];
+    float max = 0.0;
+    QColor my_color;
+
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            double value_gx = 0.0;
+            double value_gy = 0.0;
+
+            for (int k = 0; k < 3; k++) {
+                for (int p = 0; p < 3; p++) {
+                    pixel = grayImage.pixel(x + 1 + 1 - k, y + 1 + 1 - p);
+                    value_gx += Gx[p * 3 + k] * qRed(pixel);
+                    value_gy += Gy[p * 3 + k] * qRed(pixel);
+                }
+                sobel_norm[x + y * width] = abs(value_gx) + abs(value_gy);
+
+                max = sobel_norm[x + y * width] > max ? sobel_norm[x + y * width] : max;
+            }
+        }
+    }
+
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            my_color.setHsv(0, 0, 255 - int(255.0 * sobel_norm[i + j * width] / max));
+            newImage.setPixel(i, j, my_color.rgb());
+        }
+    }
+    delete[] sobel_norm;
+    return newImage;
+}
+
+
+QImage QImageAPI::GreyScale(QImage origin)
+{
+    QImage *newImage = new QImage(origin.width(), origin.height(),
+                                  QImage::Format_ARGB32);
+    QColor oldColor;
+
+    for (int x = 0; x < newImage->width(); x++) {
+        for (int y = 0; y < newImage->height(); y++) {
+            oldColor = QColor(origin.pixel(x, y));
+            int average = (oldColor.red() * 299 + oldColor.green() * 587 + oldColor.blue() * 114 + 500) / 1000;
+            newImage->setPixel(x, y, qRgb(average, average, average));
+        }
+    }
+
+    return *newImage;
+
+}

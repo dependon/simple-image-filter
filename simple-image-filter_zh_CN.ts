@@ -312,11 +312,23 @@
         <translation>灰度滤镜</translation>
     </message>
     <message>
+        <location filename="mainwidget.cpp" line="264"/>
+        <source>LaplaceSharpen</source>
+        <translatorcomment>拉普拉斯锐化</translatorcomment>
+        <translation>拉普拉斯锐化</translation>
+    </message>
+    <message>
+        <location filename="mainwidget.cpp" line="269"/>
+        <source>soder</source>
+        <translatorcomment>soder锐化</translatorcomment>
+        <translation>soder锐化</translation>
+    </message>
+    <message>
         <source>lightContrastImage</source>
         <translation type="vanished">亮度</translation>
     </message>
     <message>
-        <location filename="mainwidget.cpp" line="264"/>
+        <location filename="mainwidget.cpp" line="274"/>
         <source>inverseColorFilter</source>
         <translatorcomment>反色滤镜</translatorcomment>
         <translation>反色滤镜</translation>
@@ -325,7 +337,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="application.cpp" line="9"/>
+        <location filename="main.cpp" line="24"/>
         <source>&lt;a href=&apos;https://github.com/dependon/simple-image-filter/&apos;&gt;github/simple-image-filter&lt;/a&gt;&lt;br/&gt;&lt;span style=&apos;font-size:12pt;&apos;&gt;mail: liuminghang0821@gmail.com&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;Published under GPL V3</source>
         <translation type="unfinished"></translation>
     </message>

@@ -32,7 +32,7 @@ public:
     //反初始化
     bool Uninit();
     //通过路径打开图片
-    void openImage(const QString& path);
+    void openImage(const QString &path);
 
     ~MainWidget();
 protected:
@@ -49,7 +49,7 @@ private slots:
     //打开文管选择图片文件
     void openImageFile();
     //设置栈窗口(0为打开的初始界面,1为图像显示界面)
-    void setCurrentWidget(const int& index);
+    void setCurrentWidget(const int &index);
     //在窗口1打开文管选择文件
     void on_openPicture_clicked();
 
@@ -84,13 +84,17 @@ private:
     QAction *m_grayScaleFilter{nullptr};    //黑白滤镜(右键菜单)
     QAction *m_lightContrastImage{nullptr};    //对比度和亮度(右键菜单)
     QAction *m_inverseColorFilter{nullptr};    //反色滤镜(右键菜单)
+    QAction *m_laplaceSharpen{nullptr};    //反色滤镜(右键菜单)
+
+    QAction *m_soder{nullptr};    //反色滤镜(右键菜单)
+
 
     QSlider *m_lightSlider {nullptr};  //亮度slider
     QSlider *m_contrastSlider {nullptr};//对比度slider
 
     QVBoxLayout *m_Vlayout {nullptr};
     QHBoxLayout *m_Hlayout {nullptr};
-    QFrame * m_layoutframe {nullptr};
+    QFrame *m_layoutframe {nullptr};
 
 
 };

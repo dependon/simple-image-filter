@@ -19,9 +19,9 @@ class ImageView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    ImageView(QWidget *parent = nullptr ,ViewId id=Normal);
+    ImageView(QWidget *parent = nullptr, ViewId id = Normal);
     //通过路径打开图片
-    void openImage(const QString& path);
+    void openImage(const QString &path);
 //    //显示该img
 //    void openFilterImage(QImage *img);
 
@@ -54,24 +54,28 @@ public slots:
     //另存为
     void savecurrentPicAs();
     //打开该图片
-    void openImage(QImage* img);
-    void openFilterImage(QImage img,isChange is);
+    void openImage(QImage *img);
+    void openFilterImage(QImage img, isChange is);
     //老照片滤镜
     void oldIMage();
     //重置图片
     void resetImage();
     //qimage磨皮
-    void BEEPImage(double spatialDecay=0.02,double photometricStandardDeviation=10);
+    void BEEPImage(double spatialDecay = 0.02, double photometricStandardDeviation = 10);
     //暖色滤镜
-    void warnImage(int index=30);
+    void warnImage(int index = 30);
     //冷色滤镜
-    void coolImage(int index=30);
+    void coolImage(int index = 30);
     //灰度滤镜
     void GrayScaleImage();
     //亮度和饱和度
-    void lightContrastImage(int light=100,int Contrast=150);
+    void lightContrastImage(int light = 100, int Contrast = 150);
     //反色滤镜
     void InverseColorImage();
+    //lpls
+    void LaplaceSharpenImage();
+    //soder
+    void soderImage();
 protected:
     //窗口大小改变事件
     void resizeEvent(QResizeEvent *event) override;
@@ -84,7 +88,7 @@ private:
     bool m_isFitImage = false;//是否适应图片
     bool m_isFitWindow = false;//是否适应窗口
     qreal m_scal = 1.0;
-    int   m_rotateAngel=0;//旋转角度
+    int   m_rotateAngel = 0; //旋转角度
     QImage *m_currentImage{nullptr};//当前原始图像
     QImage m_FilterImage{nullptr};//当前处理的图像
     QImage m_lightContrastImage{nullptr};//亮度曝光度图像

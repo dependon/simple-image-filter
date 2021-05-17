@@ -32,6 +32,14 @@ public:
     //老照片滤镜
     static void oldImage(QImage *img, QImage *imgCopy);
 
+    //拉普拉斯锐化
+    static QImage LaplaceSharpen(const QImage &origin);
+
+    //Sobel Edge Detector
+    static QImage SobelEdge(const QImage &origin);
+
+    //Greyscale
+    static QImage GreyScale(QImage origin);
 };
 
 
