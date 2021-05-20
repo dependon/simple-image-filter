@@ -4,8 +4,8 @@ At present, simple-image-filter is a QT software that can handle image rotation,
 ImageProcess，using Qt,filter
 
 
-
-
+## 深度下环境安装
+sudo apt install libdtkwidget5-dev libdtkcore5-dev qtcreator 
 
 ## 磨皮滤镜
 [![gfQ4ld.png](https://z3.ax1x.com/2021/05/18/gfQ4ld.png)](https://imgtu.com/i/gfQ4ld)
