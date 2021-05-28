@@ -17,11 +17,10 @@ int QImageAPI::Bound(int range_left, int data, int range_right)
     return index;
 }
 
-void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy, double spatialDecay, double photometricStandardDeviation)
+QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double spatialDecay, double photometricStandardDeviation)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
+
+    QImage imgCopy = QImage(img);
 
     double c = -0.5 / (photometricStandardDeviation * photometricStandardDeviation); //-1/2 *光度标准偏差的平方
     double mu = spatialDecay / (2 - spatialDecay);
@@ -32,8 +31,8 @@ void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy,
         exptable[i] = (1 - spatialDecay) * exp(c * i * i);
         g_table[i] = mu * i;
     }
-    int width = img->width();
-    int height = img->height();
+    int width = img.width();
+    int height = img.height();
     int length = width * height;
     double *data2Red = new double[length];
     double *data2Green = new double[length];
@@ -43,7 +42,7 @@ void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy,
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            QRgb rgb = imgCopy->pixel(x, y);
+            QRgb rgb = imgCopy.pixel(x, y);
             data2Red[i] = qRed(rgb);
             data2Green[i] = qGreen(rgb);
             data2Blue[i] = qBlue(rgb);
@@ -182,7 +181,7 @@ void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy,
             data2Red[n] = rRed[m];
             data2Green[n] = rGreen[m];
             data2Blue[n] = rBlue[m];
-            imgCopy->setPixel(k1, k2, qRgb(data2Red[n], data2Green[n], data2Blue[n]));
+            imgCopy.setPixel(k1, k2, qRgb(data2Red[n], data2Green[n], data2Blue[n]));
             m++;
             n += width;
         }
@@ -219,130 +218,127 @@ void QImageAPI::QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy,
     exptable = nullptr;
     delete []g_table;
     g_table = nullptr;
+
+
+    return imgCopy;
 }
 
-void QImageAPI::warnImage(QImage *img, QImage *imgCopy, int index)
+QImage QImageAPI::warnImage(const QImage &img, int index)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
+    QImage imgCopy = QImage(img);
 
     QRgb *line;
     QColor frontColor;
-    for (int y = 0; y < imgCopy->height(); y++) {
-        line = (QRgb *)imgCopy->scanLine(y);
-        for (int x = 0; x < imgCopy->width(); x++) {
+    for (int y = 0; y < img.height(); y++) {
+        line = (QRgb *)img.scanLine(y);
+        for (int x = 0; x < img.width(); x++) {
             frontColor = line[x];
             float r = frontColor.red() + index;
             float g = frontColor.green() + index;
             float b = frontColor.blue();
             r = Bound(0, r, 255);
             g = Bound(0, g, 255);
-            imgCopy->setPixel(x, y, qRgb(r, g, b));
+            imgCopy.setPixel(x, y, qRgb(r, g, b));
         }
 
     }
+    return imgCopy;
 }
 
-void QImageAPI::coolImage(QImage *img, QImage *imgCopy, int index)
+QImage QImageAPI::coolImage(const QImage &img,  int index)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
+    QImage imgCopy = QImage(img);
 
     QRgb *line;
     QColor frontColor;
-    for (int y = 0; y < imgCopy->height(); y++) {
-        line = (QRgb *)imgCopy->scanLine(y);
-        for (int x = 0; x < imgCopy->width(); x++) {
+    for (int y = 0; y < img.height(); y++) {
+        line = (QRgb *)img.scanLine(y);
+        for (int x = 0; x < img.width(); x++) {
             frontColor = line[x];
             float r = frontColor.red();
             float g = frontColor.green();
             float b = frontColor.blue() + index;
             b = Bound(0, b, 255);
-            imgCopy->setPixel(x, y, qRgb(r, g, b));
+            imgCopy.setPixel(x, y, qRgb(r, g, b));
         }
 
     }
+    return imgCopy;
 }
 
-void QImageAPI::GrayScaleImage(QImage *img, QImage *imgCopy)
+QImage QImageAPI::GrayScaleImage(const QImage &img)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
+    QImage imgCopy = QImage(img);
 
     QRgb *line;
-    for (int y = 0; y < imgCopy->height(); y++) {
-        line = (QRgb *)imgCopy->scanLine(y);
-        for (int x = 0; x < imgCopy->width(); x++) {
+    for (int y = 0; y < img.height(); y++) {
+        line = (QRgb *)img.scanLine(y);
+        for (int x = 0; x < img.width(); x++) {
             int average = (qRed(line[x]) + qGreen(line[x]) + qBlue(line[x])) / 3;
-            imgCopy->setPixel(x, y, qRgb(average, average, average));
+            imgCopy.setPixel(x, y, qRgb(average, average, average));
         }
 
     }
+    return imgCopy;
 }
 
-void QImageAPI::lightContrastImage(QImage *img, QImage *imgCopy, int light, int Contrast)
+QImage QImageAPI::lightContrastImage(const QImage &img,  int light, int Contrast)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
+    QImage imgCopy = QImage(img);
 
     QRgb *line;
-    for (int y = 0; y < imgCopy->height(); y++) {
-        line = (QRgb *)imgCopy->scanLine(y);
-        for (int x = 0; x < imgCopy->width(); x++) {
+    for (int y = 0; y < img.height(); y++) {
+        line = (QRgb *)img.scanLine(y);
+        for (int x = 0; x < img.width(); x++) {
             float r = light * 0.01 * qRed(line[x]) - 150 + Contrast;
             float g = light * 0.01 * qGreen(line[x]) - 150 + Contrast;
             float b = light * 0.01 * qBlue(line[x]) - 150 + Contrast;
             r = Bound(0, r, 255);
             g = Bound(0, g, 255);
             b = Bound(0, b, 255);
-            imgCopy->setPixel(x, y, qRgb(r, g, b));
+            imgCopy.setPixel(x, y, qRgb(r, g, b));
         }
 
     }
+    return imgCopy;
 }
 
-void QImageAPI::InverseColorImage(QImage *img, QImage *imgCopy)
+QImage QImageAPI::InverseColorImage(const QImage &img)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
+    QImage imgCopy = QImage(img);
 
     QRgb *line;
-    for (int y = 0; y < imgCopy->height(); y++) {
-        line = (QRgb *)imgCopy->scanLine(y);
-        for (int x = 0; x < imgCopy->width(); x++) {
+    for (int y = 0; y < img.height(); y++) {
+        line = (QRgb *)img.scanLine(y);
+        for (int x = 0; x < img.width(); x++) {
 
-            imgCopy->setPixel(x, y, qRgb(255 - qRed(line[x]), 255 - qGreen(line[x]), 255 - qBlue(line[x])));
+            imgCopy.setPixel(x, y, qRgb(255 - qRed(line[x]), 255 - qGreen(line[x]), 255 - qBlue(line[x])));
         }
 
     }
+    return imgCopy;
 }
 
-void QImageAPI::oldImage(QImage *img, QImage *imgCopy)
+QImage QImageAPI::oldImage(const QImage &img)
 {
-    if (!img || !imgCopy) {
-        return ;
-    }
-
+    QImage imgCopy = QImage(img);
     QRgb *line;
-    for (int y = 0; y < imgCopy->height(); y++) {
-        line = (QRgb *)imgCopy->scanLine(y);
-        for (int x = 0; x < imgCopy->width(); x++) {
+    for (int y = 0; y < img.height(); y++) {
+        line = (QRgb *)img.scanLine(y);
+        for (int x = 0; x < img.width(); x++) {
             float r = 0.393 * qRed(line[x]) + 0.769 * qGreen(line[x]) + 0.189 * qBlue(line[x]);
             float g = 0.349 * qRed(line[x]) + 0.686 * qGreen(line[x]) + 0.168 * qBlue(line[x]);
             float b = 0.272 * qRed(line[x]) + 0.534 * qGreen(line[x]) + 0.131 * qBlue(line[x]);
             r = Bound(0, r, 255);
             g = Bound(0, g, 255);
             b = Bound(0, b, 255);
-            imgCopy->setPixel(x, y, qRgb(r, g, b));
+            imgCopy.setPixel(x, y, qRgb(r, g, b));
         }
 
     }
+    return imgCopy;
 }
+
 
 QImage QImageAPI::LaplaceSharpen(const QImage &origin)
 {

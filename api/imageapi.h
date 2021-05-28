@@ -18,19 +18,20 @@ public:
     //边界值
     static int Bound(int range_left, int data, int range_right);
     //qimage磨皮
-    static void QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy, double spatialDecay = 0.02, double photometricStandardDeviation = 10);
+//    static void QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy, double spatialDecay = 0.02, double photometricStandardDeviation = 10);
+    static QImage QImageD_RunBEEPSHorizontalVertical(const QImage &img, double spatialDecay, double photometricStandardDeviation);
     //暖色滤镜
-    static void warnImage(QImage *img, QImage *imgCopy, int index = 30);
+    static QImage warnImage(const QImage &img, int index = 30);
     //冷色滤镜
-    static void coolImage(QImage *img, QImage *imgCopy, int index = 30);
+    static QImage coolImage(const QImage &img,  int index = 30);
     //灰度滤镜
-    static void GrayScaleImage(QImage *img, QImage *imgCopy);
+    static QImage GrayScaleImage(const QImage &img);
     //亮度和饱和度
-    static void lightContrastImage(QImage *img, QImage *imgCopy, int light = 100, int Contrast = 150);
+    static QImage lightContrastImage(const QImage &img, int light = 100, int Contrast = 150);
     //反色滤镜
-    static void InverseColorImage(QImage *img, QImage *imgCopy);
+    static QImage InverseColorImage(const QImage &img);
     //老照片滤镜
-    static void oldImage(QImage *img, QImage *imgCopy);
+    static QImage oldImage(const QImage &img);
 
     //拉普拉斯锐化
     static QImage LaplaceSharpen(const QImage &origin);
@@ -40,6 +41,7 @@ public:
 
     //Greyscale
     static QImage GreyScale(QImage origin);
+
 };
 
 
