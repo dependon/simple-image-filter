@@ -42,6 +42,24 @@ public:
     //Greyscale
     static QImage GreyScale(QImage origin);
 
+    //轮廓获取
+    static QImage ContourExtraction(const QImage &origin);
+
+    //水平翻转
+    static QImage Horizontal(const QImage &origin);
+
+    //竖直翻转
+    static QImage Vertical(const QImage &origin);
+
+    //二值化
+    static QImage Binaryzation(const QImage &origin);
+
+    //金属拉丝效果
+    static QImage Metal(QImage origin);
+
+    //Adjust image brightness
+    static QImage Brightness(int delta, QImage origin);
+
 };
 
 

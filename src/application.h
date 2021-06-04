@@ -15,7 +15,12 @@ enum MenuItemId {
     Idold,
     IdlightContrast,
     IdLaplaceSharpen,
-    IdSobel
+    IdSobel,
+    IdHorizontal,
+    IdVertical,
+    IdContourExtraction,
+    IdMetal
+
 };
 enum isChange {
     Change,

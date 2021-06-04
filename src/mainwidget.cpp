@@ -14,6 +14,7 @@
 #include <QMimeData>
 #include <QPropertyAnimation>
 #include <QSlider>
+
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWidget)
@@ -189,68 +190,78 @@ void MainWidget::initMenu()
 {
     if (!m_leftMenu) {
         m_leftMenu = new Menu(this);
+
+
         m_openAction = new QAction(m_leftMenu);
         m_openAction->setText(tr("open"));
         m_leftMenu->addAction(m_openAction);
         connect(m_openAction, &QAction::triggered, this, &MainWidget::openImageFile);
 
-        m_fitImageAction = new QAction(m_leftMenu);
-        m_fitImageAction->setText(tr("fitImage"));
-        m_leftMenu->addAction(m_fitImageAction);
-        connect(m_fitImageAction, &QAction::triggered, ui->mainImageView, &ImageView::fitImage);
+//        m_fitImageAction = new QAction(m_leftMenu);
+//        m_fitImageAction->setText(tr("fitImage"));
+//        m_leftMenu->addAction(m_fitImageAction);
+//        connect(m_fitImageAction, &QAction::triggered, ui->mainImageView, &ImageView::fitImage);
 
-        m_fitWindowAction = new QAction(m_leftMenu);
-        m_fitWindowAction->setText(tr("fitWindow"));
-        m_leftMenu->addAction(m_fitWindowAction);
-        connect(m_fitWindowAction, &QAction::triggered, ui->mainImageView, &ImageView::fitWindow);
+//        m_fitWindowAction = new QAction(m_leftMenu);
+//        m_fitWindowAction->setText(tr("fitWindow"));
+//        m_leftMenu->addAction(m_fitWindowAction);
+//        connect(m_fitWindowAction, &QAction::triggered, ui->mainImageView, &ImageView::fitWindow);
 
-        m_rotateRightAction = new QAction(m_leftMenu);
-        m_rotateRightAction->setText(tr("rotate+90"));
-        m_leftMenu->addAction(m_rotateRightAction);
-        connect(m_rotateRightAction, &QAction::triggered, ui->mainImageView, [ = ] {
-            ui->mainImageView->RotateImage(90);
-        });
-        m_rotateLeftAction = new QAction(m_leftMenu);
-        m_rotateLeftAction->setText(tr("rotate-90"));
-        m_leftMenu->addAction(m_rotateLeftAction);
-        connect(m_rotateLeftAction, &QAction::triggered, ui->mainImageView, [ = ] {
-            ui->mainImageView->RotateImage(-90);
-        });
+//        m_rotateRightAction = new QAction(m_leftMenu);
+//        m_rotateRightAction->setText(tr("rotate+90"));
+//        m_leftMenu->addAction(m_rotateRightAction);
+//        connect(m_rotateRightAction, &QAction::triggered, ui->mainImageView, [ = ] {
+//            ui->mainImageView->RotateImage(90);
+//        });
+//        m_rotateLeftAction = new QAction(m_leftMenu);
+//        m_rotateLeftAction->setText(tr("rotate-90"));
+//        m_leftMenu->addAction(m_rotateLeftAction);
+//        connect(m_rotateLeftAction, &QAction::triggered, ui->mainImageView, [ = ] {
+//            ui->mainImageView->RotateImage(-90);
+//        });
+
+
 
         m_saveBAction = new QAction(m_leftMenu);
         m_saveBAction->setText(tr("save"));
         m_leftMenu->addAction(m_saveBAction);
         connect(m_saveBAction, &QAction::triggered, ui->mainImageView, &ImageView::savecurrentPic);
 
-        m_oldFilter = new QAction(m_leftMenu);
+        m_filterMenu = new Menu(this);
+        m_filteraction = new QAction(m_leftMenu);
+        m_filteraction->setText(tr("filter"));
+        m_filteraction->setMenu(m_filterMenu);
+        m_leftMenu->addAction(m_filteraction);
+
+        m_oldFilter = new QAction(m_filterMenu);
         m_oldFilter->setText(tr("oldFilter"));
-        m_leftMenu->addAction(m_oldFilter);
+        m_filterMenu->addAction(m_oldFilter);
         connect(m_oldFilter, &QAction::triggered, ui->mainImageView, &ImageView::oldIMage);
 
-        m_beepFilter = new QAction(m_leftMenu);
+        m_beepFilter = new QAction(m_filterMenu);
         m_beepFilter->setText(tr("beepFilter"));
-        m_leftMenu->addAction(m_beepFilter);
+        m_filterMenu->addAction(m_beepFilter);
         connect(m_beepFilter, &QAction::triggered, this, [ = ] {
             ui->mainImageView->BEEPImage();
         });
 
-        m_warnFilter = new QAction(m_leftMenu);
+        m_warnFilter = new QAction(m_filterMenu);
         m_warnFilter->setText(tr("warnFilter"));
-        m_leftMenu->addAction(m_warnFilter);
+        m_filterMenu->addAction(m_warnFilter);
         connect(m_warnFilter, &QAction::triggered, this, [ = ] {
             ui->mainImageView->warnImage();
         });
 
-        m_coolFilter = new QAction(m_leftMenu);
+        m_coolFilter = new QAction(m_filterMenu);
         m_coolFilter->setText(tr("coolFilter"));
-        m_leftMenu->addAction(m_coolFilter);
+        m_filterMenu->addAction(m_coolFilter);
         connect(m_coolFilter, &QAction::triggered, this, [ = ] {
             ui->mainImageView->coolImage();
         });
 
-        m_grayScaleFilter = new QAction(m_leftMenu);
+        m_grayScaleFilter = new QAction(m_filterMenu);
         m_grayScaleFilter->setText(tr("grayScaleFilter"));
-        m_leftMenu->addAction(m_grayScaleFilter);
+        m_filterMenu->addAction(m_grayScaleFilter);
         connect(m_grayScaleFilter, &QAction::triggered, ui->mainImageView, &ImageView::GrayScaleImage);
 
 //        m_lightContrastImage = new QAction(m_leftMenu);
@@ -259,21 +270,57 @@ void MainWidget::initMenu()
 //        connect(m_lightContrastImage, &QAction::triggered, this, [ = ] {
 //            ui->mainImageView->lightContrastImage();
 //        });
+        m_inverseColorFilter = new QAction(m_filterMenu);
+        m_inverseColorFilter->setText(tr("inverseColorFilter"));
+        m_filterMenu->addAction(m_inverseColorFilter);
+        connect(m_inverseColorFilter, &QAction::triggered, ui->mainImageView, &ImageView::InverseColorImage);
 
-        m_laplaceSharpen = new QAction(m_leftMenu);
+        m_Metal = new QAction(m_filterMenu);
+        m_Metal->setText(tr("metalFilter"));
+        m_filterMenu->addAction(m_Metal);
+        connect(m_Metal, &QAction::triggered, ui->mainImageView, &ImageView::Metal);
+
+
+        m_sharpeningMenu = new Menu(this);
+        m_sharpeningAction = new QAction(m_leftMenu);
+        m_sharpeningAction->setText(tr("sharpening"));
+        m_sharpeningAction->setMenu(m_sharpeningMenu);
+        m_leftMenu->addAction(m_sharpeningAction);
+
+        m_laplaceSharpen = new QAction(m_sharpeningMenu);
         m_laplaceSharpen->setText(tr("LaplaceSharpen"));
-        m_leftMenu->addAction(m_laplaceSharpen);
+        m_sharpeningMenu->addAction(m_laplaceSharpen);
         connect(m_laplaceSharpen, &QAction::triggered, ui->mainImageView, &ImageView::LaplaceSharpenImage);
 
-        m_soder = new QAction(m_leftMenu);
+        m_soder = new QAction(m_sharpeningMenu);
         m_soder->setText(tr("soder"));
-        m_leftMenu->addAction(m_soder);
+        m_sharpeningMenu->addAction(m_soder);
         connect(m_soder, &QAction::triggered, ui->mainImageView, &ImageView::soderImage);
 
-        m_inverseColorFilter = new QAction(m_leftMenu);
-        m_inverseColorFilter->setText(tr("inverseColorFilter"));
-        m_leftMenu->addAction(m_inverseColorFilter);
-        connect(m_inverseColorFilter, &QAction::triggered, ui->mainImageView, &ImageView::InverseColorImage);
+
+
+
+        m_flip = new QAction(m_leftMenu);
+        m_flip->setText(tr("flip"));
+        m_leftMenu->addAction(m_flip);
+        m_leftFlip = new Menu(this);
+        m_flip->setMenu(m_leftFlip);
+
+        m_flipVertical = new QAction(m_leftMenu);
+        m_flipVertical->setText(tr("flipVertical"));
+        m_leftFlip->addAction(m_flipVertical);
+        connect(m_flipVertical, &QAction::triggered, ui->mainImageView, &ImageView::flipVertical);
+
+        m_flipHorizontal = new QAction(m_leftMenu);
+        m_flipHorizontal->setText(tr("flipHorizontal"));
+        m_leftFlip->addAction(m_flipHorizontal);
+        connect(m_flipHorizontal, &QAction::triggered, ui->mainImageView, &ImageView::flipHorizontal);
+
+        m_scale = new QAction(m_leftMenu);
+        m_scale->setText(tr("scale"));
+        m_leftMenu->addAction(m_scale);
+        connect(m_scale, &QAction::triggered, ui->mainImageView, &ImageView::scaled);
+
 
     }
 

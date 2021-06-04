@@ -65,6 +65,22 @@ void ImageRunnable::run()
         m_iimg = QImageAPI::SobelEdge(m_iimg);
         App->sigFilterImage(m_iimg);
         break;
+    case MenuItemId::IdHorizontal:
+        m_iimg = QImageAPI::Horizontal(m_iimg);
+        App->sigFilterImage(m_iimg);
+        break;
+    case MenuItemId::IdVertical:
+        m_iimg = QImageAPI::Vertical(m_iimg);
+        App->sigFilterImage(m_iimg);
+        break;
+    case MenuItemId::IdMetal:
+        m_iimg = QImageAPI::Metal(m_iimg);
+        App->sigFilterImage(m_iimg);
+        break;
+    case MenuItemId::IdContourExtraction:
+        m_iimg = QImageAPI::ContourExtraction(m_iimg);
+        App->sigFilterImage(m_iimg);
+        break;
     default:
         break;
 

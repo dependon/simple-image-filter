@@ -6,7 +6,7 @@
 #include "application.h"
 
 #include <QGraphicsView>
-
+class ImageFilterInfo;
 class QGraphicsPixmapItem;
 class ImageCropperDemo;
 //Normal表示正常模式，Basic模式不会接受全局信号
@@ -40,6 +40,7 @@ public:
     //设置view模式
     void setViewId(ViewId id);
 
+    void playThread(const ImageFilterInfo &info);
 public slots:
     //适应窗口大小
     void fitWindow();
@@ -76,6 +77,20 @@ public slots:
     void LaplaceSharpenImage();
     //soder
     void soderImage();
+
+    //垂直翻转
+    void flipVertical();
+
+    //水平翻转
+    void flipHorizontal();
+
+    //轮廓获取
+    void ContourExtraction();
+
+    //金属拉丝
+    void Metal();
+
+    void scaled();
 protected:
     //窗口大小改变事件
     void resizeEvent(QResizeEvent *event) override;

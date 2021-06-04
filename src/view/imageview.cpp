@@ -2,6 +2,7 @@
 #include "mainwidget.h"
 #include "imagethread.h"
 #include "imagecropperdemo.h"
+#include "scaledialog.h"
 
 #include <QPaintDevice>
 #include <QGraphicsPixmapItem>
@@ -339,6 +340,40 @@ void ImageView::soderImage()
         QThreadPool::globalInstance()->start(imgThread);
     }
 }
+
+void ImageView::flipVertical()
+{
+    ImageFilterInfo info;
+    info.id = MenuItemId::IdVertical;
+    playThread(info);
+}
+
+void ImageView::flipHorizontal()
+{
+    ImageFilterInfo info;
+    info.id = MenuItemId::IdHorizontal;
+    playThread(info);
+}
+
+void ImageView::ContourExtraction()
+{
+    ImageFilterInfo info;
+    info.id = MenuItemId::IdContourExtraction;
+    playThread(info);
+}
+
+void ImageView::Metal()
+{
+    ImageFilterInfo info;
+    info.id = MenuItemId::IdMetal;
+    playThread(info);
+}
+
+void ImageView::scaled()
+{
+    scaleDialog a(m_FilterImage);
+    a.exec();
+}
 const QImage ImageView::image()
 {
     if (m_pixmapItem) {
@@ -353,6 +388,15 @@ void ImageView::setViewId(ViewId id)
     m_cureentId = id;
     if (Basic == id) {
         disconnect(App, &Application::sigFilterImage, this, &ImageView::openFilterImage);
+    }
+}
+
+void ImageView::playThread(const ImageFilterInfo &info)
+{
+    if (m_currentImage) {
+        ImageRunnable *imgThread = new ImageRunnable();
+        imgThread->setData(m_FilterImage, info);
+        QThreadPool::globalInstance()->start(imgThread);
     }
 }
 void ImageView::resizeEvent(QResizeEvent *event)

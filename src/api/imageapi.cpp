@@ -1,5 +1,5 @@
 ﻿#include "imageapi.h"
-
+#include <QPainter>
 
 QImageAPI::QImageAPI()
 {
@@ -458,4 +458,161 @@ QImage QImageAPI::GreyScale(QImage origin)
 
     return *newImage;
 
+}
+
+/*****************************************************************************
+ *                                 二值化
+ * **************************************************************************/
+QImage QImageAPI::Binaryzation(const QImage &origin)
+{
+
+
+    int width = origin.width();
+    int height = origin.height();
+    QImage newImg = QImage(width, height, QImage::Format_RGB888);
+
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            int gray = qGray(origin.pixel(x, y));
+            int newGray;
+            if (gray > 128)
+                newGray = 255;
+            else
+                newGray = 0;
+            newImg.setPixel(x, y, qRgb(newGray, newGray, newGray));
+        }
+    }
+    return newImg;
+}
+
+/*****************************************************************************
+ *                                 轮廓提取法
+ * **************************************************************************/
+QImage QImageAPI::ContourExtraction(const QImage &origin)
+{
+    int width = origin.width();
+    int height = origin.height();
+    int pixel[8];   // 当前像素周围的8个像素的像素值
+//    int *pixel = new int[9];
+    QImage binImg = Binaryzation(origin);
+    QImage newImg = QImage(width, height, QImage::Format_RGB888);
+    newImg.fill(Qt::white);
+
+    for (int y = 1; y < height; y++) {
+        for (int x = 1; x < width; x++) {
+            memset(pixel, 0, 8);
+
+            if (QColor(binImg.pixel(x, y)).red() == 0) {
+                newImg.setPixel(x, y, qRgb(0, 0, 0));
+                pixel[0] = QColor(binImg.pixel(x - 1, y - 1)).red();
+                pixel[1] = QColor(binImg.pixel(x - 1, y)).red();
+                pixel[2] = QColor(binImg.pixel(x - 1, y + 1)).red();
+                pixel[3] = QColor(binImg.pixel(x, y - 1)).red();
+                pixel[4] = QColor(binImg.pixel(x, y + 1)).red();
+                pixel[5] = QColor(binImg.pixel(x + 1, y - 1)).red();
+                pixel[6] = QColor(binImg.pixel(x + 1, y)).red();
+                pixel[7] = QColor(binImg.pixel(x + 1, y + 1)).red();
+                if (pixel[0] + pixel[1] + pixel[2] + pixel[3] + pixel[4] + pixel[5] + pixel[6] + pixel[7] == 0)
+                    newImg.setPixel(x, y, qRgb(255, 255, 255));
+            }
+        }
+    }
+
+    return newImg;
+}
+
+
+/*****************************************************************************
+ *                                   Flip
+ * **************************************************************************/
+QImage QImageAPI::Horizontal(const QImage &origin)
+{
+    QImage *newImage = new QImage(QSize(origin.width(), origin.height()),
+                                  QImage::Format_ARGB32);
+    QColor tmpColor;
+    int r, g, b;
+    for (int x = 0; x < newImage->width(); x++) {
+        for (int y = 0; y < newImage->height(); y++) {
+            tmpColor = QColor(origin.pixel(x, y));
+            r = tmpColor.red();
+            g = tmpColor.green();
+            b = tmpColor.blue();
+
+            newImage->setPixel(newImage->width() - x - 1, y, qRgb(r, g, b));
+
+        }
+    }
+    return *newImage;
+}
+
+
+/*****************************************************************************
+ *                                 金属拉丝效果
+ * **************************************************************************/
+QImage QImageAPI::Metal(QImage origin)
+{
+    QImage *baseImage = new QImage(origin);
+    QImage darkImage = QImageAPI::Brightness(-100, origin);
+    QImage greyImage = QImageAPI::GreyScale(darkImage);
+    QPainter painter;
+
+    QImage newImage = baseImage->scaled(QSize(origin.width(), origin.height()));
+
+    painter.begin(&newImage);
+    painter.setOpacity(0.5);
+    painter.drawImage(0, 0, greyImage);
+    painter.end();
+
+    return newImage;
+}
+
+/*****************************************************************************
+ *                          Adjust image brightness
+ * **************************************************************************/
+QImage QImageAPI::Brightness(int delta, QImage origin)
+{
+    QImage *newImage = new QImage(origin.width(), origin.height(),
+                                  QImage::Format_ARGB32);
+
+    QColor oldColor;
+    int r, g, b;
+
+    for (int x = 0; x < newImage->width(); x++) {
+        for (int y = 0; y < newImage->height(); y++) {
+            oldColor = QColor(origin.pixel(x, y));
+
+            r = oldColor.red() + delta;
+            g = oldColor.green() + delta;
+            b = oldColor.blue() + delta;
+
+            // Check if the new values are between 0 and 255
+            r = qBound(0, r, 255);
+            g = qBound(0, g, 255);
+            b = qBound(0, b, 255);
+
+            newImage->setPixel(x, y, qRgb(r, g, b));
+        }
+    }
+    return *newImage;
+}
+
+
+QImage QImageAPI::Vertical(const QImage &origin)
+{
+    QImage *newImage = new QImage(QSize(origin.width(), origin.height()),
+                                  QImage::Format_ARGB32);
+    QColor tmpColor;
+    int r, g, b;
+    for (int x = 0; x < newImage->width(); x++) {
+        for (int y = 0; y < newImage->height(); y++) {
+            tmpColor = QColor(origin.pixel(x, y));
+            r = tmpColor.red();
+            g = tmpColor.green();
+            b = tmpColor.blue();
+
+            newImage->setPixel(x, newImage->height() - y - 1, qRgb(r, g, b));
+
+        }
+    }
+    return *newImage;
 }

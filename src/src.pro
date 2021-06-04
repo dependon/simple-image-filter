@@ -46,7 +46,8 @@ SOURCES += \
     control/menu.cpp \
     view/imagecropperdemo.cpp \
     view/imagecropperlabel.cpp \
-    control/openimagebutton.cpp
+    control/openimagebutton.cpp \
+    scaledialog.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -59,10 +60,12 @@ HEADERS += \
     control/menu.h \
     view/imagecropperdemo.h \
     view/imagecropperlabel.h \
-    control/openimagebutton.h
+    control/openimagebutton.h \
+    scaledialog.h
 
 FORMS += \
-        mainwidget.ui
+        mainwidget.ui \
+    scaledialog.ui
 
 
 
@@ -70,7 +73,7 @@ FORMS += \
 #TRANSLATIONS += simple-image-filter_zh_CN.ts
 
 CONFIG(release, debug|release) {
-    TRANSLATIONS = $$files($$PWD/*.ts)
+    TRANSLATIONS = $$files($$PWD/translations/*.ts)
     #遍历目录中的ts文件，调用lrelease将其生成为qm文件
     for(tsfile, TRANSLATIONS) {
         qmfile = $$replace(tsfile, .ts$, .qm)
@@ -84,7 +87,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/durapps/simple-image-filter
 
 translations.path = $$APPSHAREDIR/translations
-translations.files = $$PWD/*.qm
+translations.files = $$PWD/translations/*.qm
 
 desktop.path = /usr/share/applications/
 desktop.files = $$PWD/install/simple-image-filter.desktop
@@ -96,3 +99,5 @@ icon.files=$$PWD/icon/icon.png
 
 RESOURCES += \
     qrc.qrc
+TRANSLATIONS += \
+    translations/simple-image-filter_zh_CN.ts

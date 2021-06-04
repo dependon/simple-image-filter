@@ -77,6 +77,8 @@ private:
     QAction *m_saveBAction{nullptr};    //保存图片按钮(右键菜单)
     QAction *m_resetAction{nullptr};    //还原原来的图片状态按钮(右键菜单)
 
+    Menu *m_filterMenu{nullptr};
+    QAction *m_filteraction{nullptr};
     QAction *m_oldFilter{nullptr};    //老照片滤镜(右键菜单)
     QAction *m_beepFilter{nullptr};    //磨皮滤镜(右键菜单)
     QAction *m_warnFilter{nullptr};    //暖色滤镜(右键菜单)
@@ -84,11 +86,22 @@ private:
     QAction *m_grayScaleFilter{nullptr};    //黑白滤镜(右键菜单)
     QAction *m_lightContrastImage{nullptr};    //对比度和亮度(右键菜单)
     QAction *m_inverseColorFilter{nullptr};    //反色滤镜(右键菜单)
-    QAction *m_laplaceSharpen{nullptr};    //反色滤镜(右键菜单)
 
-    QAction *m_soder{nullptr};    //反色滤镜(右键菜单)
+    QAction *m_Metal{nullptr}; //金属拉丝
 
+    QAction *m_flip{nullptr}; //翻转按钮
+    Menu *m_leftFlip{nullptr}; //翻转菜单
+    QAction *m_flipVertical{nullptr}; //垂直翻转
+    QAction *m_flipHorizontal{nullptr}; //水平翻转
 
+    QAction *m_ContourExtraction{nullptr}; //水平翻转
+
+    Menu *m_sharpeningMenu{nullptr};
+    QAction *m_sharpeningAction{nullptr};
+    QAction *m_laplaceSharpen{nullptr};    //
+    QAction *m_soder{nullptr};    //
+
+    QAction *m_scale{nullptr};
     QSlider *m_lightSlider {nullptr};  //亮度slider
     QSlider *m_contrastSlider {nullptr};//对比度slider
 
