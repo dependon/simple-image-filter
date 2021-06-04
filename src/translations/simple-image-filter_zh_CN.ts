@@ -299,12 +299,12 @@
     <message>
         <location filename="../mainwidget.cpp" line="310"/>
         <source>flipVertical</source>
-        <translation>水平翻转</translation>
+        <translation>垂直翻转</translation>
     </message>
     <message>
         <location filename="../mainwidget.cpp" line="315"/>
         <source>flipHorizontal</source>
-        <translation>垂直翻转</translation>
+        <translation>水平翻转</translation>
     </message>
     <message>
         <location filename="../mainwidget.cpp" line="320"/>
