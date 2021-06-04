@@ -79,6 +79,7 @@ void MainWidget::initBtn()
         m_Vlayout->addWidget(m_contrastSlider);
 
         m_openBtn = new PushButton(m_statusbarWidget);
+        m_openBtn->setShortcut(QKeySequence("Ctrl+O"));
         m_openBtn->setFixedSize(60, 60);
         m_openBtn->setToolTip(tr("open"));
         m_openBtn->setIcon(QIcon(":/icon/open.svg"));
@@ -87,6 +88,7 @@ void MainWidget::initBtn()
         connect(m_openBtn, &QPushButton::clicked, this, &MainWidget::openImageFile);
 
         m_resetBtn = new PushButton(m_statusbarWidget);
+        m_resetBtn->setShortcut(QKeySequence("Ctrl+E"));
         m_resetBtn->setFixedSize(60, 60);
         m_resetBtn->setToolTip(tr("reset"));
         m_resetBtn->setIcon(QIcon(":/icon/reset.svg"));
@@ -95,6 +97,7 @@ void MainWidget::initBtn()
         connect(m_resetBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::resetImage);
 
         m_fitImageBtn = new PushButton(m_statusbarWidget);
+        m_fitImageBtn->setShortcut(QKeySequence("Ctrl+R"));
         m_fitImageBtn->setFixedSize(60, 60);
         m_fitImageBtn->setToolTip(tr("fitImage"));
         m_fitImageBtn->setIcon(QIcon(":/icon/dcc_11_36px.svg"));
@@ -103,6 +106,7 @@ void MainWidget::initBtn()
         connect(m_fitImageBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::fitImage);
 
         m_fitWindowBtn = new PushButton(m_statusbarWidget);
+        m_fitWindowBtn->setShortcut(QKeySequence("Ctrl+T"));
         m_fitWindowBtn->setFixedSize(60, 60);
         m_fitWindowBtn->setToolTip(tr("fitWindow"));
         m_fitWindowBtn->setIcon(QIcon(":/icon/dcc_fit_36px.svg"));
@@ -111,6 +115,7 @@ void MainWidget::initBtn()
         connect(m_fitWindowBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::fitWindow);
 
         m_rotateLeft = new PushButton();
+        m_rotateLeft->setShortcut(QKeySequence("Ctrl+Left"));
         m_rotateLeft->setFixedSize(60, 60);
         m_rotateLeft->setToolTip(tr("rotate-90"));
         m_rotateLeft->setIcon(QIcon(":/icon/dcc_left_36px.svg"));
@@ -121,6 +126,7 @@ void MainWidget::initBtn()
         });
 
         m_rotateRight = new PushButton();
+        m_rotateRight->setShortcut(QKeySequence("Ctrl+Right"));
         m_rotateRight->setFixedSize(60, 60);
         m_rotateRight->setToolTip(tr("rotate+90"));
         m_rotateRight->setIcon(QIcon(":/icon/dcc_right_36px.svg"));
@@ -133,6 +139,7 @@ void MainWidget::initBtn()
 
 
         m_saveBtn = new PushButton();
+        m_saveBtn->setShortcut(QKeySequence("Ctrl+S"));
         m_saveBtn->setFixedSize(60, 60);
         m_saveBtn->setToolTip(tr("save"));
         m_saveBtn->setIcon(QIcon(":/icon/save.svg"));
@@ -142,6 +149,7 @@ void MainWidget::initBtn()
 
 
         m_scaleImageBtn = new PushButton();
+        m_scaleImageBtn->setShortcut(QKeySequence("Ctrl+Y"));
         m_scaleImageBtn->setFixedSize(60, 60);
         m_scaleImageBtn->setToolTip(tr("scaleImage"));
         m_scaleImageBtn->setIcon(QIcon(":/icon/scale.svg"));
