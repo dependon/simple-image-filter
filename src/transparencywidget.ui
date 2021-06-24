@@ -15,9 +15,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="Label" name="label">
      <property name="text">
-      <string>Set picture transparency</string>
+      <string>Set Transparency</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -60,6 +60,11 @@
    <class>SpinBox</class>
    <extends>QSpinBox</extends>
    <header location="global">spinbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Label</class>
+   <extends>QLabel</extends>
+   <header>label.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

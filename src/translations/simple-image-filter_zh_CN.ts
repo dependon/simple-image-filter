@@ -313,9 +313,8 @@
     </message>
     <message>
         <location filename="../mainwidget.cpp" line="333"/>
-        <source>Set picture transparency</source>
-        <translatorcomment>设置图片透明度</translatorcomment>
-        <translation></translation>
+        <source>Set Transparency</source>
+        <translation>设置透明度</translation>
     </message>
     <message>
         <source>oldFilter</source>
@@ -392,9 +391,8 @@
     </message>
     <message>
         <location filename="../transparencywidget.ui" line="20"/>
-        <source>Set picture transparency</source>
-        <translatorcomment>设置图片透明度</translatorcomment>
-        <translation></translation>
+        <source>Set Transparency</source>
+        <translation>设置透明度</translation>
     </message>
     <message>
         <location filename="../transparencywidget.ui" line="45"/>
