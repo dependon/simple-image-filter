@@ -5,8 +5,10 @@
 #include <DApplication>
 #include <DMainWindow>
 #include <DTitlebar>
+#include <DWidgetUtil>
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Core;
+using namespace Dtk::Widget;
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +35,8 @@ int main(int argc, char *argv[])
     w.setCentralWidget(&widget);
     w.resize(800, 600);
     w.show();
-
+    //看图居中打开
+    Dtk::Widget::moveToCenter(&w);
     return a.exec();
 }
 #else

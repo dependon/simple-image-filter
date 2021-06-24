@@ -15,5 +15,7 @@ class openImageButton: public SuggestBtn
     Q_OBJECT
 public:
     explicit openImageButton(QWidget *parent = nullptr);
+
+    explicit openImageButton(const QString &text, QWidget *parent = nullptr);
 };
 #endif // OPENIMAGEBUTTON_H

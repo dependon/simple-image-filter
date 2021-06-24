@@ -6,12 +6,23 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#if USE_DTK
+#include <DWidgetUtil>
+#include <DTitlebar>
+#endif
+
 ImageCropperDemo::ImageCropperDemo(QWidget *parent) :
-    QDialog(parent)
+    StatusBarWidget(parent)
 {
+
+#if USE_DTK
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
+    Dtk::Widget::moveToCenter(this);
+    this->resize(950, 650);
+#endif
     setupLayout();
     init();
-
     this->setAttribute(Qt::WA_DeleteOnClose, true);
     this->setWindowTitle(tr("scale image"));
 }
@@ -27,25 +38,27 @@ void ImageCropperDemo::setupLayout()
     imgCropperLabel = new ImageCropperLabel(600, 500, this);
     imgCropperLabel->setFrameStyle(1);
 
-    comboOutputShape = new QComboBox(this);
-    comboCropperShape = new QComboBox(this);
+    comboOutputShape = new combox(this);
+    comboCropperShape = new combox(this);
 
-    labelPreviewImage = new QLabel(this);
+    labelPreviewImage = new Label(this);
 
-    editOriginalImagePath = new QLineEdit(this);
-    btnChooseOriginalImagePath = new QPushButton(this);
+    editOriginalImagePath = new LineEdit(this);
+    btnChooseOriginalImagePath = new openImageButton(this);
     QHBoxLayout *hOriginalImagePathLayout = new QHBoxLayout();
     hOriginalImagePathLayout->addWidget(editOriginalImagePath);
     hOriginalImagePathLayout->addWidget(btnChooseOriginalImagePath);
 
-    editCropperFixedWidth = new QLineEdit(this);
-    editCropperFixedHeight = new QLineEdit(this);
+    editCropperFixedWidth = new LineEdit(this);
+    editCropperFixedHeight = new LineEdit(this);
     QHBoxLayout *hCropperFixedSizeLayout = new QHBoxLayout();
     hCropperFixedSizeLayout->addWidget(editCropperFixedWidth);
     hCropperFixedSizeLayout->addWidget(editCropperFixedHeight);
 
-    editCropperMinWidth = new QLineEdit("8", this);
-    editCropperMinHeight = new QLineEdit("8", this);
+    editCropperMinWidth = new LineEdit(this);
+    editCropperMinWidth->setText("8");
+    editCropperMinHeight = new LineEdit(this);
+    editCropperMinHeight->setText("8");
     QHBoxLayout *hCropperMinSizeLayout = new QHBoxLayout();
     hCropperMinSizeLayout->addWidget(editCropperMinWidth);
     hCropperMinSizeLayout->addWidget(editCropperMinHeight);
@@ -57,14 +70,15 @@ void ImageCropperDemo::setupLayout()
     editDragSquareEdge = new QLineEdit("8", this);
     checkShowRectBorder = new QCheckBox(this);
 
-    labelRectBorderColor = new QLabel(this);
-    btnChooseRectBorderCorlor = new QPushButton(this);
+    labelRectBorderColor = new Label(this);
+
+    btnChooseRectBorderCorlor = new openImageButton(this);
     QHBoxLayout *hRectBorderColorLayout = new QHBoxLayout();
     hRectBorderColorLayout->addWidget(labelRectBorderColor);
     hRectBorderColorLayout->addWidget(btnChooseRectBorderCorlor);
 
-    labelDragSquareColor = new QLabel(this);
-    btnChooseDragSquareColor = new QPushButton(this);
+    labelDragSquareColor = new Label(this);
+    btnChooseDragSquareColor = new openImageButton(this);
     QHBoxLayout *hDragSquareColorLayout = new QHBoxLayout();
     hDragSquareColorLayout->addWidget(labelDragSquareColor);
     hDragSquareColorLayout->addWidget(btnChooseDragSquareColor);
@@ -90,8 +104,8 @@ void ImageCropperDemo::setupLayout()
     formLayout4->addRow(new QLabel(tr("ShowRectBorder:"), this), checkShowRectBorder);
     formLayout4->addRow(new QLabel(tr("RectBorderColor:"), this), hRectBorderColorLayout);
 
-    btnSavePreview = new QPushButton(tr("Save"), this);
-    btnQuit = new QPushButton(tr("Quit"), this);
+    btnSavePreview = new openImageButton(tr("Save"), this);
+    btnQuit = new PushButton(tr("Quit"), this);
     QHBoxLayout *btnLayout = new QHBoxLayout();
     btnLayout->addStretch();
     btnLayout->addWidget(btnSavePreview);
@@ -110,9 +124,10 @@ void ImageCropperDemo::setupLayout()
     vLayout->addStretch();
     vLayout->addLayout(btnLayout);
 
-    mainLayout = new QHBoxLayout(this);
+    mainLayout = new QHBoxLayout();
     mainLayout->addWidget(imgCropperLabel);
     mainLayout->addLayout(vLayout);
+    this->setLayout(mainLayout);
 }
 
 void ImageCropperDemo::init()
@@ -146,13 +161,13 @@ void ImageCropperDemo::init()
     connect(comboCropperShape, SIGNAL(currentIndexChanged(int)),
             this, SLOT(onCropperShapeChanged(int)));
 
-    connect(editCropperFixedWidth, &QLineEdit::textChanged,
+    connect(editCropperFixedWidth, &LineEdit::textChanged,
             this, &ImageCropperDemo::onFixedWidthChanged);
-    connect(editCropperFixedHeight, &QLineEdit::textChanged,
+    connect(editCropperFixedHeight, &LineEdit::textChanged,
             this, &ImageCropperDemo::onFixedHeightChanged);
-    connect(editCropperMinWidth, &QLineEdit::textChanged,
+    connect(editCropperMinWidth, &LineEdit::textChanged,
             this, &ImageCropperDemo::onMinWidthChanged);
-    connect(editCropperMinHeight, &QLineEdit::textChanged,
+    connect(editCropperMinHeight, &LineEdit::textChanged,
             this, &ImageCropperDemo::onMinHeightChanged);
 
     checkEnableOpacity->setCheckState(Qt::Checked);
@@ -206,7 +221,7 @@ void ImageCropperDemo::init()
 void ImageCropperDemo::onChooseOriginalImage()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select a picture"), "",
-                                                    "picture (*.jpg *.png *.bmp)");
+                                                    ".png");
     if (filename.isNull())
         return;
 
@@ -229,6 +244,31 @@ void ImageCropperDemo::setChooseCurrentImage(QPixmap pix)
     imgCropperLabel->update();
     onUpdatePreview();
     labelPreviewImage->setFrameStyle(0);
+}
+
+void ImageCropperDemo::mousePressEvent(QMouseEvent *event)
+{
+    m_draging = true;
+    if (event->buttons() & Qt::LeftButton) { //只响应鼠标左键
+        m_startPostion = event->globalPos();
+        m_framPostion = frameGeometry().topLeft();
+    }
+    StatusBarWidget::mousePressEvent(event);//调用父类函数保持原按键行为
+}
+
+void ImageCropperDemo::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton) {
+        //offset 偏移位置
+        QPoint offset = event->globalPos() - m_startPostion;
+        move(m_framPostion + offset);
+    }
+}
+
+void ImageCropperDemo::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_draging = false;
+    StatusBarWidget::mouseReleaseEvent(event);
 }
 
 void ImageCropperDemo::onOutputShapeChanged(int idx)

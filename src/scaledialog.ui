@@ -17,14 +17,14 @@
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="Label" name="label">
        <property name="text">
         <string>width</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="widthSpinBox">
+      <widget class="SpinBox" name="widthSpinBox">
        <property name="minimum">
         <number>1</number>
        </property>
@@ -38,14 +38,14 @@
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="Label" name="label_2">
        <property name="text">
         <string>height</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="heightSpinBox">
+      <widget class="SpinBox" name="heightSpinBox">
        <property name="minimum">
         <number>1</number>
        </property>
@@ -59,14 +59,26 @@
    <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QPushButton" name="okBtn">
+      <widget class="openImageButton" name="okBtn">
+       <property name="minimumSize">
+        <size>
+         <width>176</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>1111111</width>
+         <height>1111111</height>
+        </size>
+       </property>
        <property name="text">
         <string>ok</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cancelBtn">
+      <widget class="PushButton" name="cancelBtn">
        <property name="text">
         <string>cancel</string>
        </property>
@@ -76,6 +88,28 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>openImageButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">openimagebutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Label</class>
+   <extends>QLabel</extends>
+   <header location="global">label.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>pushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SpinBox</class>
+   <extends>QSpinBox</extends>
+   <header location="global">spinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

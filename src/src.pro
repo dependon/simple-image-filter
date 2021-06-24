@@ -47,7 +47,12 @@ SOURCES += \
     view/imagecropperdemo.cpp \
     view/imagecropperlabel.cpp \
     control/openimagebutton.cpp \
-    scaledialog.cpp
+    scaledialog.cpp \
+    control/dialog.cpp \
+    control/combox.cpp \
+    control/lineedit.cpp \
+    control/label.cpp \
+    control/spinbox.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -61,7 +66,12 @@ HEADERS += \
     view/imagecropperdemo.h \
     view/imagecropperlabel.h \
     control/openimagebutton.h \
-    scaledialog.h
+    scaledialog.h \
+    control/dialog.h \
+    control/combox.h \
+    control/lineedit.h \
+    control/label.h \
+    control/spinbox.h
 
 FORMS += \
         mainwidget.ui \

@@ -2,6 +2,10 @@
 
 openImageButton::openImageButton(QWidget *parent): SuggestBtn(parent)
 {
-    setFixedWidth(302);
-    setFixedHeight(36);
+
+}
+openImageButton::openImageButton(const QString &text, QWidget *parent)
+    : SuggestBtn(parent)
+{
+    setText(text);
 }

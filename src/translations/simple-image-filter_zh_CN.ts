@@ -194,128 +194,184 @@
         <translation>打开图片</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="83"/>
-        <location filename="../mainwidget.cpp" line="196"/>
+        <location filename="../mainwidget.cpp" line="84"/>
+        <location filename="../mainwidget.cpp" line="204"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="91"/>
+        <location filename="../mainwidget.cpp" line="93"/>
         <source>reset</source>
         <translation>重置图片</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="99"/>
+        <location filename="../mainwidget.cpp" line="102"/>
         <source>fitImage</source>
         <translation>适应图片</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="107"/>
+        <location filename="../mainwidget.cpp" line="111"/>
         <source>fitWindow</source>
         <translation>适应窗口</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="115"/>
+        <location filename="../mainwidget.cpp" line="120"/>
         <source>rotate-90</source>
         <translation>旋转-90</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="125"/>
+        <location filename="../mainwidget.cpp" line="131"/>
         <source>rotate+90</source>
         <translation>旋转90</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="137"/>
-        <location filename="../mainwidget.cpp" line="226"/>
+        <location filename="../mainwidget.cpp" line="144"/>
+        <location filename="../mainwidget.cpp" line="234"/>
         <source>save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="146"/>
+        <location filename="../mainwidget.cpp" line="154"/>
         <source>scaleImage</source>
         <translatorcomment>裁剪图片</translatorcomment>
         <translation>裁剪图片</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="232"/>
+        <location filename="../mainwidget.cpp" line="240"/>
         <source>filter</source>
         <translation>滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="237"/>
-        <source>oldFilter</source>
+        <location filename="../mainwidget.cpp" line="245"/>
+        <source>Old photo filter</source>
         <translation>老照片滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="242"/>
-        <source>beepFilter</source>
-        <translation>磨皮滤镜</translation>
+        <location filename="../mainwidget.cpp" line="250"/>
+        <source>Bilateral filtering</source>
+        <translation>双边滤波</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="249"/>
-        <source>warnFilter</source>
+        <location filename="../mainwidget.cpp" line="257"/>
+        <source>Warm color filter</source>
         <translation>暖色滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="256"/>
-        <source>coolFilter</source>
+        <location filename="../mainwidget.cpp" line="264"/>
+        <source>Cool color filter</source>
         <translation>冷色滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="263"/>
-        <source>grayScaleFilter</source>
+        <location filename="../mainwidget.cpp" line="271"/>
+        <source>Gray filter</source>
         <translation>灰度滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="274"/>
-        <source>inverseColorFilter</source>
+        <location filename="../mainwidget.cpp" line="282"/>
+        <source>Anti color filter</source>
         <translation>反色滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="279"/>
-        <source>metalFilter</source>
-        <translation>金属拉丝滤镜</translation>
+        <location filename="../mainwidget.cpp" line="287"/>
+        <source>Metal filter</source>
+        <translation>金属滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="286"/>
-        <source>sharpening</source>
+        <location filename="../mainwidget.cpp" line="294"/>
+        <source>Sharpening</source>
         <translation>锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="291"/>
-        <source>LaplaceSharpen</source>
+        <location filename="../mainwidget.cpp" line="299"/>
+        <source>Laplacian sharpening</source>
         <translation>拉普拉斯锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="296"/>
-        <source>soder</source>
-        <translation>soder锐化</translation>
+        <location filename="../mainwidget.cpp" line="304"/>
+        <source>Soder sharpening</source>
+        <translation>Soder 锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="304"/>
-        <source>flip</source>
+        <location filename="../mainwidget.cpp" line="312"/>
+        <source>Flip</source>
         <translation>翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="310"/>
-        <source>flipVertical</source>
+        <location filename="../mainwidget.cpp" line="318"/>
+        <source>Flip Vertical</source>
         <translation>垂直翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="315"/>
-        <source>flipHorizontal</source>
+        <location filename="../mainwidget.cpp" line="323"/>
+        <source>Flip Horizontal</source>
         <translation>水平翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="320"/>
+        <location filename="../mainwidget.cpp" line="328"/>
+        <source>Crop a picture</source>
+        <translation>裁剪图片大小</translation>
+    </message>
+    <message>
+        <source>oldFilter</source>
+        <translation type="vanished">老照片滤镜</translation>
+    </message>
+    <message>
+        <source>beepFilter</source>
+        <translation type="vanished">磨皮滤镜</translation>
+    </message>
+    <message>
+        <source>warnFilter</source>
+        <translation type="vanished">暖色滤镜</translation>
+    </message>
+    <message>
+        <source>coolFilter</source>
+        <translation type="vanished">冷色滤镜</translation>
+    </message>
+    <message>
+        <source>grayScaleFilter</source>
+        <translation type="vanished">灰度滤镜</translation>
+    </message>
+    <message>
+        <source>inverseColorFilter</source>
+        <translation type="vanished">反色滤镜</translation>
+    </message>
+    <message>
+        <source>metalFilter</source>
+        <translation type="vanished">金属拉丝滤镜</translation>
+    </message>
+    <message>
+        <source>sharpening</source>
+        <translation type="vanished">锐化</translation>
+    </message>
+    <message>
+        <source>LaplaceSharpen</source>
+        <translation type="vanished">拉普拉斯锐化</translation>
+    </message>
+    <message>
+        <source>soder</source>
+        <translation type="vanished">soder锐化</translation>
+    </message>
+    <message>
+        <source>flip</source>
+        <translation type="vanished">翻转</translation>
+    </message>
+    <message>
+        <source>flipVertical</source>
+        <translation type="vanished">垂直翻转</translation>
+    </message>
+    <message>
+        <source>flipHorizontal</source>
+        <translation type="vanished">水平翻转</translation>
+    </message>
+    <message>
         <source>scale</source>
-        <translation>裁剪宽高</translation>
+        <translation type="vanished">裁剪宽高</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="24"/>
+        <location filename="../main.cpp" line="26"/>
         <source>&lt;a href=&apos;https://github.com/dependon/simple-image-filter/&apos;&gt;github/simple-image-filter&lt;/a&gt;&lt;br/&gt;&lt;span style=&apos;font-size:12pt;&apos;&gt;mail: liuminghang0821@gmail.com&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;Published under GPL V3</source>
         <translation>&lt;a href=&apos;https://github.com/dependon/simple-image-filter/&apos;&gt;github/simple-image-filter&lt;/a&gt;&lt;br/&gt;&lt;span style=&apos;font-size:12pt;&apos;&gt;mail: liuminghang0821@qq.com&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;Published under GPL V3</translation>
     </message>
@@ -348,8 +404,12 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../scaledialog.cpp" line="14"/>
         <source>scale window</source>
+        <translation type="vanished">裁剪窗口</translation>
+    </message>
+    <message>
+        <location filename="../scaledialog.cpp" line="14"/>
+        <source>Scale window</source>
         <translation>裁剪窗口</translation>
     </message>
 </context>

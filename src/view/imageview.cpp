@@ -155,14 +155,15 @@ void ImageView::savecurrentPic()
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png *.bmp *.jpg)")); //选择路径
     image().save(filename);
 }
-
+#include <DDialog>
 void ImageView::scaleImage()
 {
-    ImageCropperDemo *dialog = new ImageCropperDemo(this);
+    ImageCropperDemo *dialog = new ImageCropperDemo();
     if (m_pixmapItem) {
         dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
     }
-    dialog->exec();
+
+    dialog->show();
 }
 void ImageView::savecurrentPicAs()
 {

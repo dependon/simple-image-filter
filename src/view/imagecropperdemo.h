@@ -10,20 +10,33 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QSlider>
-
+#include <DDialog>
 #include "application.h"
 #include "imagecropperlabel.h"
+#include "control/statusbarwidget.h"
+#include "control/pushbutton.h"
+#include "control/openimagebutton.h"
+#include "control/combox.h"
+#include "control/lineedit.h"
+#include "control/label.h"
 
-class ImageCropperDemo : public QDialog
+class ImageCropperDemo : public StatusBarWidget
 {
     Q_OBJECT
 public:
-    ImageCropperDemo(QWidget* parent = nullptr);
-~ImageCropperDemo();
+    ImageCropperDemo(QWidget *parent = nullptr);
+    ~ImageCropperDemo();
     void setupLayout();
-
     void init();
     void setChooseCurrentImage(QPixmap pix);
+protected:
+    void mousePressEvent(QMouseEvent *event);//按下
+    void mouseMoveEvent(QMouseEvent *event);//移动
+    void mouseReleaseEvent(QMouseEvent *event);//抬起
+private:
+    bool m_draging;//是否拖动
+    QPoint m_startPostion;//拖动前鼠标位置
+    QPoint m_framPostion;//窗体的原始位置
 public slots:
     void onOutputShapeChanged(int idx);
     void onCropperShapeChanged(int idx);
@@ -38,50 +51,49 @@ public slots:
     void onShowRectBorder(int state);
     void onChooseRectBorderColor();
     void onChooseDragSquareColor();
-
     void onChooseOriginalImage();
-
     void onUpdatePreview();
     void onSaveCroppedImage();
 
 private:
-    void setLabelColor(QLabel* label, QColor color) {
+    void setLabelColor(QLabel *label, QColor color)
+    {
         QPixmap pixmap(QSize(80, 25));
         pixmap.fill(color);
         label->setPixmap(pixmap);
     }
 
 private:
-    ImageCropperLabel* imgCropperLabel;
-    QHBoxLayout* mainLayout;
+    ImageCropperLabel *imgCropperLabel;
+    QHBoxLayout *mainLayout;
 
-    QLabel* labelPreviewImage;
+    Label *labelPreviewImage;
 
-    QComboBox* comboOutputShape;
-    QComboBox* comboCropperShape;
+    combox *comboOutputShape;
+    combox *comboCropperShape;
 
-    QLineEdit* editOriginalImagePath;
-    QPushButton* btnChooseOriginalImagePath;
+    LineEdit *editOriginalImagePath;
+    openImageButton *btnChooseOriginalImagePath;
 
-    QLineEdit* editCropperFixedWidth;
-    QLineEdit* editCropperFixedHeight;
-    QLineEdit* editCropperMinWidth;
-    QLineEdit* editCropperMinHeight;
+    LineEdit *editCropperFixedWidth;
+    LineEdit *editCropperFixedHeight;
+    LineEdit *editCropperMinWidth;
+    LineEdit *editCropperMinHeight;
 
-    QCheckBox* checkShowDragSquare;
-    QCheckBox* checkEnableOpacity;
-    QSlider* sliderOpacity;
-    QLineEdit* editDragSquareEdge;
+    QCheckBox *checkShowDragSquare;
+    QCheckBox *checkEnableOpacity;
+    QSlider *sliderOpacity;
+    QLineEdit *editDragSquareEdge;
 
-    QCheckBox* checkShowRectBorder;
-    QLabel* labelRectBorderColor;
-    QPushButton* btnChooseRectBorderCorlor;
+    QCheckBox *checkShowRectBorder;
+    Label *labelRectBorderColor;
+    openImageButton *btnChooseRectBorderCorlor;
 
-    QLabel* labelDragSquareColor;
-    QPushButton* btnChooseDragSquareColor;
+    Label *labelDragSquareColor;
+    openImageButton *btnChooseDragSquareColor;
 
-    QPushButton* btnSavePreview;
-    QPushButton* btnQuit;
+    openImageButton *btnSavePreview;
+    PushButton *btnQuit;
 };
 
 #endif // TESTIMAGECROPPERLABEL_H

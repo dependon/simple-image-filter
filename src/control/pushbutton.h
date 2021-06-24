@@ -13,11 +13,13 @@ typedef  DPushButton PushBtn;
 typedef QPushButton PushBtn;
 #endif
 
-class PushButton:public PushBtn
+class PushButton: public PushBtn
 {
     Q_OBJECT
 public:
     explicit PushButton(QWidget *parent = nullptr);
+
+    explicit PushButton(const QString &text, QWidget *parent = nullptr);
 };
 
 #endif // ICONBUTTON_H

@@ -54,6 +54,12 @@
        </item>
        <item row="0" column="1">
         <widget class="openImageButton" name="openPicture">
+         <property name="minimumSize">
+          <size>
+           <width>302</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="text">
           <string>openPicture</string>
          </property>
@@ -128,7 +134,7 @@
   <customwidget>
    <class>ImageView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">imageview.h</header>
+   <header>imageview.h</header>
   </customwidget>
   <customwidget>
    <class>openImageButton</class>

@@ -7,7 +7,7 @@
 #ifndef IMAGECROPPERLABEL_H
 #define IMAGECROPPERLABEL_H
 
-#include <QLabel>
+#include "control/label.h"
 #include <QPixmap>
 #include <QPen>
 
@@ -34,12 +34,13 @@ enum class SizeType {
 };
 
 
-class ImageCropperLabel : public QLabel {
+class ImageCropperLabel : public Label
+{
     Q_OBJECT
 public:
-    ImageCropperLabel(int width, int height, QWidget* parent);
+    ImageCropperLabel(int width, int height, QWidget *parent);
 
-    void setOriginalImage(const QPixmap& pixmap);
+    void setOriginalImage(const QPixmap &pixmap);
     void setOutputShape(OutputShape shape) { outputShape = shape; }
     QPixmap getCroppedImage();
     QPixmap getCroppedImage(OutputShape shape);
@@ -67,7 +68,7 @@ public:
      * default: the twice of minimum of the edge lenght of drag square
     *****************************************************************************/
     void setCropperMinimumSize(int minWidth, int minHeight)
-        { cropperMinimumWidth = minWidth; cropperMinimumHeight = minHeight; }
+    { cropperMinimumWidth = minWidth; cropperMinimumHeight = minHeight; }
     void setCropperMinimumWidth(int minWidth) { cropperMinimumWidth = minWidth; }
     void setCropperMinimumHeight(int minHeight) { cropperMinimumHeight = minHeight; }
 
@@ -76,14 +77,14 @@ public:
     *************************************************/
     void setShowRectBorder(bool show) { isShowRectBorder = show; }
     QPen getBorderPen() { return borderPen; }
-    void setBorderPen(const QPen& pen) { borderPen = pen; }
+    void setBorderPen(const QPen &pen) { borderPen = pen; }
 
     /*************************************************
      * Set the size, color of drag square
     *************************************************/
     void setShowDragSquare(bool show) { isShowDragSquare = show; }
     void setDragSquareEdge(int edge) { dragSquareEdge = (edge >= 3 ? edge : 3); }
-    void setDragSquareColor(const QColor& color) { dragSquareColor = color; }
+    void setDragSquareColor(const QColor &color) { dragSquareColor = color; }
 
     /*****************************************
      *  Opacity Effect
@@ -110,14 +111,14 @@ private:
     void drawFillRect(QPoint centralPoint, int edge, QColor color);
     void drawRectOpacity();
     void drawEllipseOpacity();
-    void drawOpacity(const QPainterPath& path);     // shadow effect
+    void drawOpacity(const QPainterPath &path);     // shadow effect
     void drawSquareEdge(bool onlyFourCorners);
 
     /***************************************
      * Other utility methods
     ***************************************/
-    int getPosInCropperRect(const QPoint& pt);
-    bool isPosNearDragSquare(const QPoint& pt1, const QPoint& pt2);
+    int getPosInCropperRect(const QPoint &pt);
+    bool isPosNearDragSquare(const QPoint &pt1, const QPoint &pt2);
     void resetCropperPos();
     void changeCursor();
 

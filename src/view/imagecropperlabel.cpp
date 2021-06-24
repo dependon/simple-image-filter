@@ -6,8 +6,8 @@
 #include <QDebug>
 #include <QBitmap>
 
-ImageCropperLabel::ImageCropperLabel(int width, int height, QWidget* parent) :
-         QLabel(parent)
+ImageCropperLabel::ImageCropperLabel(int width, int height, QWidget *parent) :
+    Label(parent)
 {
     this->setFixedSize(width, height);
     this->setAlignment(Qt::AlignCenter);
@@ -18,7 +18,8 @@ ImageCropperLabel::ImageCropperLabel(int width, int height, QWidget* parent) :
     borderPen.setDashPattern(QVector<qreal>() << 3 << 3 << 3 << 3);
 }
 
-void ImageCropperLabel::setOriginalImage(const QPixmap &pixmap) {
+void ImageCropperLabel::setOriginalImage(const QPixmap &pixmap)
+{
     originalImage = pixmap;
 
     int imgWidth = pixmap.width();
@@ -34,8 +35,7 @@ void ImageCropperLabel::setOriginalImage(const QPixmap &pixmap) {
         imgWidthInLabel = int(scaledRate * imgWidth);
         imageRect.setRect((labelWidth - imgWidthInLabel) / 2, 0,
                           imgWidthInLabel, imgHeightInLabel);
-    }
-    else {
+    } else {
         scaledRate = labelWidth / double(imgWidth);
         imgWidthInLabel = labelWidth;
         imgHeightInLabel = int(scaledRate * imgHeight);
@@ -58,40 +58,47 @@ void ImageCropperLabel::setOriginalImage(const QPixmap &pixmap) {
 /*****************************************
  * set cropper's shape (and size)
 *****************************************/
-void ImageCropperLabel::setRectCropper() {
+void ImageCropperLabel::setRectCropper()
+{
     cropperShape = CropperShape::RECT;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setSquareCropper() {
+void ImageCropperLabel::setSquareCropper()
+{
     cropperShape = CropperShape::SQUARE;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setEllipseCropper() {
+void ImageCropperLabel::setEllipseCropper()
+{
     cropperShape = CropperShape::ELLIPSE;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setCircleCropper() {
+void ImageCropperLabel::setCircleCropper()
+{
     cropperShape = CropperShape::CIRCLE;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setFixedRectCropper(QSize size) {
+void ImageCropperLabel::setFixedRectCropper(QSize size)
+{
     cropperShape = CropperShape::FIXED_RECT;
     cropperRect_.setSize(size);
     resetCropperPos();
 }
 
-void ImageCropperLabel::setFixedEllipseCropper(QSize size) {
+void ImageCropperLabel::setFixedEllipseCropper(QSize size)
+{
     cropperShape = CropperShape::FIXED_ELLIPSE;
     cropperRect_.setSize(size);
     resetCropperPos();
 }
 
 // not recommended
-void ImageCropperLabel::setCropper(CropperShape shape, QSize size) {
+void ImageCropperLabel::setCropper(CropperShape shape, QSize size)
+{
     cropperShape = shape;
     cropperRect_.setSize(size);
     resetCropperPos();
@@ -100,17 +107,20 @@ void ImageCropperLabel::setCropper(CropperShape shape, QSize size) {
 /*****************************************************************************
      * Set cropper's fixed size
     *****************************************************************************/
-void ImageCropperLabel::setCropperFixedSize(int fixedWidth, int fixedHeight) {
+void ImageCropperLabel::setCropperFixedSize(int fixedWidth, int fixedHeight)
+{
     cropperRect_.setSize(QSize(fixedWidth, fixedHeight));
     resetCropperPos();
 }
 
-void ImageCropperLabel::setCropperFixedWidth(int fixedWidth) {
+void ImageCropperLabel::setCropperFixedWidth(int fixedWidth)
+{
     cropperRect_.setWidth(fixedWidth);
     resetCropperPos();
 }
 
-void ImageCropperLabel::setCropperFixedHeight(int fixedHeight) {
+void ImageCropperLabel::setCropperFixedHeight(int fixedHeight)
+{
     cropperRect_.setHeight(fixedHeight);
     resetCropperPos();
 }
@@ -119,7 +129,8 @@ void ImageCropperLabel::setCropperFixedHeight(int fixedHeight) {
  * Move cropper to the center of the image
  * And resize to default
 **********************************************/
-void ImageCropperLabel::resetCropperPos() {
+void ImageCropperLabel::resetCropperPos()
+{
     int labelWidth = this->width();
     int labelHeight = this->height();
 
@@ -129,33 +140,35 @@ void ImageCropperLabel::resetCropperPos() {
     }
 
     switch (cropperShape) {
-        case CropperShape::UNDEFINED:
-            break;
-        case CropperShape::FIXED_RECT:
-        case CropperShape::FIXED_ELLIPSE: {
-            cropperRect.setRect((labelWidth - cropperRect.width()) / 2,
-                             (labelHeight - cropperRect.height()) / 2,
-                             cropperRect.width(), cropperRect.height());
-            break;
-        }
-        case CropperShape::RECT:
-        case CropperShape::SQUARE:
-        case CropperShape::ELLIPSE:
-        case CropperShape::CIRCLE: {
-            int imgWidth = tempImage.width();
-            int imgHeight = tempImage.height();
-            int edge = int((imgWidth > imgHeight ? imgHeight : imgWidth) * 3 / 4.0);
-            cropperRect.setRect((labelWidth - edge) / 2, (labelHeight - edge) / 2, edge, edge);
-            break;
-        }
+    case CropperShape::UNDEFINED:
+        break;
+    case CropperShape::FIXED_RECT:
+    case CropperShape::FIXED_ELLIPSE: {
+        cropperRect.setRect((labelWidth - cropperRect.width()) / 2,
+                            (labelHeight - cropperRect.height()) / 2,
+                            cropperRect.width(), cropperRect.height());
+        break;
+    }
+    case CropperShape::RECT:
+    case CropperShape::SQUARE:
+    case CropperShape::ELLIPSE:
+    case CropperShape::CIRCLE: {
+        int imgWidth = tempImage.width();
+        int imgHeight = tempImage.height();
+        int edge = int((imgWidth > imgHeight ? imgHeight : imgWidth) * 3 / 4.0);
+        cropperRect.setRect((labelWidth - edge) / 2, (labelHeight - edge) / 2, edge, edge);
+        break;
+    }
     }
 }
 
-QPixmap ImageCropperLabel::getCroppedImage() {
+QPixmap ImageCropperLabel::getCroppedImage()
+{
     return getCroppedImage(this->outputShape);
 }
 
-QPixmap ImageCropperLabel::getCroppedImage(OutputShape shape) {
+QPixmap ImageCropperLabel::getCroppedImage(OutputShape shape)
+{
     int startX = int((cropperRect.left() - imageRect.left()) / scaledRate);
     int startY = int((cropperRect.top() - imageRect.top()) / scaledRate);
     int croppedWidth = int(cropperRect.width() / scaledRate);
@@ -181,36 +194,37 @@ QPixmap ImageCropperLabel::getCroppedImage(OutputShape shape) {
 }
 
 
-void ImageCropperLabel::paintEvent(QPaintEvent *event) {
+void ImageCropperLabel::paintEvent(QPaintEvent *event)
+{
     // Draw original image
     QLabel::paintEvent(event);
 
     // Draw cropper and set some effects
     switch (cropperShape) {
-        case CropperShape::UNDEFINED:
-            break;
-        case CropperShape::FIXED_RECT:
-            drawRectOpacity();
-            break;
-        case CropperShape::FIXED_ELLIPSE:
-            drawEllipseOpacity();
-            break;
-        case CropperShape::RECT:
-            drawRectOpacity();
-            drawSquareEdge(!ONLY_FOUR_CORNERS);
-            break;
-        case CropperShape::SQUARE:
-            drawRectOpacity();
-            drawSquareEdge(ONLY_FOUR_CORNERS);
-            break;
-        case CropperShape::ELLIPSE:
-            drawEllipseOpacity();
-            drawSquareEdge(!ONLY_FOUR_CORNERS);
-            break;
-        case CropperShape::CIRCLE:
-            drawEllipseOpacity();
-            drawSquareEdge(ONLY_FOUR_CORNERS);
-            break;
+    case CropperShape::UNDEFINED:
+        break;
+    case CropperShape::FIXED_RECT:
+        drawRectOpacity();
+        break;
+    case CropperShape::FIXED_ELLIPSE:
+        drawEllipseOpacity();
+        break;
+    case CropperShape::RECT:
+        drawRectOpacity();
+        drawSquareEdge(!ONLY_FOUR_CORNERS);
+        break;
+    case CropperShape::SQUARE:
+        drawRectOpacity();
+        drawSquareEdge(ONLY_FOUR_CORNERS);
+        break;
+    case CropperShape::ELLIPSE:
+        drawEllipseOpacity();
+        drawSquareEdge(!ONLY_FOUR_CORNERS);
+        break;
+    case CropperShape::CIRCLE:
+        drawEllipseOpacity();
+        drawSquareEdge(ONLY_FOUR_CORNERS);
+        break;
     }
 
     // Draw cropper rect
@@ -221,7 +235,8 @@ void ImageCropperLabel::paintEvent(QPaintEvent *event) {
     }
 }
 
-void ImageCropperLabel::drawSquareEdge(bool onlyFourCorners) {
+void ImageCropperLabel::drawSquareEdge(bool onlyFourCorners)
+{
     if (!isShowDragSquare)
         return;
 
@@ -242,20 +257,23 @@ void ImageCropperLabel::drawSquareEdge(bool onlyFourCorners) {
     }
 }
 
-void ImageCropperLabel::drawFillRect(QPoint centralPoint, int edge, QColor color) {
+void ImageCropperLabel::drawFillRect(QPoint centralPoint, int edge, QColor color)
+{
     QRect rect(centralPoint.x() - edge / 2, centralPoint.y() - edge / 2, edge, edge);
     QPainter painter(this);
     painter.fillRect(rect, color);
 }
 
 // Opacity effect
-void ImageCropperLabel::drawOpacity(const QPainterPath& path) {
+void ImageCropperLabel::drawOpacity(const QPainterPath &path)
+{
     QPainter painterOpac(this);
     painterOpac.setOpacity(opacity);
     painterOpac.fillPath(path, QBrush(Qt::black));
 }
 
-void ImageCropperLabel::drawRectOpacity() {
+void ImageCropperLabel::drawRectOpacity()
+{
     if (isShowOpacityEffect) {
         QPainterPath p1, p2, p;
         p1.addRect(imageRect);
@@ -265,7 +283,8 @@ void ImageCropperLabel::drawRectOpacity() {
     }
 }
 
-void ImageCropperLabel::drawEllipseOpacity() {
+void ImageCropperLabel::drawEllipseOpacity()
+{
     if (isShowOpacityEffect) {
         QPainterPath p1, p2, p;
         p1.addRect(imageRect);
@@ -275,12 +294,14 @@ void ImageCropperLabel::drawEllipseOpacity() {
     }
 }
 
-bool ImageCropperLabel::isPosNearDragSquare(const QPoint& pt1, const QPoint& pt2) {
+bool ImageCropperLabel::isPosNearDragSquare(const QPoint &pt1, const QPoint &pt2)
+{
     return abs(pt1.x() - pt2.x()) * 2 <= dragSquareEdge
            && abs(pt1.y() - pt2.y()) * 2 <= dragSquareEdge;
 }
 
-int ImageCropperLabel::getPosInCropperRect(const QPoint &pt) {
+int ImageCropperLabel::getPosInCropperRect(const QPoint &pt)
+{
     if (isPosNearDragSquare(pt, QPoint(cropperRect.right(), cropperRect.center().y())))
         return RECT_RIGHT;
     if (isPosNearDragSquare(pt, cropperRect.bottomRight()))
@@ -309,111 +330,112 @@ int ImageCropperLabel::getPosInCropperRect(const QPoint &pt) {
  *
 *************************************************/
 
-void ImageCropperLabel::changeCursor() {
+void ImageCropperLabel::changeCursor()
+{
     switch (cursorPosInCropperRect) {
-        case RECT_OUTSIZD:
-            setCursor(Qt::ArrowCursor);
+    case RECT_OUTSIZD:
+        setCursor(Qt::ArrowCursor);
+        break;
+    case RECT_BOTTOM_RIGHT: {
+        switch (cropperShape) {
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeFDiagCursor);
             break;
-        case RECT_BOTTOM_RIGHT: {
-            switch (cropperShape) {
-            case CropperShape::SQUARE:
-            case CropperShape::CIRCLE:
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-                setCursor(Qt::SizeFDiagCursor);
-                break;
-            default:
-                break;
-            }
+        default:
             break;
         }
-        case RECT_RIGHT: {
-            switch (cropperShape) {
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-                setCursor(Qt::SizeHorCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_RIGHT: {
+        switch (cropperShape) {
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeHorCursor);
+            break;
+        default:
             break;
         }
-        case RECT_BOTTOM: {
-            switch (cropperShape) {
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-                setCursor(Qt::SizeVerCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_BOTTOM: {
+        switch (cropperShape) {
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeVerCursor);
+            break;
+        default:
             break;
         }
-        case RECT_BOTTOM_LEFT: {
-            switch (cropperShape) {
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-            case CropperShape::SQUARE:
-            case CropperShape::CIRCLE:
-                setCursor(Qt::SizeBDiagCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_BOTTOM_LEFT: {
+        switch (cropperShape) {
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            setCursor(Qt::SizeBDiagCursor);
+            break;
+        default:
             break;
         }
-        case RECT_LEFT: {
-            switch (cropperShape) {
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-                setCursor(Qt::SizeHorCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_LEFT: {
+        switch (cropperShape) {
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeHorCursor);
+            break;
+        default:
             break;
         }
-        case RECT_TOP_LEFT: {
-            switch (cropperShape) {
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-            case CropperShape::SQUARE:
-            case CropperShape::CIRCLE:
-                setCursor(Qt::SizeFDiagCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_TOP_LEFT: {
+        switch (cropperShape) {
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            setCursor(Qt::SizeFDiagCursor);
+            break;
+        default:
             break;
         }
-        case RECT_TOP: {
-            switch (cropperShape) {
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-                setCursor(Qt::SizeVerCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_TOP: {
+        switch (cropperShape) {
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeVerCursor);
+            break;
+        default:
             break;
         }
-        case RECT_TOP_RIGHT: {
-            switch (cropperShape) {
-            case CropperShape::SQUARE:
-            case CropperShape::CIRCLE:
-            case CropperShape::RECT:
-            case CropperShape::ELLIPSE:
-                setCursor(Qt::SizeBDiagCursor);
-                break;
-            default:
-                break;
-            }
+        break;
+    }
+    case RECT_TOP_RIGHT: {
+        switch (cropperShape) {
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeBDiagCursor);
+            break;
+        default:
             break;
         }
-        case RECT_INSIDE: {
-            setCursor(Qt::SizeAllCursor);
-            break;
-        }
+        break;
+    }
+    case RECT_INSIDE: {
+        setCursor(Qt::SizeAllCursor);
+        break;
+    }
     }
 }
 
@@ -423,12 +445,14 @@ void ImageCropperLabel::changeCursor() {
  *
 *****************************************************/
 
-void ImageCropperLabel::mousePressEvent(QMouseEvent *e) {
+void ImageCropperLabel::mousePressEvent(QMouseEvent *e)
+{
     currPos = lastPos = e->pos();
     isLButtonPressed = true;
 }
 
-void ImageCropperLabel::mouseMoveEvent(QMouseEvent *e) {
+void ImageCropperLabel::mouseMoveEvent(QMouseEvent *e)
+{
     currPos = e->pos();
     if (!isCursorPosCalculated) {
         cursorPosInCropperRect = getPosInCropperRect(currPos);
@@ -451,262 +475,257 @@ void ImageCropperLabel::mouseMoveEvent(QMouseEvent *e) {
 
     // Move cropper
     switch (cursorPosInCropperRect) {
-        case RECT_OUTSIZD:
+    case RECT_OUTSIZD:
+        break;
+    case RECT_BOTTOM_RIGHT: {
+        disX = currPos.x() - cropperRect.left();
+        disY = currPos.y() - cropperRect.top();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
             break;
-        case RECT_BOTTOM_RIGHT: {
-            disX = currPos.x() - cropperRect.left();
-            disY = currPos.y() - cropperRect.top();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                    break;
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    setCursor(Qt::SizeFDiagCursor);
-                    if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
-                        if (disX > disY && cropperRect.top() + disX <= imageRect.bottom()) {
-                            cropperRect.setRight(currPos.x());
-                            cropperRect.setBottom(cropperRect.top() + disX);
-                            emit croppedImageChanged();
-                        }
-                        else if (disX <= disY && cropperRect.left() + disY <= imageRect.right()) {
-                            cropperRect.setBottom(currPos.y());
-                            cropperRect.setRight(cropperRect.left() + disY);
-                            emit croppedImageChanged();
-                        }
-                    }
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    setCursor(Qt::SizeFDiagCursor);
-                    if (disX >= cropperMinimumWidth) {
-                        cropperRect.setRight(currPos.x());
-                        emit croppedImageChanged();
-                    }
-                    if (disY >= cropperMinimumHeight) {
-                        cropperRect.setBottom(currPos.y());
-                        emit croppedImageChanged();
-                    }
-                    break;
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            setCursor(Qt::SizeFDiagCursor);
+            if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
+                if (disX > disY && cropperRect.top() + disX <= imageRect.bottom()) {
+                    cropperRect.setRight(currPos.x());
+                    cropperRect.setBottom(cropperRect.top() + disX);
+                    emit croppedImageChanged();
+                } else if (disX <= disY && cropperRect.left() + disY <= imageRect.right()) {
+                    cropperRect.setBottom(currPos.y());
+                    cropperRect.setRight(cropperRect.left() + disY);
+                    emit croppedImageChanged();
+                }
             }
             break;
-        }
-        case RECT_RIGHT: {
-            disX = currPos.x() - cropperRect.left();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disX >= cropperMinimumWidth) {
-                        cropperRect.setRight(currPos.x());
-                        emit croppedImageChanged();
-                    }
-                    break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            setCursor(Qt::SizeFDiagCursor);
+            if (disX >= cropperMinimumWidth) {
+                cropperRect.setRight(currPos.x());
+                emit croppedImageChanged();
+            }
+            if (disY >= cropperMinimumHeight) {
+                cropperRect.setBottom(currPos.y());
+                emit croppedImageChanged();
             }
             break;
-        }
-        case RECT_BOTTOM: {
-            disY = currPos.y() - cropperRect.top();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disY >= cropperMinimumHeight) {
-                        cropperRect.setBottom(cropperRect.bottom() + yOffset);
-                        emit croppedImageChanged();
-                    }
-                    break;
-            }
-            break;
-        }
-        case RECT_BOTTOM_LEFT: {
-            disX = cropperRect.right() - currPos.x();
-            disY = currPos.y() - cropperRect.top();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                    break;
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disX >= cropperMinimumWidth) {
-                        cropperRect.setLeft(currPos.x());
-                        emit croppedImageChanged();
-                    }
-                    if (disY >= cropperMinimumHeight) {
-                        cropperRect.setBottom(currPos.y());
-                        emit croppedImageChanged();
-                    }
-                    break;
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
-                        if (disX > disY && cropperRect.top() + disX <= imageRect.bottom()) {
-                            cropperRect.setLeft(currPos.x());
-                            cropperRect.setBottom(cropperRect.top() + disX);
-                            emit croppedImageChanged();
-                        }
-                        else if (disX <= disY && cropperRect.right() - disY >= imageRect.left()) {
-                            cropperRect.setBottom(currPos.y());
-                            cropperRect.setLeft(cropperRect.right() - disY);
-                            emit croppedImageChanged();
-                        }
-                    }
-                    break;
-            }
-            break;
-        }
-        case RECT_LEFT: {
-            disX = cropperRect.right() - currPos.x();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disX >= cropperMinimumHeight) {
-                        cropperRect.setLeft(cropperRect.left() + xOffset);
-                        emit croppedImageChanged();
-                    }
-                    break;
-            }
-            break;
-        }
-        case RECT_TOP_LEFT: {
-            disX = cropperRect.right() - currPos.x();
-            disY = cropperRect.bottom() - currPos.y();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disX >= cropperMinimumWidth) {
-                        cropperRect.setLeft(currPos.x());
-                        emit croppedImageChanged();
-                    }
-                    if (disY >= cropperMinimumHeight) {
-                        cropperRect.setTop(currPos.y());
-                        emit croppedImageChanged();
-                    }
-                    break;
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
-                        if (disX > disY && cropperRect.bottom() - disX >= imageRect.top()) {
-                            cropperRect.setLeft(currPos.x());
-                            cropperRect.setTop(cropperRect.bottom() - disX);
-                            emit croppedImageChanged();
-                        }
-                        else if (disX <= disY && cropperRect.right() - disY >= imageRect.left()) {
-                            cropperRect.setTop(currPos.y());
-                            cropperRect.setLeft(cropperRect.right() - disY);
-                            emit croppedImageChanged();
-                        }
-                    }
-                    break;
-            }
-            break;
-        }
-        case RECT_TOP: {
-            disY = cropperRect.bottom() - currPos.y();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disY >= cropperMinimumHeight) {
-                        cropperRect.setTop(cropperRect.top() + yOffset);
-                        emit croppedImageChanged();
-                    }
-                    break;
-            }
-            break;
-        }
-        case RECT_TOP_RIGHT: {
-            disX = currPos.x() - cropperRect.left();
-            disY = cropperRect.bottom() - currPos.y();
-            switch (cropperShape) {
-                case CropperShape::UNDEFINED:
-                case CropperShape::FIXED_RECT:
-                case CropperShape::FIXED_ELLIPSE:
-                    break;
-                case CropperShape::RECT:
-                case CropperShape::ELLIPSE:
-                    if (disX >= cropperMinimumWidth) {
-                        cropperRect.setRight(currPos.x());
-                        emit croppedImageChanged();
-                    }
-                    if (disY >= cropperMinimumHeight) {
-                        cropperRect.setTop(currPos.y());
-                        emit croppedImageChanged();
-                    }
-                    break;
-                case CropperShape::SQUARE:
-                case CropperShape::CIRCLE:
-                    if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
-                        if (disX < disY && cropperRect.left() + disY <= imageRect.right()) {
-                            cropperRect.setTop(currPos.y());
-                            cropperRect.setRight(cropperRect.left() + disY);
-                            emit croppedImageChanged();
-                        }
-                        else if (disX >= disY && cropperRect.bottom() - disX >= imageRect.top()) {
-                            cropperRect.setRight(currPos.x());
-                            cropperRect.setTop(cropperRect.bottom() - disX);
-                            emit croppedImageChanged();
-                        }
-                    }
-                    break;
-            }
-            break;
-        }
-        case RECT_INSIDE: {
-            // Make sure the cropperRect is entirely inside the imageRecct
-            if (xOffset > 0) {
-                if (cropperRect.right() + xOffset > imageRect.right())
-                    xOffset = 0;
-            }
-            else if (xOffset < 0) {
-                if (cropperRect.left() + xOffset < imageRect.left())
-                    xOffset = 0;
-            }
-            if (yOffset > 0) {
-                if (cropperRect.bottom() + yOffset > imageRect.bottom())
-                    yOffset = 0;
-            }
-            else if (yOffset < 0) {
-                if (cropperRect.top() + yOffset < imageRect.top())
-                    yOffset = 0;
-            }
-            cropperRect.moveTo(cropperRect.left() + xOffset, cropperRect.top() + yOffset);
-            emit croppedImageChanged();
         }
         break;
+    }
+    case RECT_RIGHT: {
+        disX = currPos.x() - cropperRect.left();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disX >= cropperMinimumWidth) {
+                cropperRect.setRight(currPos.x());
+                emit croppedImageChanged();
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_BOTTOM: {
+        disY = currPos.y() - cropperRect.top();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disY >= cropperMinimumHeight) {
+                cropperRect.setBottom(cropperRect.bottom() + yOffset);
+                emit croppedImageChanged();
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_BOTTOM_LEFT: {
+        disX = cropperRect.right() - currPos.x();
+        disY = currPos.y() - cropperRect.top();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+            break;
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disX >= cropperMinimumWidth) {
+                cropperRect.setLeft(currPos.x());
+                emit croppedImageChanged();
+            }
+            if (disY >= cropperMinimumHeight) {
+                cropperRect.setBottom(currPos.y());
+                emit croppedImageChanged();
+            }
+            break;
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
+                if (disX > disY && cropperRect.top() + disX <= imageRect.bottom()) {
+                    cropperRect.setLeft(currPos.x());
+                    cropperRect.setBottom(cropperRect.top() + disX);
+                    emit croppedImageChanged();
+                } else if (disX <= disY && cropperRect.right() - disY >= imageRect.left()) {
+                    cropperRect.setBottom(currPos.y());
+                    cropperRect.setLeft(cropperRect.right() - disY);
+                    emit croppedImageChanged();
+                }
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_LEFT: {
+        disX = cropperRect.right() - currPos.x();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disX >= cropperMinimumHeight) {
+                cropperRect.setLeft(cropperRect.left() + xOffset);
+                emit croppedImageChanged();
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_TOP_LEFT: {
+        disX = cropperRect.right() - currPos.x();
+        disY = cropperRect.bottom() - currPos.y();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+            break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disX >= cropperMinimumWidth) {
+                cropperRect.setLeft(currPos.x());
+                emit croppedImageChanged();
+            }
+            if (disY >= cropperMinimumHeight) {
+                cropperRect.setTop(currPos.y());
+                emit croppedImageChanged();
+            }
+            break;
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
+                if (disX > disY && cropperRect.bottom() - disX >= imageRect.top()) {
+                    cropperRect.setLeft(currPos.x());
+                    cropperRect.setTop(cropperRect.bottom() - disX);
+                    emit croppedImageChanged();
+                } else if (disX <= disY && cropperRect.right() - disY >= imageRect.left()) {
+                    cropperRect.setTop(currPos.y());
+                    cropperRect.setLeft(cropperRect.right() - disY);
+                    emit croppedImageChanged();
+                }
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_TOP: {
+        disY = cropperRect.bottom() - currPos.y();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disY >= cropperMinimumHeight) {
+                cropperRect.setTop(cropperRect.top() + yOffset);
+                emit croppedImageChanged();
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_TOP_RIGHT: {
+        disX = currPos.x() - cropperRect.left();
+        disY = cropperRect.bottom() - currPos.y();
+        switch (cropperShape) {
+        case CropperShape::UNDEFINED:
+        case CropperShape::FIXED_RECT:
+        case CropperShape::FIXED_ELLIPSE:
+            break;
+        case CropperShape::RECT:
+        case CropperShape::ELLIPSE:
+            if (disX >= cropperMinimumWidth) {
+                cropperRect.setRight(currPos.x());
+                emit croppedImageChanged();
+            }
+            if (disY >= cropperMinimumHeight) {
+                cropperRect.setTop(currPos.y());
+                emit croppedImageChanged();
+            }
+            break;
+        case CropperShape::SQUARE:
+        case CropperShape::CIRCLE:
+            if (disX >= cropperMinimumWidth && disY >= cropperMinimumHeight) {
+                if (disX < disY && cropperRect.left() + disY <= imageRect.right()) {
+                    cropperRect.setTop(currPos.y());
+                    cropperRect.setRight(cropperRect.left() + disY);
+                    emit croppedImageChanged();
+                } else if (disX >= disY && cropperRect.bottom() - disX >= imageRect.top()) {
+                    cropperRect.setRight(currPos.x());
+                    cropperRect.setTop(cropperRect.bottom() - disX);
+                    emit croppedImageChanged();
+                }
+            }
+            break;
+        }
+        break;
+    }
+    case RECT_INSIDE: {
+        // Make sure the cropperRect is entirely inside the imageRecct
+        if (xOffset > 0) {
+            if (cropperRect.right() + xOffset > imageRect.right())
+                xOffset = 0;
+        } else if (xOffset < 0) {
+            if (cropperRect.left() + xOffset < imageRect.left())
+                xOffset = 0;
+        }
+        if (yOffset > 0) {
+            if (cropperRect.bottom() + yOffset > imageRect.bottom())
+                yOffset = 0;
+        } else if (yOffset < 0) {
+            if (cropperRect.top() + yOffset < imageRect.top())
+                yOffset = 0;
+        }
+        cropperRect.moveTo(cropperRect.left() + xOffset, cropperRect.top() + yOffset);
+        emit croppedImageChanged();
+    }
+    break;
     }
 
     repaint();
 }
 
-void ImageCropperLabel::mouseReleaseEvent(QMouseEvent *) {
+void ImageCropperLabel::mouseReleaseEvent(QMouseEvent *)
+{
     isLButtonPressed = false;
     isCursorPosCalculated = false;
     setCursor(Qt::ArrowCursor);

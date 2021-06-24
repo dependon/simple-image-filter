@@ -242,33 +242,33 @@ void MainWidget::initMenu()
         m_leftMenu->addAction(m_filteraction);
 
         m_oldFilter = new QAction(m_filterMenu);
-        m_oldFilter->setText(tr("oldFilter"));
+        m_oldFilter->setText(tr("Old photo filter"));
         m_filterMenu->addAction(m_oldFilter);
         connect(m_oldFilter, &QAction::triggered, ui->mainImageView, &ImageView::oldIMage);
 
         m_beepFilter = new QAction(m_filterMenu);
-        m_beepFilter->setText(tr("beepFilter"));
+        m_beepFilter->setText(tr("Bilateral filtering"));
         m_filterMenu->addAction(m_beepFilter);
         connect(m_beepFilter, &QAction::triggered, this, [ = ] {
             ui->mainImageView->BEEPImage();
         });
 
         m_warnFilter = new QAction(m_filterMenu);
-        m_warnFilter->setText(tr("warnFilter"));
+        m_warnFilter->setText(tr("Warm color filter"));
         m_filterMenu->addAction(m_warnFilter);
         connect(m_warnFilter, &QAction::triggered, this, [ = ] {
             ui->mainImageView->warnImage();
         });
 
         m_coolFilter = new QAction(m_filterMenu);
-        m_coolFilter->setText(tr("coolFilter"));
+        m_coolFilter->setText(tr("Cool color filter"));
         m_filterMenu->addAction(m_coolFilter);
         connect(m_coolFilter, &QAction::triggered, this, [ = ] {
             ui->mainImageView->coolImage();
         });
 
         m_grayScaleFilter = new QAction(m_filterMenu);
-        m_grayScaleFilter->setText(tr("grayScaleFilter"));
+        m_grayScaleFilter->setText(tr("Gray filter"));
         m_filterMenu->addAction(m_grayScaleFilter);
         connect(m_grayScaleFilter, &QAction::triggered, ui->mainImageView, &ImageView::GrayScaleImage);
 
@@ -279,29 +279,29 @@ void MainWidget::initMenu()
 //            ui->mainImageView->lightContrastImage();
 //        });
         m_inverseColorFilter = new QAction(m_filterMenu);
-        m_inverseColorFilter->setText(tr("inverseColorFilter"));
+        m_inverseColorFilter->setText(tr("Anti color filter"));
         m_filterMenu->addAction(m_inverseColorFilter);
         connect(m_inverseColorFilter, &QAction::triggered, ui->mainImageView, &ImageView::InverseColorImage);
 
         m_Metal = new QAction(m_filterMenu);
-        m_Metal->setText(tr("metalFilter"));
+        m_Metal->setText(tr("Metal filter"));
         m_filterMenu->addAction(m_Metal);
         connect(m_Metal, &QAction::triggered, ui->mainImageView, &ImageView::Metal);
 
 
         m_sharpeningMenu = new Menu(this);
         m_sharpeningAction = new QAction(m_leftMenu);
-        m_sharpeningAction->setText(tr("sharpening"));
+        m_sharpeningAction->setText(tr("Sharpening"));
         m_sharpeningAction->setMenu(m_sharpeningMenu);
         m_leftMenu->addAction(m_sharpeningAction);
 
         m_laplaceSharpen = new QAction(m_sharpeningMenu);
-        m_laplaceSharpen->setText(tr("LaplaceSharpen"));
+        m_laplaceSharpen->setText(tr("Laplacian sharpening"));
         m_sharpeningMenu->addAction(m_laplaceSharpen);
         connect(m_laplaceSharpen, &QAction::triggered, ui->mainImageView, &ImageView::LaplaceSharpenImage);
 
         m_soder = new QAction(m_sharpeningMenu);
-        m_soder->setText(tr("soder"));
+        m_soder->setText(tr("Soder sharpening"));
         m_sharpeningMenu->addAction(m_soder);
         connect(m_soder, &QAction::triggered, ui->mainImageView, &ImageView::soderImage);
 
@@ -309,23 +309,23 @@ void MainWidget::initMenu()
 
 
         m_flip = new QAction(m_leftMenu);
-        m_flip->setText(tr("flip"));
+        m_flip->setText(tr("Flip"));
         m_leftMenu->addAction(m_flip);
         m_leftFlip = new Menu(this);
         m_flip->setMenu(m_leftFlip);
 
         m_flipVertical = new QAction(m_leftMenu);
-        m_flipVertical->setText(tr("flipVertical"));
+        m_flipVertical->setText(tr("Flip Vertical"));
         m_leftFlip->addAction(m_flipVertical);
         connect(m_flipVertical, &QAction::triggered, ui->mainImageView, &ImageView::flipVertical);
 
         m_flipHorizontal = new QAction(m_leftMenu);
-        m_flipHorizontal->setText(tr("flipHorizontal"));
+        m_flipHorizontal->setText(tr("Flip Horizontal"));
         m_leftFlip->addAction(m_flipHorizontal);
         connect(m_flipHorizontal, &QAction::triggered, ui->mainImageView, &ImageView::flipHorizontal);
 
         m_scale = new QAction(m_leftMenu);
-        m_scale->setText(tr("scale"));
+        m_scale->setText(tr("Crop a picture"));
         m_leftMenu->addAction(m_scale);
         connect(m_scale, &QAction::triggered, ui->mainImageView, &ImageView::scaled);
 

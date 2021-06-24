@@ -11,7 +11,7 @@ scaleDialog::scaleDialog(const QImage &img, QWidget *parent) :
     ui->setupUi(this);
     ui->widthSpinBox->setValue(m_img.width());
     ui->heightSpinBox->setValue(m_img.height());
-    setWindowTitle(tr("scale window"));
+    setWindowTitle(tr("Scale window"));
 }
 
 scaleDialog::~scaleDialog()

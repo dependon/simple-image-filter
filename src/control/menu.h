@@ -12,8 +12,9 @@ typedef  DMenu MyMunu;
 #include <QMenu>
 typedef QMenu MyMunu;
 #endif
-class Menu :public MyMunu
+class Menu : public MyMunu
 {
+    Q_OBJECT
 public:
     explicit Menu(QWidget *parent = nullptr);
 };
