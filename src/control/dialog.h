@@ -6,10 +6,10 @@
 DWIDGET_USE_NAMESPACE
 typedef  DWidget MyDialog;
 #else
-#include <QDialog>
-typedef  QDialog MyDialog;
+#include <QWidget>
+typedef  QWidget MyDialog;
 #endif
-class Dialog : public DWidget
+class Dialog : public MyDialog
 {
     Q_OBJECT
 public:

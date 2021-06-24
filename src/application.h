@@ -19,8 +19,8 @@ enum MenuItemId {
     IdHorizontal,
     IdVertical,
     IdContourExtraction,
-    IdMetal
-
+    IdMetal,
+    IdTransparency
 };
 enum isChange {
     Change,

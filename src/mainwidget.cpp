@@ -329,6 +329,10 @@ void MainWidget::initMenu()
         m_leftMenu->addAction(m_scale);
         connect(m_scale, &QAction::triggered, ui->mainImageView, &ImageView::scaled);
 
+        m_transparency = new QAction(m_leftMenu);
+        m_transparency->setText(tr("Set picture transparency"));
+        m_leftMenu->addAction(m_transparency);
+        connect(m_transparency, &QAction::triggered, ui->mainImageView, &ImageView::SetTransparency);
 
     }
 

@@ -60,6 +60,9 @@ public:
     //Adjust image brightness
     static QImage Brightness(int delta, QImage origin);
 
+    //透明度
+    static QImage transparencyImg(int delta, QImage origin);
+
 };
 
 

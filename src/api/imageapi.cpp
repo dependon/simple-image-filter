@@ -596,6 +596,27 @@ QImage QImageAPI::Brightness(int delta, QImage origin)
     return *newImage;
 }
 
+QImage QImageAPI::transparencyImg(int delta, QImage origin)
+{
+    QImage *newImage = new QImage(origin.width(), origin.height(),
+                                  QImage::Format_ARGB32);
+    QColor oldColor;
+    int r, g, b;
+    for (int x = 0; x < newImage->width(); x++) {
+        for (int y = 0; y < newImage->height(); y++) {
+            oldColor = QColor(origin.pixel(x, y));
+
+            r = oldColor.red() ;
+            g = oldColor.green() ;
+            b = oldColor.blue() ;
+
+            newImage->setPixel(x, y, qRgba(r, g, b, delta));
+        }
+    }
+
+    return *newImage;
+}
+
 
 QImage QImageAPI::Vertical(const QImage &origin)
 {

@@ -52,7 +52,8 @@ SOURCES += \
     control/combox.cpp \
     control/lineedit.cpp \
     control/label.cpp \
-    control/spinbox.cpp
+    control/spinbox.cpp \
+    transparencywidget.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -71,11 +72,13 @@ HEADERS += \
     control/combox.h \
     control/lineedit.h \
     control/label.h \
-    control/spinbox.h
+    control/spinbox.h \
+    transparencywidget.h
 
 FORMS += \
         mainwidget.ui \
-    scaledialog.ui
+    scaledialog.ui \
+    transparencywidget.ui
 
 
 

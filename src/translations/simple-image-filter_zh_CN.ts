@@ -13,137 +13,137 @@
 <context>
     <name>ImageCropperDemo</name>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="16"/>
+        <location filename="../view/imagecropperdemo.cpp" line="27"/>
         <source>scale image</source>
         <translation>裁剪图片</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="73"/>
+        <location filename="../view/imagecropperdemo.cpp" line="87"/>
         <source>Preview:</source>
         <translation>预览:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="74"/>
+        <location filename="../view/imagecropperdemo.cpp" line="88"/>
         <source>OriginalImage:</source>
         <translation>另外选择图片:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="75"/>
+        <location filename="../view/imagecropperdemo.cpp" line="89"/>
         <source>OutputShape:</source>
         <translation>输出形状:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="76"/>
+        <location filename="../view/imagecropperdemo.cpp" line="90"/>
         <source>CropperShape:</source>
         <translation>裁剪形状:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="77"/>
+        <location filename="../view/imagecropperdemo.cpp" line="91"/>
         <source>FixedSize:</source>
         <translation>固定尺寸:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="78"/>
+        <location filename="../view/imagecropperdemo.cpp" line="92"/>
         <source>MinimumSize:</source>
         <translation>最小的尺寸:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="81"/>
+        <location filename="../view/imagecropperdemo.cpp" line="95"/>
         <source>EnableOpacity:</source>
         <translation>是否支持透明:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="82"/>
+        <location filename="../view/imagecropperdemo.cpp" line="96"/>
         <source>Opacity:</source>
         <translation>透明度:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="85"/>
+        <location filename="../view/imagecropperdemo.cpp" line="99"/>
         <source>ShowDragSquare:</source>
         <translation>显示拖动方块:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="86"/>
+        <location filename="../view/imagecropperdemo.cpp" line="100"/>
         <source>DragSquareEdge:</source>
         <translation>拖动方块大小:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="87"/>
+        <location filename="../view/imagecropperdemo.cpp" line="101"/>
         <source>DragSquareColor:</source>
         <translation>拖动方块颜色:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="90"/>
+        <location filename="../view/imagecropperdemo.cpp" line="104"/>
         <source>ShowRectBorder:</source>
         <translation>显示矩形边框:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="91"/>
+        <location filename="../view/imagecropperdemo.cpp" line="105"/>
         <source>RectBorderColor:</source>
         <translation>矩形边框颜色:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="93"/>
+        <location filename="../view/imagecropperdemo.cpp" line="107"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="94"/>
+        <location filename="../view/imagecropperdemo.cpp" line="108"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="135"/>
+        <location filename="../view/imagecropperdemo.cpp" line="150"/>
         <source>Rect/Square</source>
         <translation>矩形/方形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="136"/>
+        <location filename="../view/imagecropperdemo.cpp" line="151"/>
         <source>Ellipse/Circle</source>
         <translation>椭圆/圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="140"/>
+        <location filename="../view/imagecropperdemo.cpp" line="155"/>
         <source>Rect</source>
         <translation>矩形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="141"/>
+        <location filename="../view/imagecropperdemo.cpp" line="156"/>
         <source>Square</source>
         <translation>正方形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="142"/>
+        <location filename="../view/imagecropperdemo.cpp" line="157"/>
         <source>FixedRect</source>
         <translation>固定矩形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="143"/>
+        <location filename="../view/imagecropperdemo.cpp" line="158"/>
         <source>Ellipse</source>
         <translation>椭圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="144"/>
+        <location filename="../view/imagecropperdemo.cpp" line="159"/>
         <source>Circle</source>
         <translation>圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="145"/>
+        <location filename="../view/imagecropperdemo.cpp" line="160"/>
         <source>FixedEllipse</source>
         <translation>固定椭圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="208"/>
+        <location filename="../view/imagecropperdemo.cpp" line="223"/>
         <source>Select a picture</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="215"/>
+        <location filename="../view/imagecropperdemo.cpp" line="230"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="215"/>
+        <location filename="../view/imagecropperdemo.cpp" line="230"/>
         <source>Load image failed</source>
         <translation>加载图片失败</translation>
     </message>
@@ -151,32 +151,32 @@
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../view/imageview.cpp" line="155"/>
+        <location filename="../view/imageview.cpp" line="160"/>
         <source>Save Image</source>
         <translation>保存图片</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="155"/>
+        <location filename="../view/imageview.cpp" line="160"/>
         <source>Images (*.png *.bmp *.jpg)</source>
         <translation>图片 (*.png *.bmp *.jpg)</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="170"/>
+        <location filename="../view/imageview.cpp" line="176"/>
         <source>Open File</source>
         <translation>打开图片</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="170"/>
+        <location filename="../view/imageview.cpp" line="176"/>
         <source>png</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="176"/>
+        <location filename="../view/imageview.cpp" line="182"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="176"/>
+        <location filename="../view/imageview.cpp" line="182"/>
         <source>open file error</source>
         <translation>打开文件失败</translation>
     </message>
@@ -189,7 +189,7 @@
         <translation>主窗口</translation>
     </message>
     <message>
-        <location filename="../mainwidget.ui" line="58"/>
+        <location filename="../mainwidget.ui" line="64"/>
         <source>openPicture</source>
         <translation>打开图片</translation>
     </message>
@@ -312,6 +312,12 @@
         <translation>裁剪图片大小</translation>
     </message>
     <message>
+        <location filename="../mainwidget.cpp" line="333"/>
+        <source>Set picture transparency</source>
+        <translatorcomment>设置图片透明度</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
         <source>oldFilter</source>
         <translation type="vanished">老照片滤镜</translation>
     </message>
@@ -377,6 +383,27 @@
     </message>
 </context>
 <context>
+    <name>TransparencyWidget</name>
+    <message>
+        <location filename="../transparencywidget.ui" line="14"/>
+        <source>Form</source>
+        <translatorcomment>窗口</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../transparencywidget.ui" line="20"/>
+        <source>Set picture transparency</source>
+        <translatorcomment>设置图片透明度</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../transparencywidget.ui" line="45"/>
+        <source>ok</source>
+        <translatorcomment>确定</translatorcomment>
+        <translation>确定</translation>
+    </message>
+</context>
+<context>
     <name>scaleDialog</name>
     <message>
         <location filename="../scaledialog.ui" line="14"/>
@@ -384,22 +411,28 @@
         <translation>裁剪窗口</translation>
     </message>
     <message>
-        <location filename="../scaledialog.ui" line="22"/>
+        <location filename="../scaledialog.ui" line="52"/>
         <source>width</source>
         <translation>宽</translation>
     </message>
     <message>
-        <location filename="../scaledialog.ui" line="43"/>
+        <location filename="../scaledialog.ui" line="73"/>
         <source>height</source>
         <translation>高</translation>
     </message>
     <message>
-        <location filename="../scaledialog.ui" line="64"/>
+        <location filename="../scaledialog.ui" line="92"/>
+        <source>Scaled image</source>
+        <translatorcomment>裁剪图片</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../scaledialog.ui" line="34"/>
         <source>ok</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../scaledialog.ui" line="71"/>
+        <location filename="../scaledialog.ui" line="41"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>

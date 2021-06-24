@@ -86,6 +86,7 @@ private:
     QAction *m_grayScaleFilter{nullptr};    //黑白滤镜(右键菜单)
     QAction *m_lightContrastImage{nullptr};    //对比度和亮度(右键菜单)
     QAction *m_inverseColorFilter{nullptr};    //反色滤镜(右键菜单)
+    QAction *m_transparency{nullptr};    //设置透明度
 
     QAction *m_Metal{nullptr}; //金属拉丝
 

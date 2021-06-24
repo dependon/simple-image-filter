@@ -14,7 +14,7 @@
 
 
 
-struct ImageFilterInfo{
+struct ImageFilterInfo {
     MenuItemId id;
     double spatialDecay{0.02};
     double photometricStandardDeviation{10};
@@ -22,9 +22,10 @@ struct ImageFilterInfo{
     int coolImageDecay{30};
     int lightDecay{100};
     int ContrastDecay{100};
+    int transparency{255};
 };
 
-class ImageRunnable :public QObject, public QRunnable
+class ImageRunnable : public QObject, public QRunnable
 {
 
     Q_OBJECT

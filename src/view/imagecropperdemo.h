@@ -10,7 +10,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QSlider>
-#include <DDialog>
+
 #include "application.h"
 #include "imagecropperlabel.h"
 #include "control/statusbarwidget.h"

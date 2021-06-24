@@ -81,6 +81,10 @@ void ImageRunnable::run()
         m_iimg = QImageAPI::ContourExtraction(m_iimg);
         App->sigFilterImage(m_iimg);
         break;
+    case MenuItemId::IdTransparency:
+        m_iimg = QImageAPI::transparencyImg(m_info.transparency, m_iimg);
+        App->sigFilterImage(m_iimg);
+        break;
     default:
         break;
 

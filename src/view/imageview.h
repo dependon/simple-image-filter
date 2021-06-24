@@ -92,6 +92,8 @@ public slots:
     void Metal();
 
     void scaled();
+
+    void SetTransparency();
 protected:
     //窗口大小改变事件
     void resizeEvent(QResizeEvent *event) override;

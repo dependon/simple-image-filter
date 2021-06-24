@@ -3,6 +3,7 @@
 #include "imagethread.h"
 #include "imagecropperdemo.h"
 #include "scaledialog.h"
+#include "transparencywidget.h"
 
 #include <QPaintDevice>
 #include <QGraphicsPixmapItem>
@@ -14,6 +15,10 @@
 #include <QThreadPool>
 #include <qmath.h>
 #include <QObject>
+#ifdef USE_DTK
+#include <DDialog>
+#endif
+
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
@@ -155,7 +160,7 @@ void ImageView::savecurrentPic()
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png *.bmp *.jpg)")); //选择路径
     image().save(filename);
 }
-#include <DDialog>
+
 void ImageView::scaleImage()
 {
     ImageCropperDemo *dialog = new ImageCropperDemo();
@@ -379,10 +384,33 @@ void ImageView::scaled()
 #else
     QDialog ss;
 #endif
+//    ss.setTitle(tr("Scaled image"));
     ss.setFixedSize(374, 214);
     scaleWidget->setParent(&ss);
     ss.exec();
 
+}
+
+void ImageView::SetTransparency()
+{
+
+    TransparencyWidget *widget = new TransparencyWidget();
+    widget->show();
+    connect(widget, &TransparencyWidget::transparencyChange, this, [ = ](const int &index) {
+        ImageFilterInfo info;
+        info.id = MenuItemId::IdTransparency;
+        info.transparency = index;
+        playThread(info);
+    });
+#ifdef USE_DTK
+    DDialog ss;
+#else
+    QDialog ss;
+#endif
+//    ss.setTitle(tr("Set picture transparency"));
+    ss.setFixedSize(374, 120);
+    widget->setParent(&ss);
+    ss.exec();
 }
 const QImage ImageView::image()
 {
