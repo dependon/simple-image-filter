@@ -421,8 +421,7 @@
     <message>
         <location filename="../scaledialog.ui" line="92"/>
         <source>Scaled image</source>
-        <translatorcomment>裁剪图片</translatorcomment>
-        <translation></translation>
+        <translation>裁剪图片</translation>
     </message>
     <message>
         <location filename="../scaledialog.ui" line="34"/>
