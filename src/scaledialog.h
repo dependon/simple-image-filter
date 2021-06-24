@@ -1,13 +1,13 @@
 #ifndef SCALEDIALOG_H
 #define SCALEDIALOG_H
 
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
 class scaleDialog;
 }
 
-class scaleDialog : public QDialog
+class scaleDialog : public QWidget
 {
     Q_OBJECT
 

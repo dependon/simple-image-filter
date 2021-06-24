@@ -4,7 +4,7 @@
 #include "application.h"
 
 scaleDialog::scaleDialog(const QImage &img, QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     m_img(img),
     ui(new Ui::scaleDialog)
 {
@@ -22,10 +22,16 @@ scaleDialog::~scaleDialog()
 void scaleDialog::on_okBtn_clicked()
 {
     App->sigFilterImage(m_img.scaled(ui->widthSpinBox->value(), ui->heightSpinBox->value()));
-    close();
+    QWidget *widget = static_cast<QWidget *>(parent());
+    if (widget) {
+        widget->close();
+    }
 }
 
 void scaleDialog::on_cancelBtn_clicked()
 {
-    close();
+    QWidget *widget = static_cast<QWidget *>(parent());
+    if (widget) {
+        widget->close();
+    }
 }

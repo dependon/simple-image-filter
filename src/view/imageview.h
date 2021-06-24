@@ -9,6 +9,7 @@
 class ImageFilterInfo;
 class QGraphicsPixmapItem;
 class ImageCropperDemo;
+class scaleDialog;
 //Normal表示正常模式，Basic模式不会接受全局信号
 enum ViewId {
     Normal,
@@ -108,6 +109,7 @@ private:
     QImage m_FilterImage{nullptr};//当前处理的图像
     QImage m_lightContrastImage{nullptr};//亮度曝光度图像
     ViewId m_cureentId{Normal};//当前模式
+//    scaleDialog m_scaleWidget{nullptr};
 };
 
 #endif // IMAGEVIEW_H

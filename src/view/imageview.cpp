@@ -372,8 +372,17 @@ void ImageView::Metal()
 
 void ImageView::scaled()
 {
-    scaleDialog a(m_FilterImage);
-    a.exec();
+    scaleDialog *scaleWidget = new scaleDialog(m_FilterImage);
+    scaleWidget->show();
+#ifdef USE_DTK
+    DDialog ss;
+#else
+    QDialog ss;
+#endif
+    ss.setFixedSize(374, 214);
+    scaleWidget->setParent(&ss);
+    ss.exec();
+
 }
 const QImage ImageView::image()
 {
