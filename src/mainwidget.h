@@ -35,6 +35,8 @@ public:
     //通过路径打开图片
     void openImage(const QString &path);
 
+    void initShortcut();
+
     ~MainWidget();
 protected:
     //窗口显示事件

@@ -15,6 +15,8 @@
 #include <QThreadPool>
 #include <qmath.h>
 #include <QObject>
+#include <QStandardPaths>
+
 #ifdef USE_DTK
 #include <DDialog>
 #include <DMessageBox>
@@ -158,7 +160,8 @@ void ImageView::RotateImage(const int &index)
 }
 void ImageView::savecurrentPic()
 {
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr(".png")); //选择路径
+    QString desktop = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Desktop";
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), desktop, tr(".png")); //选择路径
     if (!filename.contains(".png")) {
         filename = filename + ".png";
     }
@@ -177,7 +180,8 @@ void ImageView::scaleImage()
 void ImageView::savecurrentPicAs()
 {
     QFileDialog fileDialog;
-    QString fileName = fileDialog.getSaveFileName(this, tr("Open File"), "/home", tr("png"));
+    QString desktop = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Desktop";
+    QString fileName = fileDialog.getSaveFileName(this, tr("Open File"), desktop, tr("png"));
     if (fileName == "") {
         return;
     }

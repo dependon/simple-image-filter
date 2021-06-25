@@ -16,6 +16,7 @@
 #include <QPropertyAnimation>
 #include <QSlider>
 #include <QClipboard>
+#include <QShortcut>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -55,6 +56,7 @@ bool MainWidget::Init()
         initBtn();
         initConnect();
         initMenu();
+        initShortcut();
         iRet = true;
     }
     setCurrentWidget(0);
@@ -362,6 +364,27 @@ void MainWidget::openImage(const QString &path)
     ui->mainImageView->openImage(path);
     ui->basicImageView->openImage(path);
     setWindowTitle(QFileInfo(path).fileName());
+}
+
+void MainWidget::initShortcut()
+{
+    QShortcut *sc = new QShortcut(QKeySequence("Ctrl+="), this);
+    sc->setContext(Qt::WindowShortcut);
+    connect(sc, &QShortcut::activated, this, [ = ] {
+        ui->mainImageView->setScaleValue(1.1);
+    });
+    sc = new QShortcut(QKeySequence("Ctrl+-"), this);
+    sc->setContext(Qt::WindowShortcut);
+    connect(sc, &QShortcut::activated, this, [ = ] {
+        ui->mainImageView->setScaleValue(0.9);
+    });
+    sc = new QShortcut(QKeySequence("Ctrl+C"), this);
+    connect(sc, &QShortcut::activated, this, [ = ] {
+        QClipboard *cb = qApp->clipboard();
+        QMimeData *newMimeData = new QMimeData();
+        newMimeData->setImageData(ui->mainImageView->image());
+        cb->setMimeData(newMimeData, QClipboard::Clipboard);
+    });
 }
 
 MainWidget::~MainWidget()
