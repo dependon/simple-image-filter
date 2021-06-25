@@ -17,6 +17,7 @@
 #include <QObject>
 #ifdef USE_DTK
 #include <DDialog>
+#include <DMessageBox>
 #endif
 
 const qreal MAX_SCALE_FACTOR = 20.0;
@@ -157,7 +158,7 @@ void ImageView::RotateImage(const int &index)
 }
 void ImageView::savecurrentPic()
 {
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png *.bmp *.jpg)")); //选择路径
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr(".png")); //选择路径
     image().save(filename);
 }
 
@@ -248,8 +249,27 @@ void ImageView::oldIMage()
 
 void ImageView::resetImage()
 {
+#ifdef USE_DTK
+//    int i = DMessageBox::information(NULL, "Title", "Content", QMessageBox::Yes | QMessageBox::No);
+    DDialog *pDDialog = new DDialog(QString(tr("Reset tips")), QString(tr("Reset picture?")), nullptr);
+    pDDialog->setIcon(QIcon::fromTheme("deepin-editor"));
+    pDDialog->setWindowFlags(pDDialog->windowFlags() | Qt::WindowStaysOnTopHint);
+    pDDialog->addButton(QString(tr("ok")), false, DDialog::ButtonRecommend);
+    pDDialog->addButton(QString(tr("cancel")), true, DDialog::ButtonNormal);
+    connect(pDDialog, &DDialog::buttonClicked, [ = ](int index, const QString & text) {
+        if (index == 0) {
+            openImage(m_currentImage);
+            m_FilterImage = *m_currentImage;
+        } else {
+//            close();
+        }
+    });
+    pDDialog->exec();
+#else
     openImage(m_currentImage);
     m_FilterImage = *m_currentImage;
+#endif
+
 }
 
 void ImageView::BEEPImage(double spatialDecay, double photometricStandardDeviation)

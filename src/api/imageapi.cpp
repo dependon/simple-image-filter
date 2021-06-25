@@ -420,9 +420,11 @@ QImage QImageAPI::SobelEdge(const QImage &origin)
 
             for (int k = 0; k < 3; k++) {
                 for (int p = 0; p < 3; p++) {
-                    pixel = grayImage.pixel(x + 1 + 1 - k, y + 1 + 1 - p);
-                    value_gx += Gx[p * 3 + k] * qRed(pixel);
-                    value_gy += Gy[p * 3 + k] * qRed(pixel);
+                    if ((x + 1 + 1 - k < width) && (y + 1 + 1 - p < height)) {
+                        pixel = grayImage.pixel(x + 1 + 1 - k, y + 1 + 1 - p);
+                        value_gx += Gx[p * 3 + k] * qRed(pixel);
+                        value_gy += Gy[p * 3 + k] * qRed(pixel);
+                    }
                 }
                 sobel_norm[x + y * width] = abs(value_gx) + abs(value_gy);
 
