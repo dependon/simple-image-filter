@@ -6,11 +6,12 @@
 class Menu;
 class QFrame;
 class QSlider;
-class PushButton;
+class ToolButton;
 class QVBoxLayout;
 class QHBoxLayout;
 class StatusBarWidget;
 class QGraphicsPixmapItem;
+class ToolButton;
 namespace Ui {
 class MainWidget;
 }
@@ -58,18 +59,19 @@ private:
 
     StatusBarWidget *m_statusbarWidget{nullptr};    //栈窗体
 
-    PushButton *m_openBtn{nullptr};    //打开按钮(下方状态栏)
-    PushButton *m_fitImageBtn{nullptr};    //适应图片大小按钮(下方状态栏)
-    PushButton *m_fitWindowBtn{nullptr};    //适应窗口大小按钮(下方状态栏)
-    PushButton *m_rotateRight{nullptr};    //向右旋转按钮按钮(下方状态栏)
-    PushButton *m_rotateLeft{nullptr};   //向左旋转按钮按钮(下方状态栏)
-    PushButton *m_saveBtn{nullptr};    //保存图片按钮(下方状态栏)
-    PushButton *m_resetBtn{nullptr};    //还原原来的图片状态按钮(下方状态栏)
-    PushButton *m_scaleImageBtn{nullptr};    //还原原来的图片状态按钮(下方状态栏)
+    ToolButton *m_openBtn{nullptr};    //打开按钮(下方状态栏)
+    ToolButton *m_fitImageBtn{nullptr};    //适应图片大小按钮(下方状态栏)
+    ToolButton *m_fitWindowBtn{nullptr};    //适应窗口大小按钮(下方状态栏)
+    ToolButton *m_rotateRight{nullptr};    //向右旋转按钮按钮(下方状态栏)
+    ToolButton *m_rotateLeft{nullptr};   //向左旋转按钮按钮(下方状态栏)
+    ToolButton *m_saveBtn{nullptr};    //保存图片按钮(下方状态栏)
+    ToolButton *m_resetBtn{nullptr};    //还原原来的图片状态按钮(下方状态栏)
+    ToolButton *m_scaleImageBtn{nullptr};    //还原原来的图片状态按钮(下方状态栏)
 
     Menu *m_leftMenu{nullptr};  //右键菜单
 
     QAction *m_openAction{nullptr};  //打开按钮(右键菜单)
+    QAction *m_copyAction{nullptr};  //复制功能(右键菜单)
     QAction *m_fitImageAction{nullptr};//适应图片大小按钮(右键菜单)
     QAction *m_fitWindowAction{nullptr};    //适应窗口大小按钮(右键菜单)
     QAction *m_rotateRightAction{nullptr};   //向右旋转按钮按钮(右键菜单)

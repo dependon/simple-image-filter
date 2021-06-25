@@ -9,5 +9,6 @@
         <file>icon/open.svg</file>
         <file>icon/reset.svg</file>
         <file>icon/icon.png</file>
+        <file>icon/close.svg</file>
     </qresource>
 </RCC>

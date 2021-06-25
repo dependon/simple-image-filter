@@ -53,7 +53,8 @@ SOURCES += \
     control/lineedit.cpp \
     control/label.cpp \
     control/spinbox.cpp \
-    transparencywidget.cpp
+    transparencywidget.cpp \
+    control/toolbutton.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -73,7 +74,8 @@ HEADERS += \
     control/lineedit.h \
     control/label.h \
     control/spinbox.h \
-    transparencywidget.h
+    transparencywidget.h \
+    control/toolbutton.h
 
 FORMS += \
         mainwidget.ui \

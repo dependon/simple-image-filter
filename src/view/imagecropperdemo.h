@@ -15,6 +15,7 @@
 #include "imagecropperlabel.h"
 #include "control/statusbarwidget.h"
 #include "control/pushbutton.h"
+#include "control/toolbutton.h"
 #include "control/openimagebutton.h"
 #include "control/combox.h"
 #include "control/lineedit.h"
@@ -94,6 +95,10 @@ private:
 
     openImageButton *btnSavePreview;
     PushButton *btnQuit;
+#ifdef USE_DTK
+    ToolButton *m_closeBtn;
+#endif
+
 };
 
 #endif // TESTIMAGECROPPERLABEL_H

@@ -1,7 +1,8 @@
 #include "mainwidget.h"
 #include "ui_mainwidget.h"
 #include "statusbarwidget.h"
-#include "pushbutton.h"
+
+#include "toolbutton.h"
 #include "imageview.h"
 #include "application.h"
 #include "menu.h"
@@ -14,6 +15,7 @@
 #include <QMimeData>
 #include <QPropertyAnimation>
 #include <QSlider>
+#include <QClipboard>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -78,84 +80,84 @@ void MainWidget::initBtn()
         m_Vlayout->addWidget(m_lightSlider);
         m_Vlayout->addWidget(m_contrastSlider);
 
-        m_openBtn = new PushButton(m_statusbarWidget);
+        m_openBtn = new ToolButton(m_statusbarWidget);
         m_openBtn->setShortcut(QKeySequence("Ctrl+O"));
         m_openBtn->setFixedSize(60, 60);
         m_openBtn->setToolTip(tr("open"));
         m_openBtn->setIcon(QIcon(":/icon/open.svg"));
         m_openBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_openBtn);
-        connect(m_openBtn, &QPushButton::clicked, this, &MainWidget::openImageFile);
+        connect(m_openBtn, &QToolButton::clicked, this, &MainWidget::openImageFile);
 
-        m_resetBtn = new PushButton(m_statusbarWidget);
+        m_resetBtn = new ToolButton(m_statusbarWidget);
         m_resetBtn->setShortcut(QKeySequence("Ctrl+E"));
         m_resetBtn->setFixedSize(60, 60);
         m_resetBtn->setToolTip(tr("reset"));
         m_resetBtn->setIcon(QIcon(":/icon/reset.svg"));
         m_resetBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_resetBtn);
-        connect(m_resetBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::resetImage);
+        connect(m_resetBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::resetImage);
 
-        m_fitImageBtn = new PushButton(m_statusbarWidget);
+        m_fitImageBtn = new ToolButton(m_statusbarWidget);
         m_fitImageBtn->setShortcut(QKeySequence("Ctrl+R"));
         m_fitImageBtn->setFixedSize(60, 60);
         m_fitImageBtn->setToolTip(tr("fitImage"));
         m_fitImageBtn->setIcon(QIcon(":/icon/dcc_11_36px.svg"));
         m_fitImageBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_fitImageBtn);
-        connect(m_fitImageBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::fitImage);
+        connect(m_fitImageBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::fitImage);
 
-        m_fitWindowBtn = new PushButton(m_statusbarWidget);
+        m_fitWindowBtn = new ToolButton(m_statusbarWidget);
         m_fitWindowBtn->setShortcut(QKeySequence("Ctrl+T"));
         m_fitWindowBtn->setFixedSize(60, 60);
         m_fitWindowBtn->setToolTip(tr("fitWindow"));
         m_fitWindowBtn->setIcon(QIcon(":/icon/dcc_fit_36px.svg"));
         m_fitWindowBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_fitWindowBtn);
-        connect(m_fitWindowBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::fitWindow);
+        connect(m_fitWindowBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::fitWindow);
 
-        m_rotateLeft = new PushButton();
+        m_rotateLeft = new ToolButton();
         m_rotateLeft->setShortcut(QKeySequence("Ctrl+Left"));
         m_rotateLeft->setFixedSize(60, 60);
         m_rotateLeft->setToolTip(tr("rotate-90"));
         m_rotateLeft->setIcon(QIcon(":/icon/dcc_left_36px.svg"));
         m_rotateLeft->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_rotateLeft);
-        connect(m_rotateLeft, &QPushButton::clicked, ui->mainImageView, [ = ] {
+        connect(m_rotateLeft, &QToolButton::clicked, ui->mainImageView, [ = ] {
             ui->mainImageView->RotateImage(-90);
         });
 
-        m_rotateRight = new PushButton();
+        m_rotateRight = new ToolButton();
         m_rotateRight->setShortcut(QKeySequence("Ctrl+Right"));
         m_rotateRight->setFixedSize(60, 60);
         m_rotateRight->setToolTip(tr("rotate+90"));
         m_rotateRight->setIcon(QIcon(":/icon/dcc_right_36px.svg"));
         m_rotateRight->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_rotateRight);
-        connect(m_rotateRight, &QPushButton::clicked, ui->mainImageView, [ = ] {
+        connect(m_rotateRight, &QToolButton::clicked, ui->mainImageView, [ = ] {
             ui->mainImageView->RotateImage(90);
         });
 
 
 
-        m_saveBtn = new PushButton();
+        m_saveBtn = new ToolButton();
         m_saveBtn->setShortcut(QKeySequence("Ctrl+S"));
         m_saveBtn->setFixedSize(60, 60);
         m_saveBtn->setToolTip(tr("save"));
         m_saveBtn->setIcon(QIcon(":/icon/save.svg"));
         m_saveBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_saveBtn);
-        connect(m_saveBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::savecurrentPic);
+        connect(m_saveBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::savecurrentPic);
 
 
-        m_scaleImageBtn = new PushButton();
+        m_scaleImageBtn = new ToolButton();
         m_scaleImageBtn->setShortcut(QKeySequence("Ctrl+Y"));
         m_scaleImageBtn->setFixedSize(60, 60);
         m_scaleImageBtn->setToolTip(tr("scaleImage"));
         m_scaleImageBtn->setIcon(QIcon(":/icon/scale.svg"));
         m_scaleImageBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_scaleImageBtn);
-        connect(m_scaleImageBtn, &QPushButton::clicked, ui->mainImageView, &ImageView::scaleImage);
+        connect(m_scaleImageBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::scaleImage);
 
 
 
@@ -201,43 +203,28 @@ void MainWidget::initMenu()
 
 
         m_openAction = new QAction(m_leftMenu);
-        m_openAction->setText(tr("open"));
+        m_openAction->setText(tr("Open images"));
         m_leftMenu->addAction(m_openAction);
         connect(m_openAction, &QAction::triggered, this, &MainWidget::openImageFile);
 
-//        m_fitImageAction = new QAction(m_leftMenu);
-//        m_fitImageAction->setText(tr("fitImage"));
-//        m_leftMenu->addAction(m_fitImageAction);
-//        connect(m_fitImageAction, &QAction::triggered, ui->mainImageView, &ImageView::fitImage);
-
-//        m_fitWindowAction = new QAction(m_leftMenu);
-//        m_fitWindowAction->setText(tr("fitWindow"));
-//        m_leftMenu->addAction(m_fitWindowAction);
-//        connect(m_fitWindowAction, &QAction::triggered, ui->mainImageView, &ImageView::fitWindow);
-
-//        m_rotateRightAction = new QAction(m_leftMenu);
-//        m_rotateRightAction->setText(tr("rotate+90"));
-//        m_leftMenu->addAction(m_rotateRightAction);
-//        connect(m_rotateRightAction, &QAction::triggered, ui->mainImageView, [ = ] {
-//            ui->mainImageView->RotateImage(90);
-//        });
-//        m_rotateLeftAction = new QAction(m_leftMenu);
-//        m_rotateLeftAction->setText(tr("rotate-90"));
-//        m_leftMenu->addAction(m_rotateLeftAction);
-//        connect(m_rotateLeftAction, &QAction::triggered, ui->mainImageView, [ = ] {
-//            ui->mainImageView->RotateImage(-90);
-//        });
-
-
+        m_copyAction = new QAction(m_leftMenu);
+        m_copyAction->setText(tr("Copy"));
+        m_leftMenu->addAction(m_copyAction);
+        connect(m_copyAction, &QAction::triggered, this, [ = ] {
+            QClipboard *cb = qApp->clipboard();
+            QMimeData *newMimeData = new QMimeData();
+            newMimeData->setImageData(ui->mainImageView->image());
+            cb->setMimeData(newMimeData, QClipboard::Clipboard);
+        });
 
         m_saveBAction = new QAction(m_leftMenu);
-        m_saveBAction->setText(tr("save"));
+        m_saveBAction->setText(tr("Save"));
         m_leftMenu->addAction(m_saveBAction);
         connect(m_saveBAction, &QAction::triggered, ui->mainImageView, &ImageView::savecurrentPic);
 
         m_filterMenu = new Menu(this);
         m_filteraction = new QAction(m_leftMenu);
-        m_filteraction->setText(tr("filter"));
+        m_filteraction->setText(tr("Filter"));
         m_filteraction->setMenu(m_filterMenu);
         m_leftMenu->addAction(m_filteraction);
 

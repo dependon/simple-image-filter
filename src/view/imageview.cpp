@@ -159,6 +159,9 @@ void ImageView::RotateImage(const int &index)
 void ImageView::savecurrentPic()
 {
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr(".png")); //选择路径
+    if (!filename.contains(".png")) {
+        filename = filename + ".png";
+    }
     image().save(filename);
 }
 

@@ -20,6 +20,13 @@ ImageCropperDemo::ImageCropperDemo(QWidget *parent) :
     this->setAttribute(Qt::WA_TranslucentBackground, true);
     Dtk::Widget::moveToCenter(this);
     this->resize(950, 650);
+
+    m_closeBtn = new ToolButton(this);
+//    m_closeBtn->setText("X");
+    m_closeBtn->setFixedSize(QSize(30, 30));
+    m_closeBtn->setIcon(QIcon(":/icon/close.svg"));
+    connect(m_closeBtn, &ToolButton::clicked, this, &ImageCropperDemo::close);
+    m_closeBtn->move(910, 10);
 #endif
     setupLayout();
     init();
