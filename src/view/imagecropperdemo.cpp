@@ -6,28 +6,29 @@
 #include <QMessageBox>
 #include <QDebug>
 
-#if USE_DTK
+#ifdef USE_DTK
 #include <DWidgetUtil>
 #include <DTitlebar>
+#include <DColorDialog>
 #endif
 
 ImageCropperDemo::ImageCropperDemo(QWidget *parent) :
-    StatusBarWidget(parent)
+    QWidget(parent)
 {
 
-#if USE_DTK
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
-    Dtk::Widget::moveToCenter(this);
-    this->resize(950, 650);
+//#if USE_DTK
+//    this->setWindowFlags(Qt::FramelessWindowHint);
+//    this->setAttribute(Qt::WA_TranslucentBackground, true);
+//    Dtk::Widget::moveToCenter(this);
+//    this->resize(950, 650);
 
-    m_closeBtn = new ToolButton(this);
-//    m_closeBtn->setText("X");
-    m_closeBtn->setFixedSize(QSize(30, 30));
-    m_closeBtn->setIcon(QIcon(":/icon/close.svg"));
-    connect(m_closeBtn, &ToolButton::clicked, this, &ImageCropperDemo::close);
-    m_closeBtn->move(910, 10);
-#endif
+//    m_closeBtn = new ToolButton(this);
+////    m_closeBtn->setText("X");
+//    m_closeBtn->setFixedSize(QSize(30, 30));
+//    m_closeBtn->setIcon(QIcon(":/icon/close.svg"));
+//    connect(m_closeBtn, &ToolButton::clicked, this, &ImageCropperDemo::close);
+//    m_closeBtn->move(910, 10);
+//#endif
     setupLayout();
     init();
     this->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -260,7 +261,7 @@ void ImageCropperDemo::mousePressEvent(QMouseEvent *event)
         m_startPostion = event->globalPos();
         m_framPostion = frameGeometry().topLeft();
     }
-    StatusBarWidget::mousePressEvent(event);//调用父类函数保持原按键行为
+    QWidget::mousePressEvent(event);//调用父类函数保持原按键行为
 }
 
 void ImageCropperDemo::mouseMoveEvent(QMouseEvent *event)
@@ -275,7 +276,7 @@ void ImageCropperDemo::mouseMoveEvent(QMouseEvent *event)
 void ImageCropperDemo::mouseReleaseEvent(QMouseEvent *event)
 {
     m_draging = false;
-    StatusBarWidget::mouseReleaseEvent(event);
+    QWidget::mouseReleaseEvent(event);
 }
 
 void ImageCropperDemo::onOutputShapeChanged(int idx)
@@ -444,7 +445,11 @@ void ImageCropperDemo::onShowRectBorder(int state)
 
 void ImageCropperDemo::onChooseRectBorderColor()
 {
+#ifdef USE_DTK
+    QColor color = DColorDialog::getColor(imgCropperLabel->getBorderPen().color(), this);
+#elif
     QColor color = QColorDialog::getColor(imgCropperLabel->getBorderPen().color(), this);
+#endif
     if (color.isValid()) {
         setLabelColor(labelRectBorderColor, color);
         QPen pen = imgCropperLabel->getBorderPen();
@@ -456,7 +461,12 @@ void ImageCropperDemo::onChooseRectBorderColor()
 
 void ImageCropperDemo::onChooseDragSquareColor()
 {
+#ifdef USE_DTK
+    QColor color = DColorDialog::getColor(Qt::white, this);
+#elif
     QColor color = QColorDialog::getColor(Qt::white, this);
+#endif
+
     if (color.isValid()) {
         setLabelColor(labelDragSquareColor, color);
         imgCropperLabel->setDragSquareColor(color);

@@ -21,7 +21,7 @@
 #include "control/lineedit.h"
 #include "control/label.h"
 
-class ImageCropperDemo : public StatusBarWidget
+class ImageCropperDemo : public QWidget
 {
     Q_OBJECT
 public:
@@ -95,9 +95,9 @@ private:
 
     openImageButton *btnSavePreview;
     PushButton *btnQuit;
-#ifdef USE_DTK
-    ToolButton *m_closeBtn;
-#endif
+//#ifdef USE_DTK
+//    ToolButton *m_closeBtn;
+//#endif
 
 };
 

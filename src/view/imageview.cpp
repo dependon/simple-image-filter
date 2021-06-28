@@ -171,11 +171,23 @@ void ImageView::savecurrentPic()
 void ImageView::scaleImage()
 {
     ImageCropperDemo *dialog = new ImageCropperDemo();
+
     if (m_pixmapItem) {
         dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
     }
 
     dialog->show();
+
+#ifdef USE_DTK
+    DDialog ss;
+#else
+    QDialog ss;
+#endif
+    ss.setTitle(tr("Scale Image Widget"));
+    ss.setFixedSize(1000, 610);
+    dialog->setParent(&ss);
+    ss.exec();
+
 }
 void ImageView::savecurrentPicAs()
 {
@@ -259,7 +271,7 @@ void ImageView::resetImage()
 #ifdef USE_DTK
 //    int i = DMessageBox::information(NULL, "Title", "Content", QMessageBox::Yes | QMessageBox::No);
     DDialog *pDDialog = new DDialog(QString(tr("Reset tips")), QString(tr("Reset picture?")), nullptr);
-    pDDialog->setIcon(QIcon::fromTheme("deepin-editor"));
+//    pDDialog->setIcon(QIcon::fromTheme("deepin-editor"));
     pDDialog->setWindowFlags(pDDialog->windowFlags() | Qt::WindowStaysOnTopHint);
     pDDialog->addButton(QString(tr("ok")), false, DDialog::ButtonRecommend);
     pDDialog->addButton(QString(tr("cancel")), true, DDialog::ButtonNormal);
