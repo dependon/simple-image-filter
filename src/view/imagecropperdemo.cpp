@@ -214,7 +214,14 @@ void ImageCropperDemo::init()
     connect(btnSavePreview, &QPushButton::clicked,
             this, &ImageCropperDemo::onSaveCroppedImage);
     connect(btnQuit, &QPushButton::clicked,
-            this, &ImageCropperDemo::close);
+    this, [ = ] {
+        this->close();
+        QWidget *widget = static_cast<QWidget *>(parent());
+        if (widget)
+        {
+            widget->close();
+        }
+    });
 
     imgCropperLabel->update();
 }
@@ -254,30 +261,30 @@ void ImageCropperDemo::setChooseCurrentImage(QPixmap pix)
     labelPreviewImage->setFrameStyle(0);
 }
 
-void ImageCropperDemo::mousePressEvent(QMouseEvent *event)
-{
-    m_draging = true;
-    if (event->buttons() & Qt::LeftButton) { //只响应鼠标左键
-        m_startPostion = event->globalPos();
-        m_framPostion = frameGeometry().topLeft();
-    }
-    QWidget::mousePressEvent(event);//调用父类函数保持原按键行为
-}
+//void ImageCropperDemo::mousePressEvent(QMouseEvent *event)
+//{
+//    m_draging = true;
+//    if (event->buttons() & Qt::LeftButton) { //只响应鼠标左键
+//        m_startPostion = event->globalPos();
+//        m_framPostion = frameGeometry().topLeft();
+//    }
+//    QWidget::mousePressEvent(event);//调用父类函数保持原按键行为
+//}
 
-void ImageCropperDemo::mouseMoveEvent(QMouseEvent *event)
-{
-    if (event->buttons() & Qt::LeftButton) {
-        //offset 偏移位置
-        QPoint offset = event->globalPos() - m_startPostion;
-        move(m_framPostion + offset);
-    }
-}
+//void ImageCropperDemo::mouseMoveEvent(QMouseEvent *event)
+//{
+//    if (event->buttons() & Qt::LeftButton) {
+//        //offset 偏移位置
+//        QPoint offset = event->globalPos() - m_startPostion;
+//        move(m_framPostion + offset);
+//    }
+//}
 
-void ImageCropperDemo::mouseReleaseEvent(QMouseEvent *event)
-{
-    m_draging = false;
-    QWidget::mouseReleaseEvent(event);
-}
+//void ImageCropperDemo::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    m_draging = false;
+//    QWidget::mouseReleaseEvent(event);
+//}
 
 void ImageCropperDemo::onOutputShapeChanged(int idx)
 {
@@ -447,7 +454,7 @@ void ImageCropperDemo::onChooseRectBorderColor()
 {
 #ifdef USE_DTK
     QColor color = DColorDialog::getColor(imgCropperLabel->getBorderPen().color(), this);
-#elif
+#else
     QColor color = QColorDialog::getColor(imgCropperLabel->getBorderPen().color(), this);
 #endif
     if (color.isValid()) {
@@ -463,7 +470,7 @@ void ImageCropperDemo::onChooseDragSquareColor()
 {
 #ifdef USE_DTK
     QColor color = DColorDialog::getColor(Qt::white, this);
-#elif
+#else
     QColor color = QColorDialog::getColor(Qt::white, this);
 #endif
 

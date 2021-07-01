@@ -184,8 +184,7 @@ void ImageView::scaleImage()
 #else
     QDialog ss;
 #endif
-    ss.setTitle(tr("Scale Image Widget"));
-    ss.setFixedSize(1000, 610);
+    ss.setFixedSize(1050, 610);
     dialog->setParent(&ss);
     ss.exec();
 

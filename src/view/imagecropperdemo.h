@@ -31,9 +31,9 @@ public:
     void init();
     void setChooseCurrentImage(QPixmap pix);
 protected:
-    void mousePressEvent(QMouseEvent *event);//按下
-    void mouseMoveEvent(QMouseEvent *event);//移动
-    void mouseReleaseEvent(QMouseEvent *event);//抬起
+//    void mousePressEvent(QMouseEvent *event);//按下
+//    void mouseMoveEvent(QMouseEvent *event);//移动
+//    void mouseReleaseEvent(QMouseEvent *event);//抬起
 private:
     bool m_draging;//是否拖动
     QPoint m_startPostion;//拖动前鼠标位置
