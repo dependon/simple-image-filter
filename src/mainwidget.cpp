@@ -17,6 +17,7 @@
 #include <QSlider>
 #include <QClipboard>
 #include <QShortcut>
+#include <QStandardPaths>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -361,9 +362,11 @@ void MainWidget::setCurrentWidget(const int &index)
 
 void MainWidget::openImage(const QString &path)
 {
-    ui->mainImageView->openImage(path);
-    ui->basicImageView->openImage(path);
-    setWindowTitle(QFileInfo(path).fileName());
+    if (!path.isEmpty()) {
+        ui->mainImageView->openImage(path);
+        ui->basicImageView->openImage(path);
+        setWindowTitle(QFileInfo(path).fileName());
+    }
 }
 
 void MainWidget::initShortcut()
@@ -418,7 +421,8 @@ void MainWidget::resizeEvent(QResizeEvent *event)
 
 void MainWidget::openImageFile()
 {
-    QString strPath = QFileDialog::getOpenFileName();
+    QString picPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    QString strPath = QFileDialog::getOpenFileName(this, "", picPath);
     openImage(strPath);
 
 }

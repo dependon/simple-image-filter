@@ -47,7 +47,6 @@ void ImageView::openImage(const QString &path)
             m_currentImage = nullptr;
         }
         m_currentImage = new QImage(path);
-
         if (!m_currentImage->isNull()) {
             QPixmap pic = QPixmap::fromImage(*m_currentImage);
             if (Basic != m_cureentId) {
