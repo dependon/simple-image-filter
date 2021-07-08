@@ -6,12 +6,17 @@ ImageProcess，using Qt,filter
 ## arch linux install 
 yay -s simple-image-filter-git
 
-## build
+## deepin/debian build
 sudo apt install libdtkwidget5-dev libdtkcore5-dev qtcreator 
+
 git clone https://github.com/dependon/simple-image-filter.git
+
 mkdir build
+
 cd build
+
 qmake ..
+
 make 
 
 ## Dermabrasion filter
