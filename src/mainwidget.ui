@@ -132,14 +132,14 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>openImageButton</class>
+   <extends>QPushButton</extends>
+   <header>openimagebutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>ImageView</class>
    <extends>QGraphicsView</extends>
    <header>imageview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>openImageButton</class>
-   <extends>QPushButton</extends>
-   <header location="global">openimagebutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

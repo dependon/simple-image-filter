@@ -6,6 +6,7 @@
 #include "imageview.h"
 #include "application.h"
 #include "menu.h"
+#include "shortcut/shortcut.h"
 
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -18,6 +19,7 @@
 #include <QClipboard>
 #include <QShortcut>
 #include <QStandardPaths>
+#include <QProcess>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -50,7 +52,7 @@ bool MainWidget::Init()
         m_layoutframe->setLayout(m_Hlayout);
         m_Vlayout->addWidget(m_layoutframe);
         m_statusbarWidget->setLayout(m_Vlayout);
-        m_statusbarWidget->setFixedSize(6 * 90, 170);
+        m_statusbarWidget->setFixedSize(6 * 90, 180);
         m_statusbarWidget->move((this->width() - m_statusbarWidget->width()) / 2,
                                 this->height() - m_statusbarWidget->height());
 
@@ -67,12 +69,42 @@ bool MainWidget::Init()
 void MainWidget::initBtn()
 {
     if (m_statusbarWidget) {
-        m_lightSlider = new QSlider(Qt::Horizontal, this); //这个初始值，是让这个控件水平布局
+        m_lightSliderWidget = new QFrame(this);
+        m_contrastSliderWidget = new QFrame(this);
+
+        m_lightSliderLabel = new Label(m_lightSliderWidget);
+        m_lightSliderLabel->setText(QObject::tr("Brightness"));
+        m_lightSliderLabel->setFixedWidth(70);
+        m_lightSliderLabel->setAlignment(Qt::AlignCenter);
+
+        m_contrastSliderLabel = new Label(m_contrastSliderWidget);
+        m_contrastSliderLabel->setText(QObject::tr("Contrast"));
+        m_contrastSliderLabel->setFixedWidth(70);
+        m_contrastSliderLabel->setAlignment(Qt::AlignCenter);
+
+        m_lightSliderWidgetLayout = new QHBoxLayout(m_lightSliderWidget);
+        m_lightSliderWidget->setLayout(m_lightSliderWidgetLayout);
+
+
+        m_contrastSliderWidgetLayout = new QHBoxLayout(m_contrastSliderWidget);
+        m_contrastSliderWidget->setLayout(m_contrastSliderWidgetLayout);
+
+
+        m_lightSlider = new QSlider(Qt::Horizontal, m_lightSliderWidget); //这个初始值，是让这个控件水平布局
         m_lightSlider->setRange(0, 300);
         m_lightSlider->setValue(100);
-        m_contrastSlider = new QSlider(Qt::Horizontal, this); //这个初始值，是让这个控件水平布局
+
+        m_contrastSlider = new QSlider(Qt::Horizontal, m_contrastSliderWidget); //这个初始值，是让这个控件水平布局
         m_contrastSlider->setRange(0, 300);
         m_contrastSlider->setValue(150);
+
+        m_lightSliderWidgetLayout->addWidget(m_lightSliderLabel);
+        m_lightSliderWidgetLayout->addWidget(m_lightSlider);
+        m_lightSliderWidgetLayout->setContentsMargins(0, 0, 0, 0);
+
+        m_contrastSliderWidgetLayout->addWidget(m_contrastSliderLabel);
+        m_contrastSliderWidgetLayout->addWidget(m_contrastSlider);
+        m_contrastSliderWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
         connect(m_lightSlider, &QSlider::sliderReleased, this, [ = ] {
             ui->mainImageView->lightContrastImage(m_lightSlider->value(), m_contrastSlider->value());
@@ -80,13 +112,14 @@ void MainWidget::initBtn()
         connect(m_contrastSlider, &QSlider::sliderReleased, this, [ = ] {
             ui->mainImageView->lightContrastImage(m_lightSlider->value(), m_contrastSlider->value());
         });
-        m_Vlayout->addWidget(m_lightSlider);
-        m_Vlayout->addWidget(m_contrastSlider);
+        m_Vlayout->addWidget(m_lightSliderWidget);
+        m_Vlayout->addWidget(m_contrastSliderWidget);
+        m_Vlayout->setContentsMargins(5, 5, 5, 5);
 
         m_openBtn = new ToolButton(m_statusbarWidget);
         m_openBtn->setShortcut(QKeySequence("Ctrl+O"));
         m_openBtn->setFixedSize(60, 60);
-        m_openBtn->setToolTip(tr("open"));
+        m_openBtn->setToolTip(QObject::tr("Open"));
         m_openBtn->setIcon(QIcon(":/icon/open.svg"));
         m_openBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_openBtn);
@@ -95,7 +128,7 @@ void MainWidget::initBtn()
         m_resetBtn = new ToolButton(m_statusbarWidget);
         m_resetBtn->setShortcut(QKeySequence("Ctrl+E"));
         m_resetBtn->setFixedSize(60, 60);
-        m_resetBtn->setToolTip(tr("reset"));
+        m_resetBtn->setToolTip(QObject::tr("Reset"));
         m_resetBtn->setIcon(QIcon(":/icon/reset.svg"));
         m_resetBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_resetBtn);
@@ -104,7 +137,7 @@ void MainWidget::initBtn()
         m_fitImageBtn = new ToolButton(m_statusbarWidget);
         m_fitImageBtn->setShortcut(QKeySequence("Ctrl+R"));
         m_fitImageBtn->setFixedSize(60, 60);
-        m_fitImageBtn->setToolTip(tr("fitImage"));
+        m_fitImageBtn->setToolTip(QObject::tr("FitImage"));
         m_fitImageBtn->setIcon(QIcon(":/icon/dcc_11_36px.svg"));
         m_fitImageBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_fitImageBtn);
@@ -113,7 +146,7 @@ void MainWidget::initBtn()
         m_fitWindowBtn = new ToolButton(m_statusbarWidget);
         m_fitWindowBtn->setShortcut(QKeySequence("Ctrl+T"));
         m_fitWindowBtn->setFixedSize(60, 60);
-        m_fitWindowBtn->setToolTip(tr("fitWindow"));
+        m_fitWindowBtn->setToolTip(QObject::tr("FitWindow"));
         m_fitWindowBtn->setIcon(QIcon(":/icon/dcc_fit_36px.svg"));
         m_fitWindowBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_fitWindowBtn);
@@ -122,7 +155,7 @@ void MainWidget::initBtn()
         m_rotateLeft = new ToolButton();
         m_rotateLeft->setShortcut(QKeySequence("Ctrl+Left"));
         m_rotateLeft->setFixedSize(60, 60);
-        m_rotateLeft->setToolTip(tr("rotate-90"));
+        m_rotateLeft->setToolTip(QObject::tr("Rotate-90"));
         m_rotateLeft->setIcon(QIcon(":/icon/dcc_left_36px.svg"));
         m_rotateLeft->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_rotateLeft);
@@ -133,7 +166,7 @@ void MainWidget::initBtn()
         m_rotateRight = new ToolButton();
         m_rotateRight->setShortcut(QKeySequence("Ctrl+Right"));
         m_rotateRight->setFixedSize(60, 60);
-        m_rotateRight->setToolTip(tr("rotate+90"));
+        m_rotateRight->setToolTip(QObject::tr("Rotate+90"));
         m_rotateRight->setIcon(QIcon(":/icon/dcc_right_36px.svg"));
         m_rotateRight->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_rotateRight);
@@ -146,7 +179,7 @@ void MainWidget::initBtn()
         m_saveBtn = new ToolButton();
         m_saveBtn->setShortcut(QKeySequence("Ctrl+S"));
         m_saveBtn->setFixedSize(60, 60);
-        m_saveBtn->setToolTip(tr("save"));
+        m_saveBtn->setToolTip(QObject::tr("Save"));
         m_saveBtn->setIcon(QIcon(":/icon/save.svg"));
         m_saveBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_saveBtn);
@@ -156,7 +189,7 @@ void MainWidget::initBtn()
         m_scaleImageBtn = new ToolButton();
         m_scaleImageBtn->setShortcut(QKeySequence("Ctrl+Y"));
         m_scaleImageBtn->setFixedSize(60, 60);
-        m_scaleImageBtn->setToolTip(tr("scaleImage"));
+        m_scaleImageBtn->setToolTip(QObject::tr("ScaleImage"));
         m_scaleImageBtn->setIcon(QIcon(":/icon/scale.svg"));
         m_scaleImageBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_scaleImageBtn);
@@ -387,6 +420,21 @@ void MainWidget::initShortcut()
         QMimeData *newMimeData = new QMimeData();
         newMimeData->setImageData(ui->mainImageView->image());
         cb->setMimeData(newMimeData, QClipboard::Clipboard);
+    });
+
+    QShortcut *scViewShortcut = new QShortcut(QKeySequence("Ctrl+Shift+/"), this);
+    // connect(scE, SIGNAL(activated()), dApp, SLOT(quit()));
+    connect(scViewShortcut, &QShortcut::activated, this, [ = ] {
+        qDebug() << "receive Ctrl+Shift+/";
+        QRect rect = window()->geometry();
+        QPoint pos(rect.x() + rect.width() / 2, rect.y() + rect.height() / 2);
+        Shortcut sc;
+        QStringList shortcutString;
+        QString param1 = "-j=" + sc.toStr();
+        QString param2 = "-p=" + QString::number(pos.x()) + "," + QString::number(pos.y());
+        shortcutString << "-b" << param1 << param2;
+        qDebug() << shortcutString;
+        QProcess::startDetached("deepin-shortcut-viewer", shortcutString);
     });
 }
 

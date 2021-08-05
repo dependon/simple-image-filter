@@ -270,11 +270,9 @@ QImage QImageAPI::GrayScaleImage(const QImage &img)
 {
     QImage imgCopy = QImage(img);
 
-    QRgb *line;
     for (int y = 0; y < img.height(); y++) {
-        line = (QRgb *)img.scanLine(y);
         for (int x = 0; x < img.width(); x++) {
-            int average = (qRed(line[x]) + qGreen(line[x]) + qBlue(line[x])) / 3;
+            int average = (qRed(img.pixel(x, y)) + qGreen(img.pixel(x, y)) + qBlue(img.pixel(x, y))) / 3;
             imgCopy.setPixel(x, y, qRgb(average, average, average));
         }
 
@@ -286,13 +284,11 @@ QImage QImageAPI::lightContrastImage(const QImage &img,  int light, int Contrast
 {
     QImage imgCopy = QImage(img);
 
-    QRgb *line;
     for (int y = 0; y < img.height(); y++) {
-        line = (QRgb *)img.scanLine(y);
         for (int x = 0; x < img.width(); x++) {
-            float r = light * 0.01 * qRed(line[x]) - 150 + Contrast;
-            float g = light * 0.01 * qGreen(line[x]) - 150 + Contrast;
-            float b = light * 0.01 * qBlue(line[x]) - 150 + Contrast;
+            float r = light * 0.01 * qRed(img.pixel(x, y)) - 150 + Contrast;
+            float g = light * 0.01 * qGreen(img.pixel(x, y)) - 150 + Contrast;
+            float b = light * 0.01 * qBlue(img.pixel(x, y)) - 150 + Contrast;
             r = Bound(0, r, 255);
             g = Bound(0, g, 255);
             b = Bound(0, b, 255);
@@ -307,12 +303,9 @@ QImage QImageAPI::InverseColorImage(const QImage &img)
 {
     QImage imgCopy = QImage(img);
 
-    QRgb *line;
     for (int y = 0; y < img.height(); y++) {
-        line = (QRgb *)img.scanLine(y);
         for (int x = 0; x < img.width(); x++) {
-
-            imgCopy.setPixel(x, y, qRgb(255 - qRed(line[x]), 255 - qGreen(line[x]), 255 - qBlue(line[x])));
+            imgCopy.setPixel(x, y, qRgb(255 - qRed(img.pixel(x, y)), 255 - qGreen(img.pixel(x, y)), 255 - qBlue(img.pixel(x, y))));
         }
 
     }

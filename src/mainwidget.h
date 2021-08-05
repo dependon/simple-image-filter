@@ -2,7 +2,7 @@
 #define MAINWIDGET_H
 
 #include <QWidget>
-
+#include "label.h"
 class Menu;
 class QFrame;
 class QSlider;
@@ -114,6 +114,15 @@ private:
     QHBoxLayout *m_Hlayout {nullptr};
     QFrame *m_layoutframe {nullptr};
 
+    //新增slider窗口
+    QFrame *m_lightSliderWidget{nullptr};
+    QFrame *m_contrastSliderWidget{nullptr};
+
+    Label *m_lightSliderLabel{nullptr};
+    Label *m_contrastSliderLabel{nullptr};
+
+    QHBoxLayout *m_lightSliderWidgetLayout{nullptr};
+    QHBoxLayout *m_contrastSliderWidgetLayout{nullptr};
 
 };
 
