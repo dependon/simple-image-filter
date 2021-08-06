@@ -12,6 +12,7 @@ class QHBoxLayout;
 class StatusBarWidget;
 class QGraphicsPixmapItem;
 class ToolButton;
+class QPropertyAnimation;
 namespace Ui {
 class MainWidget;
 }
@@ -59,7 +60,7 @@ private slots:
 private:
     Ui::MainWidget *ui;
 
-    StatusBarWidget *m_statusbarWidget{nullptr};    //栈窗体
+    StatusBarWidget *m_statusbarWidget{nullptr};    //下方状态栏
 
     ToolButton *m_openBtn{nullptr};    //打开按钮(下方状态栏)
     ToolButton *m_fitImageBtn{nullptr};    //适应图片大小按钮(下方状态栏)

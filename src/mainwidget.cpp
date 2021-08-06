@@ -206,7 +206,7 @@ void MainWidget::initConnect()
 
     connect(App, &Application::setStackWidget, this, &MainWidget::setCurrentWidget);
     connect(App, &Application::sigMouseMove, this, [ = ] {
-        if (window()->isFullScreen() && m_statusbarWidget)
+        if (/*window()->isFullScreen() &&*/ m_statusbarWidget)
         {
             QPoint pos = mapFromGlobal(QCursor::pos());
             if (height() - 20 < pos.y() && height() > pos.y() && height() == m_statusbarWidget->y()) {
