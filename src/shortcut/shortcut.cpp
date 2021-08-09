@@ -51,8 +51,8 @@ Shortcut::Shortcut(QObject *parent)
                       << ShortcutItem(QObject::tr("Zoom out"), "Ctrl+ '-'")
                       << ShortcutItem(QObject::tr("Copy"), "Ctrl+ C");
 
-    group3.groupItems /*<< ShortcutItem(QObject::tr("Display shortcuts"), "F1")*/
-            << ShortcutItem(QObject::tr("Display shortcuts"), "Ctrl + Shift + ?");
+    group3.groupItems << ShortcutItem(QObject::tr("Help"), "F2")
+                      << ShortcutItem(QObject::tr("Display shortcuts"), "Ctrl + Shift + ?");
 
 #ifndef LITE_DIV
     m_shortcutGroups << group1 << group2 << group3;

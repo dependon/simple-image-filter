@@ -7,6 +7,7 @@
 #include "application.h"
 #include "menu.h"
 #include "shortcut/shortcut.h"
+#include "help/helpwidget.h"
 
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -20,6 +21,10 @@
 #include <QShortcut>
 #include <QStandardPaths>
 #include <QProcess>
+
+#ifdef USE_DTK
+#include <DDialog>
+#endif
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -142,7 +147,7 @@ void MainWidget::initBtn()
         m_fitImageBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_fitImageBtn);
         connect(m_fitImageBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::fitImage);
-
+        connect(m_fitImageBtn, &QToolButton::clicked, ui->basicImageView, &ImageView::fitImage);
         m_fitWindowBtn = new ToolButton(m_statusbarWidget);
         m_fitWindowBtn->setShortcut(QKeySequence("Ctrl+T"));
         m_fitWindowBtn->setFixedSize(60, 60);
@@ -151,7 +156,7 @@ void MainWidget::initBtn()
         m_fitWindowBtn->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_fitWindowBtn);
         connect(m_fitWindowBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::fitWindow);
-
+        connect(m_fitWindowBtn, &QToolButton::clicked, ui->basicImageView, &ImageView::fitWindow);
         m_rotateLeft = new ToolButton();
         m_rotateLeft->setShortcut(QKeySequence("Ctrl+Left"));
         m_rotateLeft->setFixedSize(60, 60);
@@ -436,7 +441,23 @@ void MainWidget::initShortcut()
         qDebug() << shortcutString;
         QProcess::startDetached("deepin-shortcut-viewer", shortcutString);
     });
+
+    QShortcut *F1Shortcut = new QShortcut(QKeySequence("F2"), this);
+    connect(F1Shortcut, &QShortcut::activated, this, [ = ] {
+        helpWidget *widget = new helpWidget();
+        widget->show();
+#ifdef USE_DTK
+        DDialog ss;
+        ss.setIcon(QIcon(":/icon/icon.png"));
+#else
+        QDialog ss;
+#endif
+        ss.setFixedSize(430, 520);
+        widget->setParent(&ss);
+        ss.exec();
+    });
 }
+
 
 MainWidget::~MainWidget()
 {

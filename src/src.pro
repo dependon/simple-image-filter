@@ -55,7 +55,8 @@ SOURCES += \
     control/spinbox.cpp \
     transparencywidget.cpp \
     control/toolbutton.cpp \
-    shortcut/shortcut.cpp
+    shortcut/shortcut.cpp \
+    help/helpwidget.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -77,12 +78,14 @@ HEADERS += \
     control/spinbox.h \
     transparencywidget.h \
     control/toolbutton.h \
-    shortcut/shortcut.h
+    shortcut/shortcut.h \
+    help/helpwidget.h
 
 FORMS += \
         mainwidget.ui \
     scaledialog.ui \
-    transparencywidget.ui
+    transparencywidget.ui \
+    help/helpwidget.ui
 
 
 

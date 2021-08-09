@@ -38,6 +38,7 @@ public:
 
     void initShortcut();
 
+
     ~MainWidget();
 protected:
     //窗口显示事件
