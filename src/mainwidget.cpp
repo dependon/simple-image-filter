@@ -263,6 +263,11 @@ void MainWidget::initMenu()
         m_leftMenu->addAction(m_saveBAction);
         connect(m_saveBAction, &QAction::triggered, ui->mainImageView, &ImageView::savecurrentPic);
 
+        m_resetAction = new QAction(m_leftMenu);
+        m_resetAction->setText(QObject::tr("Reset"));
+        m_leftMenu->addAction(m_resetAction);
+        connect(m_resetAction, &QAction::triggered, ui->mainImageView, &ImageView::resetImage);
+
         m_filterMenu = new Menu(this);
         m_filteraction = new QAction(m_leftMenu);
         m_filteraction->setText(tr("Filter"));
