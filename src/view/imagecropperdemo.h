@@ -95,9 +95,7 @@ private:
 
     openImageButton *btnSavePreview;
     PushButton *btnQuit;
-//#ifdef USE_DTK
-//    ToolButton *m_closeBtn;
-//#endif
+
 
 };
 

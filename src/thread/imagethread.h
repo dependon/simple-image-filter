@@ -12,8 +12,6 @@
 #include <QMutexLocker>
 #include <QRunnable>
 
-
-
 struct ImageFilterInfo {
     MenuItemId id;
     double spatialDecay{0.02};
@@ -32,7 +30,7 @@ class ImageRunnable : public QObject, public QRunnable
 public :
     ImageRunnable();
     ~ImageRunnable();
-//    void setData(QImage *img,ImageFilterInfo info);
+    //设置数据
     void setData(QImage &img, ImageFilterInfo info);
 protected:
     virtual void run();

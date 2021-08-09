@@ -23,8 +23,6 @@ public:
     ImageView(QWidget *parent = nullptr, ViewId id = Normal);
     //通过路径打开图片
     void openImage(const QString &path);
-//    //显示该img
-//    void openFilterImage(QImage *img);
 
     //用于鼠标滚轮滑动
     qreal windowRelativeScale() const;
@@ -90,9 +88,9 @@ public slots:
 
     //金属拉丝
     void Metal();
-
+    //裁剪图片分辨率
     void scaled();
-
+    //设置图片透明度
     void SetTransparency();
 protected:
     //窗口大小改变事件

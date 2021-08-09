@@ -35,11 +35,10 @@ public:
     bool Uninit();
     //通过路径打开图片
     void openImage(const QString &path);
-
+    //初始化快捷键
     void initShortcut();
 
-
-    ~MainWidget();
+    ~MainWidget() override;
 protected:
     //窗口显示事件
     void showEvent(QShowEvent *event) override;
@@ -103,10 +102,10 @@ private:
 
     QAction *m_ContourExtraction{nullptr}; //水平翻转
 
-    Menu *m_sharpeningMenu{nullptr};
+    Menu *m_sharpeningMenu{nullptr};//锐化菜单
     QAction *m_sharpeningAction{nullptr};
-    QAction *m_laplaceSharpen{nullptr};    //
-    QAction *m_soder{nullptr};    //
+    QAction *m_laplaceSharpen{nullptr};    //拉普拉斯锐化
+    QAction *m_soder{nullptr};    //soder锐化
 
     QAction *m_scale{nullptr};
     QSlider *m_lightSlider {nullptr};  //亮度slider

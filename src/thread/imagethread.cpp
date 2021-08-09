@@ -12,11 +12,6 @@ ImageRunnable::~ImageRunnable()
 
 }
 
-//void ImageRunnable::setData(QImage *img, ImageFilterInfo info)
-//{
-//    m_info=info;
-//    m_img=img;
-//}
 void ImageRunnable::setData(QImage &img, ImageFilterInfo info)
 {
     m_info = info;
@@ -29,7 +24,6 @@ void ImageRunnable::run()
     case MenuItemId::IdNormal:
         break;
     case MenuItemId::Idold:
-//        QImageAPI::oldImage(&m_iimg, &m_iimg);
         m_iimg = QImageAPI::oldImage(m_iimg);
         App->sigFilterImage(m_iimg);
         break;
