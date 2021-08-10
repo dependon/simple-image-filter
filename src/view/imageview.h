@@ -97,6 +97,9 @@ public slots:
 
     //设置为上一次处理的图片
     void setLastImage();
+
+    //add新的缓存
+    void addhisImage(QImage img, isChange is = Change);
 protected:
     //窗口大小改变事件
     void resizeEvent(QResizeEvent *event) override;

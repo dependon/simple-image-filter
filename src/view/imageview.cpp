@@ -22,8 +22,9 @@
 #include <DMessageBox>
 #endif
 
+#ifdef Q_OS_LINUX
 #include <malloc.h>
-
+#endif
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
@@ -37,12 +38,7 @@ ImageView::ImageView(QWidget *parent, ViewId id):
 
     if (Basic != id) {
         connect(App, &Application::sigFilterImage, this, &ImageView::openFilterImage);
-        connect(App, &Application::sigFilterImage, this, [ = ](QImage img, isChange is = Change) {
-            if (m_hisImage.count() > 10) {
-                m_hisImage.pop_front();
-            }
-            m_hisImage.push_back(img);
-        });
+        connect(App, &Application::sigFilterImage, this, &ImageView::addhisImage);
     }
 }
 
@@ -82,7 +78,9 @@ void ImageView::openImage(const QString &path)
 
 void ImageView::openFilterImage(QImage img, isChange is)
 {
+#ifdef Q_OS_LINUX
     malloc_trim(0);
+#endif
     if (!img.isNull() && scene()) {
         if (Change == is) {
             m_FilterImage = img;
@@ -473,6 +471,15 @@ void ImageView::setLastImage()
         emit App->sigResetLightContrast();
         openFilterImage(*m_currentImage, Change);
     }
+}
+
+void ImageView::addhisImage(QImage img, isChange is)
+{
+    Q_UNUSED(is);
+    if (m_hisImage.count() > 10) {
+        m_hisImage.pop_front();
+    }
+    m_hisImage.push_back(img);
 }
 const QImage ImageView::image()
 {
