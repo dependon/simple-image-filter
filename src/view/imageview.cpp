@@ -22,8 +22,9 @@
 #include <DMessageBox>
 #endif
 
+#ifdef Q_OS_LINUX
 #include <malloc.h>
-
+#endif
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
@@ -82,7 +83,9 @@ void ImageView::openImage(const QString &path)
 
 void ImageView::openFilterImage(QImage img, isChange is)
 {
+#ifdef Q_OS_LINUX
     malloc_trim(0);
+#endif
     if (!img.isNull() && scene()) {
         if (Change == is) {
             m_FilterImage = img;
