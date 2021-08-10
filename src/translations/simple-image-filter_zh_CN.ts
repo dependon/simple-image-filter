@@ -151,7 +151,7 @@
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../view/imageview.cpp" line="168"/>
+        <location filename="../view/imageview.cpp" line="166"/>
         <source>Save Image</source>
         <translation>保存图片</translation>
     </message>
@@ -160,47 +160,47 @@
         <translation type="vanished">图片 (*.png *.bmp *.jpg)</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="168"/>
+        <location filename="../view/imageview.cpp" line="166"/>
         <source>.png</source>
         <translation>.png</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="200"/>
+        <location filename="../view/imageview.cpp" line="198"/>
         <source>Open File</source>
         <translation>打开图片</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="200"/>
+        <location filename="../view/imageview.cpp" line="198"/>
         <source>png</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="206"/>
+        <location filename="../view/imageview.cpp" line="204"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="206"/>
+        <location filename="../view/imageview.cpp" line="204"/>
         <source>open file error</source>
         <translation>打开文件失败</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="277"/>
+        <location filename="../view/imageview.cpp" line="275"/>
         <source>Reset tips</source>
         <translation>重置提示</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="277"/>
+        <location filename="../view/imageview.cpp" line="275"/>
         <source>Reset picture?</source>
         <translation>是否重置图片?</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="280"/>
+        <location filename="../view/imageview.cpp" line="278"/>
         <source>ok</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="281"/>
+        <location filename="../view/imageview.cpp" line="279"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -310,42 +310,42 @@
         <translation>金属滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="343"/>
+        <location filename="../mainwidget.cpp" line="352"/>
         <source>Sharpening</source>
         <translation>锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="348"/>
+        <location filename="../mainwidget.cpp" line="357"/>
         <source>Laplacian sharpening</source>
         <translation>拉普拉斯锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="353"/>
+        <location filename="../mainwidget.cpp" line="362"/>
         <source>Soder sharpening</source>
         <translation>Soder 锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="361"/>
+        <location filename="../mainwidget.cpp" line="370"/>
         <source>Flip</source>
         <translation>翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="367"/>
+        <location filename="../mainwidget.cpp" line="376"/>
         <source>Flip Vertical</source>
         <translation>垂直翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="372"/>
+        <location filename="../mainwidget.cpp" line="381"/>
         <source>Flip Horizontal</source>
         <translation>水平翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="377"/>
+        <location filename="../mainwidget.cpp" line="386"/>
         <source>Crop a picture</source>
         <translation>裁剪图片大小</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="382"/>
+        <location filename="../mainwidget.cpp" line="391"/>
         <source>Set Transparency</source>
         <translation>设置透明度</translation>
     </message>
@@ -483,6 +483,16 @@
         <location filename="../shortcut/shortcut.cpp" line="53"/>
         <source>Withdrawal step</source>
         <translation>撤销到上一步</translation>
+    </message>
+    <message>
+        <location filename="../mainwidget.cpp" line="341"/>
+        <source>Contour Extraction Filter</source>
+        <translation>轮廓提取</translation>
+    </message>
+    <message>
+        <location filename="../mainwidget.cpp" line="346"/>
+        <source>Binaryzation Filter</source>
+        <translation>图像二值化</translation>
     </message>
     <message>
         <location filename="../shortcut/shortcut.cpp" line="38"/>

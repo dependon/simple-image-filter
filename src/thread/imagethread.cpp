@@ -75,6 +75,10 @@ void ImageRunnable::run()
         m_iimg = QImageAPI::ContourExtraction(m_iimg);
         App->sigFilterImage(m_iimg);
         break;
+    case MenuItemId::IdBinaryzation:
+        m_iimg = QImageAPI::Binaryzation(m_iimg);
+        App->sigFilterImage(m_iimg);
+        break;
     case MenuItemId::IdTransparency:
         m_iimg = QImageAPI::transparencyImg(m_info.transparency, m_iimg);
         App->sigFilterImage(m_iimg);

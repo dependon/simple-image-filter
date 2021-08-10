@@ -19,6 +19,7 @@ enum MenuItemId {
     IdHorizontal,
     IdVertical,
     IdContourExtraction,
+    IdBinaryzation,
     IdMetal,
     IdTransparency
 };

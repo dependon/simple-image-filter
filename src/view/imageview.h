@@ -100,6 +100,9 @@ public slots:
 
     //add新的缓存
     void addhisImage(QImage img, isChange is = Change);
+
+    //二值化
+    void Binaryzation();
 protected:
     //窗口大小改变事件
     void resizeEvent(QResizeEvent *event) override;

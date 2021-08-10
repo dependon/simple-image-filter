@@ -454,8 +454,6 @@ QImage QImageAPI::GreyScale(QImage origin)
  * **************************************************************************/
 QImage QImageAPI::Binaryzation(const QImage &origin)
 {
-
-
     int width = origin.width();
     int height = origin.height();
     QImage newImg = QImage(width, height, QImage::Format_RGB888);

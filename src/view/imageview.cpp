@@ -403,6 +403,13 @@ void ImageView::flipHorizontal()
     playThread(info);
 }
 
+void ImageView::Binaryzation()
+{
+    ImageFilterInfo info;
+    info.id = MenuItemId::IdBinaryzation;
+    playThread(info);
+}
+
 void ImageView::ContourExtraction()
 {
     ImageFilterInfo info;

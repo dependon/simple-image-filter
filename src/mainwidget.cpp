@@ -337,6 +337,15 @@ void MainWidget::initMenu()
         m_filterMenu->addAction(m_Metal);
         connect(m_Metal, &QAction::triggered, ui->mainImageView, &ImageView::Metal);
 
+        m_ContourExtractionFilter = new QAction(m_filterMenu);  //轮廓获取(右键菜单)
+        m_ContourExtractionFilter->setText(QObject::tr("Contour Extraction Filter"));
+        m_filterMenu->addAction(m_ContourExtractionFilter);
+        connect(m_ContourExtractionFilter, &QAction::triggered, ui->mainImageView, &ImageView::ContourExtraction);
+
+        m_BinaryzationFilter = new QAction(m_filterMenu); //二值化滤镜(右键菜单)
+        m_BinaryzationFilter->setText(QObject::tr("Binaryzation Filter"));
+        m_filterMenu->addAction(m_BinaryzationFilter);
+        connect(m_BinaryzationFilter, &QAction::triggered, ui->mainImageView, &ImageView::Binaryzation);
 
         m_sharpeningMenu = new Menu(this);
         m_sharpeningAction = new QAction(m_leftMenu);
