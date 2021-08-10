@@ -51,6 +51,9 @@ signals:
     void sigFilterImage(QImage, isChange is = Change);
     //鼠标移动信号，由于在view里面鼠标移动后，事件没有渗透到主窗口，特此写了一个信号
     void sigMouseMove();
+
+    //重置亮度和对比度
+    void sigResetLightContrast();
 private:
 
 };

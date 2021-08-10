@@ -22,6 +22,8 @@
 #include <DMessageBox>
 #endif
 
+#include <malloc.h>
+
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
@@ -35,6 +37,12 @@ ImageView::ImageView(QWidget *parent, ViewId id):
 
     if (Basic != id) {
         connect(App, &Application::sigFilterImage, this, &ImageView::openFilterImage);
+        connect(App, &Application::sigFilterImage, this, [ = ](QImage img, isChange is = Change) {
+            if (m_hisImage.count() > 10) {
+                m_hisImage.pop_front();
+            }
+            m_hisImage.push_back(img);
+        });
     }
 }
 
@@ -48,6 +56,10 @@ void ImageView::openImage(const QString &path)
         }
         m_currentImage = new QImage(path);
         if (!m_currentImage->isNull()) {
+            //删除历史,重置亮度对比度
+            m_hisImage.clear();
+            emit App->sigResetLightContrast();
+
             QPixmap pic = QPixmap::fromImage(*m_currentImage);
             if (Basic != m_cureentId) {
                 App->setStackWidget(1);
@@ -70,6 +82,7 @@ void ImageView::openImage(const QString &path)
 
 void ImageView::openFilterImage(QImage img, isChange is)
 {
+    malloc_trim(0);
     if (!img.isNull() && scene()) {
         if (Change == is) {
             m_FilterImage = img;
@@ -92,18 +105,10 @@ void ImageView::openFilterImage(QImage img, isChange is)
 qreal ImageView::windowRelativeScale() const
 {
     QRectF bf = sceneRect();
-    if (this->window()->isFullScreen()) {
-        if (1.0 * (width()) / (height() + 15) > 1.0 * bf.width() / bf.height()) {
-            return 1.0 * (height() + 15) / bf.height();
-        } else {
-            return 1.0 * (width()) / bf.width();
-        }
+    if (1.0 * width() / height() > 1.0 * bf.width() / bf.height()) {
+        return 1.0 * height() / bf.height();
     } else {
-        if (1.0 * (width() - 20) / (height() - 180) > 1.0 * bf.width() / bf.height()) {
-            return 1.0 * (height() - 180) / bf.height();
-        } else {
-            return 1.0 * (width() - 20) / bf.width();
-        }
+        return 1.0 * width() / bf.width();
     }
 }
 void ImageView::fitWindow()
@@ -278,6 +283,7 @@ void ImageView::resetImage()
         if (index == 0) {
             openImage(m_currentImage);
             m_FilterImage = *m_currentImage;
+            emit App->sigResetLightContrast();
         } else {
 //            close();
         }
@@ -451,6 +457,22 @@ void ImageView::SetTransparency()
     ss.setFixedSize(374, 120);
     widget->setParent(&ss);
     ss.exec();
+}
+
+void ImageView::setLastImage()
+{
+    qDebug() << m_hisImage.count();
+    if (m_hisImage.count() > 1) {
+        m_hisImage.pop_back();
+        openFilterImage(m_hisImage.last(), Change);
+
+    } else {
+        if (m_hisImage.count() > 0) {
+            m_hisImage.pop_back();
+        }
+        emit App->sigResetLightContrast();
+        openFilterImage(*m_currentImage, Change);
+    }
 }
 const QImage ImageView::image()
 {

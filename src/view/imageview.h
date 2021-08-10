@@ -6,10 +6,12 @@
 #include "application.h"
 
 #include <QGraphicsView>
+#include <QList>
 class ImageFilterInfo;
 class QGraphicsPixmapItem;
 class ImageCropperDemo;
 class scaleDialog;
+
 //Normal表示正常模式，Basic模式不会接受全局信号
 enum ViewId {
     Normal,
@@ -92,6 +94,9 @@ public slots:
     void scaled();
     //设置图片透明度
     void SetTransparency();
+
+    //设置为上一次处理的图片
+    void setLastImage();
 protected:
     //窗口大小改变事件
     void resizeEvent(QResizeEvent *event) override;
@@ -109,6 +114,7 @@ private:
     QImage m_FilterImage{nullptr};//当前处理的图像
     QImage m_lightContrastImage{nullptr};//亮度曝光度图像
     ViewId m_cureentId{Normal};//当前模式
+    QList <QImage> m_hisImage;//历史图片
 //    scaleDialog m_scaleWidget{nullptr};
 };
 

@@ -227,12 +227,10 @@ QImage QImageAPI::warnImage(const QImage &img, int index)
 {
     QImage imgCopy = QImage(img);
 
-    QRgb *line;
     QColor frontColor;
     for (int y = 0; y < img.height(); y++) {
-        line = (QRgb *)img.scanLine(y);
         for (int x = 0; x < img.width(); x++) {
-            frontColor = line[x];
+            frontColor = img.pixel(x, y);
             float r = frontColor.red() + index;
             float g = frontColor.green() + index;
             float b = frontColor.blue();
@@ -249,12 +247,10 @@ QImage QImageAPI::coolImage(const QImage &img,  int index)
 {
     QImage imgCopy = QImage(img);
 
-    QRgb *line;
     QColor frontColor;
     for (int y = 0; y < img.height(); y++) {
-        line = (QRgb *)img.scanLine(y);
         for (int x = 0; x < img.width(); x++) {
-            frontColor = line[x];
+            frontColor = img.pixel(x, y);
             float r = frontColor.red();
             float g = frontColor.green();
             float b = frontColor.blue() + index;
@@ -315,13 +311,11 @@ QImage QImageAPI::InverseColorImage(const QImage &img)
 QImage QImageAPI::oldImage(const QImage &img)
 {
     QImage imgCopy = QImage(img);
-    QRgb *line;
     for (int y = 0; y < img.height(); y++) {
-        line = (QRgb *)img.scanLine(y);
         for (int x = 0; x < img.width(); x++) {
-            float r = 0.393 * qRed(line[x]) + 0.769 * qGreen(line[x]) + 0.189 * qBlue(line[x]);
-            float g = 0.349 * qRed(line[x]) + 0.686 * qGreen(line[x]) + 0.168 * qBlue(line[x]);
-            float b = 0.272 * qRed(line[x]) + 0.534 * qGreen(line[x]) + 0.131 * qBlue(line[x]);
+            float r = 0.393 * qRed(img.pixel(x, y)) + 0.769 * qGreen(img.pixel(x, y)) + 0.189 * qBlue(img.pixel(x, y));
+            float g = 0.349 * qRed(img.pixel(x, y)) + 0.686 * qGreen(img.pixel(x, y)) + 0.168 * qBlue(img.pixel(x, y));
+            float b = 0.272 * qRed(img.pixel(x, y)) + 0.534 * qGreen(img.pixel(x, y)) + 0.131 * qBlue(img.pixel(x, y));
             r = Bound(0, r, 255);
             g = Bound(0, g, 255);
             b = Bound(0, b, 255);

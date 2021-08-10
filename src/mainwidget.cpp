@@ -235,6 +235,17 @@ void MainWidget::initConnect()
             }
         }
     });
+
+    connect(App, &Application::sigResetLightContrast, this, [ = ] {
+        if (m_lightSlider)
+        {
+            m_lightSlider->setValue(100);
+        }
+        if (m_contrastSlider)
+        {
+            m_contrastSlider->setValue(150);
+        }
+    });
 }
 
 void MainWidget::initMenu()
@@ -430,6 +441,10 @@ void MainWidget::initShortcut()
         QMimeData *newMimeData = new QMimeData();
         newMimeData->setImageData(ui->mainImageView->image());
         cb->setMimeData(newMimeData, QClipboard::Clipboard);
+    });
+    sc = new QShortcut(QKeySequence("Ctrl+Z"), this);
+    connect(sc, &QShortcut::activated, this, [ = ] {
+        ui->mainImageView->setLastImage();
     });
 
     QShortcut *scViewShortcut = new QShortcut(QKeySequence("Ctrl+Shift+/"), this);

@@ -49,7 +49,8 @@ Shortcut::Shortcut(QObject *parent)
                       << ShortcutItem(QObject::tr("ScaleImage"), "Ctrl+Y")
                       << ShortcutItem(QObject::tr("Zoom in"), "Ctrl+ '+'")
                       << ShortcutItem(QObject::tr("Zoom out"), "Ctrl+ '-'")
-                      << ShortcutItem(QObject::tr("Copy"), "Ctrl+ C");
+                      << ShortcutItem(QObject::tr("Copy"), "Ctrl+ C")
+                      << ShortcutItem(QObject::tr("Withdrawal step"), "Ctrl+ Z");
 
     group3.groupItems << ShortcutItem(QObject::tr("Help"), "F2")
                       << ShortcutItem(QObject::tr("Display shortcuts"), "Ctrl + Shift + ?");
