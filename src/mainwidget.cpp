@@ -274,6 +274,11 @@ void MainWidget::initMenu()
         m_leftMenu->addAction(m_saveBAction);
         connect(m_saveBAction, &QAction::triggered, ui->mainImageView, &ImageView::savecurrentPic);
 
+        m_CXAction = new QAction(m_leftMenu);
+        m_CXAction->setText(QObject::tr("Withdrawal step"));
+        m_leftMenu->addAction(m_CXAction);
+        connect(m_CXAction, &QAction::triggered, ui->mainImageView, &ImageView::setLastImage);
+
         m_resetAction = new QAction(m_leftMenu);
         m_resetAction->setText(QObject::tr("Reset"));
         m_leftMenu->addAction(m_resetAction);

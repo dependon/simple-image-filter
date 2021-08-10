@@ -80,6 +80,7 @@ private:
     QAction *m_rotateRightAction{nullptr};   //向右旋转按钮按钮(右键菜单)
     QAction *m_rotateLeftAction{nullptr};    //向左旋转按钮按钮(右键菜单)
     QAction *m_saveBAction{nullptr};    //保存图片按钮(右键菜单)
+    QAction *m_CXAction{nullptr};       //撤销回上一次按钮
     QAction *m_resetAction{nullptr};    //还原原来的图片状态按钮(右键菜单)
 
     Menu *m_filterMenu{nullptr};

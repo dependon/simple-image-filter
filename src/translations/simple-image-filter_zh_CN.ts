@@ -151,7 +151,7 @@
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../view/imageview.cpp" line="163"/>
+        <location filename="../view/imageview.cpp" line="168"/>
         <source>Save Image</source>
         <translation>保存图片</translation>
     </message>
@@ -160,47 +160,47 @@
         <translation type="vanished">图片 (*.png *.bmp *.jpg)</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="163"/>
+        <location filename="../view/imageview.cpp" line="168"/>
         <source>.png</source>
         <translation>.png</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="195"/>
+        <location filename="../view/imageview.cpp" line="200"/>
         <source>Open File</source>
         <translation>打开图片</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="195"/>
+        <location filename="../view/imageview.cpp" line="200"/>
         <source>png</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="201"/>
+        <location filename="../view/imageview.cpp" line="206"/>
         <source>error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="201"/>
+        <location filename="../view/imageview.cpp" line="206"/>
         <source>open file error</source>
         <translation>打开文件失败</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="272"/>
+        <location filename="../view/imageview.cpp" line="277"/>
         <source>Reset tips</source>
         <translation>重置提示</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="272"/>
+        <location filename="../view/imageview.cpp" line="277"/>
         <source>Reset picture?</source>
         <translation>是否重置图片?</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="275"/>
+        <location filename="../view/imageview.cpp" line="280"/>
         <source>ok</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="276"/>
+        <location filename="../view/imageview.cpp" line="281"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -255,97 +255,97 @@
         <translation type="vanished">滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="247"/>
+        <location filename="../mainwidget.cpp" line="258"/>
         <source>Open images</source>
         <translation>打开图片</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="252"/>
+        <location filename="../mainwidget.cpp" line="263"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="262"/>
+        <location filename="../mainwidget.cpp" line="273"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="268"/>
+        <location filename="../mainwidget.cpp" line="289"/>
         <source>Filter</source>
         <translation>滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="273"/>
+        <location filename="../mainwidget.cpp" line="294"/>
         <source>Old photo filter</source>
         <translation>老照片滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="278"/>
+        <location filename="../mainwidget.cpp" line="299"/>
         <source>Bilateral filtering</source>
         <translation>双边滤波</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="285"/>
+        <location filename="../mainwidget.cpp" line="306"/>
         <source>Warm color filter</source>
         <translation>暖色滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="292"/>
+        <location filename="../mainwidget.cpp" line="313"/>
         <source>Cool color filter</source>
         <translation>冷色滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="299"/>
+        <location filename="../mainwidget.cpp" line="320"/>
         <source>Gray filter</source>
         <translation>灰度滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="310"/>
+        <location filename="../mainwidget.cpp" line="331"/>
         <source>Anti color filter</source>
         <translation>反色滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="315"/>
+        <location filename="../mainwidget.cpp" line="336"/>
         <source>Metal filter</source>
         <translation>金属滤镜</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="322"/>
+        <location filename="../mainwidget.cpp" line="343"/>
         <source>Sharpening</source>
         <translation>锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="327"/>
+        <location filename="../mainwidget.cpp" line="348"/>
         <source>Laplacian sharpening</source>
         <translation>拉普拉斯锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="332"/>
+        <location filename="../mainwidget.cpp" line="353"/>
         <source>Soder sharpening</source>
         <translation>Soder 锐化</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="340"/>
+        <location filename="../mainwidget.cpp" line="361"/>
         <source>Flip</source>
         <translation>翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="346"/>
+        <location filename="../mainwidget.cpp" line="367"/>
         <source>Flip Vertical</source>
         <translation>垂直翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="351"/>
+        <location filename="../mainwidget.cpp" line="372"/>
         <source>Flip Horizontal</source>
         <translation>水平翻转</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="356"/>
+        <location filename="../mainwidget.cpp" line="377"/>
         <source>Crop a picture</source>
         <translation>裁剪图片大小</translation>
     </message>
     <message>
-        <location filename="../mainwidget.cpp" line="361"/>
+        <location filename="../mainwidget.cpp" line="382"/>
         <source>Set Transparency</source>
         <translation>设置透明度</translation>
     </message>
@@ -415,7 +415,7 @@
     </message>
     <message>
         <location filename="../main.cpp" line="42"/>
-        <location filename="../shortcut/shortcut.cpp" line="54"/>
+        <location filename="../shortcut/shortcut.cpp" line="55"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
@@ -437,6 +437,7 @@
     </message>
     <message>
         <location filename="../mainwidget.cpp" line="136"/>
+        <location filename="../mainwidget.cpp" line="283"/>
         <location filename="../shortcut/shortcut.cpp" line="43"/>
         <source>Reset</source>
         <translation>重做</translation>
@@ -478,6 +479,12 @@
         <translation>裁剪图片</translation>
     </message>
     <message>
+        <location filename="../mainwidget.cpp" line="278"/>
+        <location filename="../shortcut/shortcut.cpp" line="53"/>
+        <source>Withdrawal step</source>
+        <translation>撤销到上一步</translation>
+    </message>
+    <message>
         <location filename="../shortcut/shortcut.cpp" line="38"/>
         <source>Simple Image Filter</source>
         <translation>简单图像处理工具</translation>
@@ -503,7 +510,7 @@
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../shortcut/shortcut.cpp" line="55"/>
+        <location filename="../shortcut/shortcut.cpp" line="56"/>
         <source>Display shortcuts</source>
         <translation>显示快捷键窗口</translation>
     </message>
@@ -563,101 +570,111 @@
     </message>
     <message>
         <location filename="../help/helpwidget.ui" line="93"/>
+        <source>Withdrawal step</source>
+        <translation>撤销到上一步</translation>
+    </message>
+    <message>
+        <location filename="../help/helpwidget.ui" line="103"/>
+        <source>Ctrl+Z</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../help/helpwidget.ui" line="117"/>
         <source>Reset</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="103"/>
+        <location filename="../help/helpwidget.ui" line="127"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="117"/>
+        <location filename="../help/helpwidget.ui" line="141"/>
         <source>Fit Image</source>
         <translation>适应图片</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="127"/>
+        <location filename="../help/helpwidget.ui" line="151"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="141"/>
+        <location filename="../help/helpwidget.ui" line="165"/>
         <source>Fit Window</source>
         <translation>适应窗口</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="151"/>
+        <location filename="../help/helpwidget.ui" line="175"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="165"/>
+        <location filename="../help/helpwidget.ui" line="189"/>
         <source>Rotate-90</source>
         <translation>旋转-90</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="175"/>
+        <location filename="../help/helpwidget.ui" line="199"/>
         <source>Ctrl+Left</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="189"/>
+        <location filename="../help/helpwidget.ui" line="213"/>
         <source>Rotate+90</source>
         <translation>旋转+90</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="199"/>
+        <location filename="../help/helpwidget.ui" line="223"/>
         <source>Ctrl+Right</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="213"/>
+        <location filename="../help/helpwidget.ui" line="237"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="223"/>
+        <location filename="../help/helpwidget.ui" line="247"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="237"/>
+        <location filename="../help/helpwidget.ui" line="261"/>
         <source>ScaleImage</source>
         <translation>裁剪图片</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="247"/>
+        <location filename="../help/helpwidget.ui" line="271"/>
         <source>Ctrl+Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="261"/>
+        <location filename="../help/helpwidget.ui" line="285"/>
         <source>Zoom in</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="271"/>
+        <location filename="../help/helpwidget.ui" line="295"/>
         <source>Ctrl+ &apos;+&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="285"/>
+        <location filename="../help/helpwidget.ui" line="309"/>
         <source>Zoom out</source>
         <translation>放小</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="295"/>
+        <location filename="../help/helpwidget.ui" line="319"/>
         <source>Ctrl+ &apos;-&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="309"/>
+        <location filename="../help/helpwidget.ui" line="333"/>
         <source>Display shortcuts</source>
         <translation>显示快捷键窗口</translation>
     </message>
     <message>
-        <location filename="../help/helpwidget.ui" line="319"/>
+        <location filename="../help/helpwidget.ui" line="343"/>
         <source>Ctrl + Shift + ?</source>
         <translation></translation>
     </message>
