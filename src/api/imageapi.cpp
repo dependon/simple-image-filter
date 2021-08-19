@@ -6,6 +6,34 @@ QImageAPI::QImageAPI()
 
 }
 
+int QImageAPI::RgbMax(int red, int green, int blue)
+{
+    int ret = 0;
+    if (red >= green) {
+        ret = red;
+    } else {
+        ret = green;
+    }
+    if (ret < blue) {
+        ret = blue;
+    }
+    return ret;
+}
+
+int QImageAPI::RgbMin(int red, int green, int blue)
+{
+    int ret = 0;
+    if (red >= green) {
+        ret = green;
+    } else {
+        ret = red;
+    }
+    if (ret > blue) {
+        ret = blue;
+    }
+    return ret;
+}
+
 int QImageAPI::Bound(int range_left, int data, int range_right)
 {
     int index = data;
@@ -602,6 +630,51 @@ QImage QImageAPI::transparencyImg(int delta, QImage origin)
     }
 
     return *newImage;
+}
+
+QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
+{
+    int r, g, b, rgbMin, rgbMax;
+    float k = saturation / 100.0f * 128;
+    int alpha = 0;
+
+    QImage newImage(origin);
+    QColor tmpColor;
+
+    for (int x = 0; x < newImage.width(); x++) {
+        for (int y = 0; y < newImage.height(); y++) {
+            tmpColor = QColor(origin.pixel(x, y));
+            r = tmpColor.red();
+            g = tmpColor.green();
+            b = tmpColor.blue();
+
+            rgbMin = RgbMin(r, g, b);
+            rgbMax = RgbMax(r, g, b);
+
+            int delta = (rgbMax - rgbMin);
+            int value = (rgbMax + rgbMin);
+            if (delta == 0) {
+                continue;
+            }
+            int L = value >> 1;
+            int S = L < 128 ? (delta << 7) / value : (delta << 7) / (510 - value);
+            if (k >= 0) {
+                alpha = k + S >= 128 ? S : 128 - k;
+                alpha = 128 * 128 / alpha - 128;
+            } else
+                alpha = k;
+            r = r + ((r - L) * alpha >> 7);
+            g = g + ((g - L) * alpha >> 7);
+            b = b + ((b - L) * alpha >> 7);
+            r = Bound(0, r, 255);
+            g = Bound(0, g, 255);
+            b = Bound(0, b, 255);
+            newImage.setPixel(x, y, qRgb(r, g, b));
+
+        }
+    }
+    return newImage;
+
 }
 
 

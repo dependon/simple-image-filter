@@ -15,6 +15,10 @@ class QImageAPI
 public:
 
     QImageAPI();
+    //取rgb最大值
+    static int RgbMax(int red, int green, int blue);
+    //取rgb最小值
+    static int RgbMin(int red, int green, int blue);
     //边界值
     static int Bound(int range_left, int data, int range_right);
     //qimage磨皮
@@ -63,6 +67,8 @@ public:
     //透明度
     static QImage transparencyImg(int delta, QImage origin);
 
+    //Stauration饱和度(-100 -100)
+    static QImage StaurationImg(const QImage &origin, int saturation);
 };
 
 
