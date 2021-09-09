@@ -420,10 +420,6 @@ QImage QImageAPI::SobelEdge(const QImage &origin)
     int width = grayImage.width();
     QImage newImage = QImage(width, height, QImage::Format_RGB888);
 
-    /* 改写下面这行解决：某些编译器下不支持“变长数组”的问题 */
-    // float sobel_norm[width*height];
-
-
     float *sobel_norm = new float[width * height];
     float max = 0.0;
     QColor my_color;
@@ -461,19 +457,18 @@ QImage QImageAPI::SobelEdge(const QImage &origin)
 
 QImage QImageAPI::GreyScale(QImage origin)
 {
-    QImage *newImage = new QImage(origin.width(), origin.height(),
-                                  QImage::Format_ARGB32);
+    QImage newImage(origin.width(), origin.height(), QImage::Format_ARGB32);
     QColor oldColor;
 
-    for (int x = 0; x < newImage->width(); x++) {
-        for (int y = 0; y < newImage->height(); y++) {
+    for (int x = 0; x < newImage.width(); x++) {
+        for (int y = 0; y < newImage.height(); y++) {
             oldColor = QColor(origin.pixel(x, y));
             int average = (oldColor.red() * 299 + oldColor.green() * 587 + oldColor.blue() * 114 + 500) / 1000;
-            newImage->setPixel(x, y, qRgb(average, average, average));
+            newImage.setPixel(x, y, qRgb(average, average, average));
         }
     }
 
-    return *newImage;
+    return newImage;
 
 }
 
@@ -542,22 +537,24 @@ QImage QImageAPI::ContourExtraction(const QImage &origin)
  * **************************************************************************/
 QImage QImageAPI::Horizontal(const QImage &origin)
 {
-    QImage *newImage = new QImage(QSize(origin.width(), origin.height()),
-                                  QImage::Format_ARGB32);
-    QColor tmpColor;
-    int r, g, b;
-    for (int x = 0; x < newImage->width(); x++) {
-        for (int y = 0; y < newImage->height(); y++) {
-            tmpColor = QColor(origin.pixel(x, y));
-            r = tmpColor.red();
-            g = tmpColor.green();
-            b = tmpColor.blue();
+    QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
+    newImage = origin.mirrored(true, false);
+    return newImage;
+//    QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
+//    QColor tmpColor;
+//    int r, g, b;
+//    for (int x = 0; x < newImage.width(); x++) {
+//        for (int y = 0; y < newImage.height(); y++) {
+//            tmpColor = QColor(origin.pixel(x, y));
+//            r = tmpColor.red();
+//            g = tmpColor.green();
+//            b = tmpColor.blue();
 
-            newImage->setPixel(newImage->width() - x - 1, y, qRgb(r, g, b));
+//            newImage.setPixel(newImage.width() - x - 1, y, qRgb(r, g, b));
 
-        }
-    }
-    return *newImage;
+//        }
+//    }
+//    return newImage;
 }
 
 
@@ -680,20 +677,20 @@ QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
 
 QImage QImageAPI::Vertical(const QImage &origin)
 {
-    QImage *newImage = new QImage(QSize(origin.width(), origin.height()),
-                                  QImage::Format_ARGB32);
-    QColor tmpColor;
-    int r, g, b;
-    for (int x = 0; x < newImage->width(); x++) {
-        for (int y = 0; y < newImage->height(); y++) {
-            tmpColor = QColor(origin.pixel(x, y));
-            r = tmpColor.red();
-            g = tmpColor.green();
-            b = tmpColor.blue();
+    QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
+    newImage = origin.mirrored(false, true);
+//    QColor tmpColor;
+//    int r, g, b;
+//    for (int x = 0; x < newImage.width(); x++) {
+//        for (int y = 0; y < newImage.height(); y++) {
+//            tmpColor = QColor(origin.pixel(x, y));
+//            r = tmpColor.red();
+//            g = tmpColor.green();
+//            b = tmpColor.blue();
 
-            newImage->setPixel(x, newImage->height() - y - 1, qRgb(r, g, b));
+//            newImage.setPixel(x, newImage.height() - y - 1, qRgb(r, g, b));
 
-        }
-    }
-    return *newImage;
+//        }
+//    }
+    return newImage;
 }
