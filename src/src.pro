@@ -104,7 +104,7 @@ CONFIG(release, debug|release) {
 APPSHAREDIR = /usr/share/simple-image-filter
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/durapps/simple-image-filter
+else: unix:!android: target.path = /usr/bin
 
 translations.path = $$APPSHAREDIR/translations
 translations.files = $$PWD/translations/*.qm
@@ -112,8 +112,8 @@ translations.files = $$PWD/translations/*.qm
 desktop.path = /usr/share/applications/
 desktop.files = $$PWD/install/simple-image-filter.desktop
 
-icon.path =/opt/durapps/simple-image-filter/
-icon.files=$$PWD/icon/icon.png
+icon.path =/usr/share/icons
+icon.files=$$PWD/icon/simple-image-filter.png
 
 !isEmpty(target.path): INSTALLS += target translations icon desktop
 

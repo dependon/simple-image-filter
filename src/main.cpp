@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
         )
     );
     a.setApplicationVersion(DApplication::buildVersion("1.0.0"));
-    w.setWindowIcon(QIcon(":/icon/icon.png"));
-    w.titlebar()->setIcon(QIcon(":/icon/icon.png"));
+    w.setWindowIcon(QIcon(":/icon/simple-image-filter.png"));
+    w.titlebar()->setIcon(QIcon(":/icon/simple-image-filter.png"));
     w.setCentralWidget(&widget);
     w.resize(800, 600);
     w.show();
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         helpWidget *widget = new helpWidget();
         widget->show();
         DDialog ss;
-        ss.setIcon(QIcon(":/icon/icon.png"));
+        ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
         ss.setFixedSize(430, 520);
         widget->setParent(&ss);
         ss.exec();

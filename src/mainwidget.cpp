@@ -482,7 +482,7 @@ void MainWidget::initShortcut()
         widget->show();
 #ifdef USE_DTK
         DDialog ss;
-        ss.setIcon(QIcon(":/icon/icon.png"));
+        ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
 #else
         QDialog ss;
 #endif

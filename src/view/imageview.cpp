@@ -182,7 +182,7 @@ void ImageView::scaleImage()
 
 #ifdef USE_DTK
     DDialog ss;
-    ss.setIcon(QIcon(":/icon/icon.png"));
+    ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
 #else
     QDialog ss;
 #endif
@@ -273,7 +273,7 @@ void ImageView::resetImage()
 #ifdef USE_DTK
 //    int i = DMessageBox::information(NULL, "Title", "Content", QMessageBox::Yes | QMessageBox::No);
     DDialog *pDDialog = new DDialog(QString(tr("Reset tips")), QString(tr("Reset picture?")), nullptr);
-    pDDialog->setIcon(QIcon(":/icon/icon.png"));
+    pDDialog->setIcon(QIcon(":/icon/simple-image-filter.png"));
     pDDialog->setWindowFlags(pDDialog->windowFlags() | Qt::WindowStaysOnTopHint);
     pDDialog->addButton(QString(tr("ok")), false, DDialog::ButtonRecommend);
     pDDialog->addButton(QString(tr("cancel")), true, DDialog::ButtonNormal);
@@ -430,7 +430,7 @@ void ImageView::scaled()
     scaleWidget->show();
 #ifdef USE_DTK
     DDialog ss;
-    ss.setIcon(QIcon(":/icon/icon.png"));
+    ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
 #else
     QDialog ss;
 #endif
@@ -454,7 +454,7 @@ void ImageView::SetTransparency()
     });
 #ifdef USE_DTK
     DDialog ss;
-    ss.setIcon(QIcon(":/icon/icon.png"));
+    ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
 #else
     QDialog ss;
 #endif

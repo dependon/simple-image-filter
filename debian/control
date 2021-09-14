@@ -1,8 +1,8 @@
 Source: simple-image-filter
 Section: utils
 Priority: optional
-Maintainer: liuminghang  <liuminghang0821@gmail.com>
-Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qtbase5-dev, libdtkwidget-dev,qttools5-dev-tools
+Maintainer: liuminghang  <523633637@qq.com>
+Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qtbase5-dev,qttools5-dev-tools
 Standards-Version: 0.0-3
 Homepage: simple-image-filter
 
