@@ -56,9 +56,27 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 #else
+#include <QDir>
+#include <QDirIterator>
+#include <QTranslator>
+#define TRANSALTIONPATH "/usr/share/simple-image-filter"
 int main(int argc, char *argv[])
 {
     Application a(argc, argv);
+#ifdef Q_OS_LINUX
+    QDir dir(TRANSALTIONPATH);
+    if (dir.exists()) {
+        QDirIterator qmIt(TRANSALTIONPATH, QStringList() << QString("*%1.qm").arg(QLocale::system().name()), QDir::Files);
+        while (qmIt.hasNext()) {
+            qmIt.next();
+            QFileInfo finfo = qmIt.fileInfo();
+            QTranslator *translator = new QTranslator;
+            if (translator->load(finfo.baseName(), finfo.absolutePath())) {
+                qApp->installTranslator(translator);
+            }
+        }
+    }
+#endif
     qRegisterMetaType<isChange>("isChange");
     MainWidget w;
     w.resize(800, 600);
