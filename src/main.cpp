@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 #include <QDir>
 #include <QDirIterator>
 #include <QTranslator>
-#define TRANSALTIONPATH "/usr/share/simple-image-filter"
+#define TRANSALTIONPATH "/usr/share/simple-image-filter/translations"
 int main(int argc, char *argv[])
 {
     Application a(argc, argv);
