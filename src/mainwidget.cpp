@@ -460,7 +460,7 @@ void MainWidget::initShortcut()
     connect(sc, &QShortcut::activated, this, [ = ] {
         ui->mainImageView->setLastImage();
     });
-
+#ifdef USE_DTK
     QShortcut *scViewShortcut = new QShortcut(QKeySequence("Ctrl+Shift+/"), this);
     // connect(scE, SIGNAL(activated()), dApp, SLOT(quit()));
     connect(scViewShortcut, &QShortcut::activated, this, [ = ] {
@@ -475,8 +475,23 @@ void MainWidget::initShortcut()
         qDebug() << shortcutString;
         QProcess::startDetached("deepin-shortcut-viewer", shortcutString);
     });
+#endif
+    QShortcut *F2Shortcut = new QShortcut(QKeySequence("F2"), this);
+    connect(F2Shortcut, &QShortcut::activated, this, [ = ] {
+        helpWidget *widget = new helpWidget();
+        widget->show();
+#ifdef USE_DTK
+        DDialog ss;
+        ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
+#else
+        QDialog ss;
+#endif
+        ss.setFixedSize(430, 520);
+        widget->setParent(&ss);
+        ss.exec();
+    });
 
-    QShortcut *F1Shortcut = new QShortcut(QKeySequence("F2"), this);
+    QShortcut *F1Shortcut = new QShortcut(QKeySequence("F1"), this);
     connect(F1Shortcut, &QShortcut::activated, this, [ = ] {
         helpWidget *widget = new helpWidget();
         widget->show();
