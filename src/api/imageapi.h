@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2020 ~ 2021 LiuMingHang.
  *
  * Author:     LiuMingHang <liuminghang0821@gmail.com>
@@ -35,29 +35,29 @@ class QImageAPI
 public:
 
     QImageAPI();
-    //取rgb最大值
+    //Take RGB maximum
     static int RgbMax(int red, int green, int blue);
-    //取rgb最小值
+    //Take RGB minimum
     static int RgbMin(int red, int green, int blue);
-    //边界值
+    //Boundary judgment
     static int Bound(int range_left, int data, int range_right);
-    //qimage磨皮
+    //qimage Skin grinding
 //    static void QImageD_RunBEEPSHorizontalVertical(QImage *img, QImage *imgCopy, double spatialDecay = 0.02, double photometricStandardDeviation = 10);
     static QImage QImageD_RunBEEPSHorizontalVertical(const QImage &img, double spatialDecay, double photometricStandardDeviation);
-    //暖色滤镜
+    //Warm color filter
     static QImage warnImage(const QImage &img, int index = 30);
-    //冷色滤镜
+    //Cool color filter
     static QImage coolImage(const QImage &img,  int index = 30);
-    //灰度滤镜
+    //Grayscale filter
     static QImage GrayScaleImage(const QImage &img);
-    //亮度和饱和度
+    //Brightness and saturation
     static QImage lightContrastImage(const QImage &img, int light = 100, int Contrast = 150);
-    //反色滤镜
+    //Anti color filter
     static QImage InverseColorImage(const QImage &img);
-    //老照片滤镜
+    //Old photo filter
     static QImage oldImage(const QImage &img);
 
-    //拉普拉斯锐化
+    //laplacian sharpening
     static QImage LaplaceSharpen(const QImage &origin);
 
     //Sobel Edge Detector
@@ -66,28 +66,28 @@ public:
     //Greyscale
     static QImage GreyScale(QImage origin);
 
-    //轮廓获取
+    //Contour acquisition
     static QImage ContourExtraction(const QImage &origin);
 
-    //水平翻转
+    //Flip horizontally
     static QImage Horizontal(const QImage &origin);
 
-    //竖直翻转
+    //Flip vertical
     static QImage Vertical(const QImage &origin);
 
-    //二值化
+    //Binarization
     static QImage Binaryzation(const QImage &origin);
 
-    //金属拉丝效果
+    //Metal wire drawing effect
     static QImage Metal(QImage origin);
 
     //Adjust image brightness
     static QImage Brightness(int delta, QImage origin);
 
-    //透明度
+    //Transparency
     static QImage transparencyImg(int delta, QImage origin);
 
-    //Stauration饱和度(-100 -100)
+    //Saturation (- 100 - 100)
     static QImage StaurationImg(const QImage &origin, int saturation);
 };
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2020 ~ 2021 LiuMingHang.
  *
  * Author:     LiuMingHang <liuminghang0821@gmail.com>
@@ -70,8 +70,7 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
 
     QImage imgCopy = QImage(img);
 
-    double c = -0.5 / (photometricStandardDeviation * photometricStandardDeviation); //-1/2 *光度标准偏差的平方
-    double mu = spatialDecay / (2 - spatialDecay);
+    double c = -0.5 / (photometricStandardDeviation * photometricStandardDeviation); 
 
     double *exptable = new double[256];
     double *g_table = new double[256];
@@ -127,30 +126,30 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
         for (int k = startIndex + 1, K = startIndex + width; k < K; ++k) {
             int div0Red = fabs(pRed[k] - pRed[k - 1]);
             mu = exptable[div0Red];
-            pRed[k] = pRed[k - 1] * mu + pRed[k] * (1.0 - mu);//公式1
+            pRed[k] = pRed[k - 1] * mu + pRed[k] * (1.0 - mu);
 
             int div0Green = fabs(pGreen[k] - pGreen[k - 1]);
             mu = exptable[div0Green];
-            pGreen[k] = pGreen[k - 1] * mu + pGreen[k] * (1.0 - mu);//公式1
+            pGreen[k] = pGreen[k - 1] * mu + pGreen[k] * (1.0 - mu);
 
             int div0Blue = fabs(pBlue[k] - pBlue[k - 1]);
             mu = exptable[div0Blue];
-            pBlue[k] = pBlue[k - 1] * mu + pBlue[k] * (1.0 - mu);//公式1
+            pBlue[k] = pBlue[k - 1] * mu + pBlue[k] * (1.0 - mu);
 
         }
 
         for (int k = startIndex + width - 2; startIndex <= k; --k) {
             int div0Red = fabs(rRed[k] - rRed[k + 1]);
             double mu = exptable[div0Red];
-            rRed[k] = rRed[k + 1] * mu + rRed[k] * (1.0 - mu);//公式3
+            rRed[k] = rRed[k + 1] * mu + rRed[k] * (1.0 - mu);
 
             int div0Green = fabs(rGreen[k] - rGreen[k + 1]);
             mu = exptable[div0Green];
-            rGreen[k] = rGreen[k + 1] * mu + rGreen[k] * (1.0 - mu);//公式3
+            rGreen[k] = rGreen[k + 1] * mu + rGreen[k] * (1.0 - mu);
 
             int div0Blue = fabs(rBlue[k] - rBlue[k + 1]);
             mu = exptable[div0Blue];
-            rBlue[k] = rBlue[k + 1] * mu + rBlue[k] * (1.0 - mu);//公式3
+            rBlue[k] = rBlue[k + 1] * mu + rBlue[k] * (1.0 - mu);
         }
         for (int k = startIndex, K = startIndex + width; k < K; k++) {
             rRed[k] = (rRed[k] + pRed[k]) * rho0 - g_table[(int)data2Red[k]];
@@ -388,7 +387,6 @@ QImage QImageAPI::LaplaceSharpen(const QImage &origin)
             int sumG = 0;
             int sumB = 0;
 
-            //对每一个像素使用模板
 
             for (int m = x - 1; m <= x + 1; m++)
                 for (int n = y - 1; n <= y + 1; n++) {
@@ -492,9 +490,7 @@ QImage QImageAPI::GreyScale(QImage origin)
 
 }
 
-/*****************************************************************************
- *                                 二值化
- * **************************************************************************/
+
 QImage QImageAPI::Binaryzation(const QImage &origin)
 {
     int width = origin.width();
@@ -515,15 +511,12 @@ QImage QImageAPI::Binaryzation(const QImage &origin)
     return newImg;
 }
 
-/*****************************************************************************
- *                                 轮廓提取法
- * **************************************************************************/
+
 QImage QImageAPI::ContourExtraction(const QImage &origin)
 {
     int width = origin.width();
     int height = origin.height();
-    int pixel[8];   // 当前像素周围的8个像素的像素值
-//    int *pixel = new int[9];
+    int pixel[8];  
     QImage binImg = Binaryzation(origin);
     QImage newImg = QImage(width, height, QImage::Format_RGB888);
     newImg.fill(Qt::white);
@@ -560,27 +553,10 @@ QImage QImageAPI::Horizontal(const QImage &origin)
     QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
     newImage = origin.mirrored(true, false);
     return newImage;
-//    QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
-//    QColor tmpColor;
-//    int r, g, b;
-//    for (int x = 0; x < newImage.width(); x++) {
-//        for (int y = 0; y < newImage.height(); y++) {
-//            tmpColor = QColor(origin.pixel(x, y));
-//            r = tmpColor.red();
-//            g = tmpColor.green();
-//            b = tmpColor.blue();
 
-//            newImage.setPixel(newImage.width() - x - 1, y, qRgb(r, g, b));
-
-//        }
-//    }
-//    return newImage;
 }
 
 
-/*****************************************************************************
- *                                 金属拉丝效果
- * **************************************************************************/
 QImage QImageAPI::Metal(QImage origin)
 {
     QImage *baseImage = new QImage(origin);
@@ -598,9 +574,7 @@ QImage QImageAPI::Metal(QImage origin)
     return newImage;
 }
 
-/*****************************************************************************
- *                          Adjust image brightness
- * **************************************************************************/
+
 QImage QImageAPI::Brightness(int delta, QImage origin)
 {
     QImage *newImage = new QImage(origin.width(), origin.height(),
@@ -699,18 +673,5 @@ QImage QImageAPI::Vertical(const QImage &origin)
 {
     QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
     newImage = origin.mirrored(false, true);
-//    QColor tmpColor;
-//    int r, g, b;
-//    for (int x = 0; x < newImage.width(); x++) {
-//        for (int y = 0; y < newImage.height(); y++) {
-//            tmpColor = QColor(origin.pixel(x, y));
-//            r = tmpColor.red();
-//            g = tmpColor.green();
-//            b = tmpColor.blue();
-
-//            newImage.setPixel(x, newImage.height() - y - 1, qRgb(r, g, b));
-
-//        }
-//    }
     return newImage;
 }

@@ -30,7 +30,7 @@ class QGraphicsPixmapItem;
 class CropperWidget;
 class scaleDialog;
 
-//Normal表示正常模式，Basic模式不会接受全局信号
+//Normal indicates normal mode, and Basic mode does not accept global signals
 enum ViewId {
     Normal,
     Basic,
@@ -41,95 +41,95 @@ class ImageView : public QGraphicsView
     Q_OBJECT
 public:
     ImageView(QWidget *parent = nullptr, ViewId id = Normal);
-    //通过路径打开图片
+    //Open picture via path
     void openImage(const QString &path);
 
-    //用于鼠标滚轮滑动
+    //For mouse wheel sliding
     qreal windowRelativeScale() const;
     qreal imageRelativeScale() const;
     void scaleAtPoint(QPoint pos, qreal factor);
     void setScaleValue(qreal v);
-    //自适应窗口
+    //Adaptive window
     void autoFit();
-    //鼠标移动事件
+
     void mouseMoveEvent(QMouseEvent *event) override;
-    //返回当前图片img
+    //Returns the current picture img
     const QImage image();
-    //设置view模式
+    //Set view mode
     void setViewId(ViewId id);
 
     void playThread(const ImageFilterInfo &info);
 public slots:
-    //适应窗口大小
+    //Fit window size
     void fitWindow();
-    //适应图片大小
+    //Fit to picture size
     void fitImage();
-    //旋转图片，感觉index角度，-为左，+为右
+    //Rotate the picture and feel the index angle, - is left and + is righ
     void RotateImage(const int &index);
-    //保存图片
+    //Save picture
     void savecurrentPic();
-    //裁剪图片
+    //Crop picture
     void scaleImage();
-    //另存为
+    //Save as
     void savecurrentPicAs();
-    //打开该图片
+    //Open this picture
     void openImage(QImage *img);
     void openFilterImage(QImage img, isChange is);
-    //老照片滤镜
+    //Old photo filter
     void oldIMage();
-    //重置图片
+    //Reset diagram
     void resetImage();
-    //qimage磨皮
+    //qimage Skin grinding
     void BEEPImage(double spatialDecay = 0.02, double photometricStandardDeviation = 10);
-    //暖色滤镜
+    //Warm color filter
     void warnImage(int index = 30);
-    //冷色滤镜
+    //Cool color filter
     void coolImage(int index = 30);
-    //灰度滤镜
+    //Grayscale filter
     void GrayScaleImage();
-    //亮度和饱和度
+    //Brightness and saturation
     void lightContrastImage(int light = 100, int Contrast = 150);
-    //反色滤镜
+    //Anti color filter
     void InverseColorImage();
     //lpls
     void LaplaceSharpenImage();
     //soder
     void soderImage();
-    //垂直翻转
+    //Flip vertically
     void flipVertical();
-    //水平翻转
+    //Flip horizontally
     void flipHorizontal();
-    //轮廓获取
+    //Contour acquisition
     void ContourExtraction();
-    //金属拉丝
+    //metal wire-drawing
     void Metal();
-    //裁剪图片分辨率
+    //Crop picture resolution
     void scaled();
-    //设置图片透明度
+    //Set picture transparency
     void SetTransparency();
-    //设置为上一次处理的图片
+    //Set as last processed picture
     void setLastImage();
-    //add新的缓存
+    //Add new cache
     void addhisImage(QImage img, isChange is = Change);
-    //二值化
+    //Binarization
     void Binaryzation();
 protected:
-    //窗口大小改变事件
+
     void resizeEvent(QResizeEvent *event) override;
-    //鼠标滚轮事件
+
     void wheelEvent(QWheelEvent *event) override;
 private:
-    QString m_currentPath;//当前图片路径
-    QGraphicsPixmapItem *m_pixmapItem{nullptr};//当前图像的item
-    bool m_isFitImage = false;//是否适应图片
-    bool m_isFitWindow = false;//是否适应窗口
+    QString m_currentPath;//Current picture path
+    QGraphicsPixmapItem *m_pixmapItem{nullptr};//Item of the current image
+    bool m_isFitImage = false;//Is it suitable for pictures
+    bool m_isFitWindow = false;//Fit window
     qreal m_scal = 1.0;
-    int   m_rotateAngel = 0; //旋转角度
-    QImage *m_currentImage{nullptr};//当前原始图像
-    QImage m_FilterImage{nullptr};//当前处理的图像
-    QImage m_lightContrastImage{nullptr};//亮度曝光度图像
-    ViewId m_cureentId{Normal};//当前模式
-    QList <QImage> m_hisImage;//历史图片
+    int   m_rotateAngel = 0; //Rotation angle
+    QImage *m_currentImage{nullptr};//Current original image
+    QImage m_FilterImage{nullptr};//Currently processed image
+    QImage m_lightContrastImage{nullptr};//Brightness exposure image
+    ViewId m_cureentId{Normal};//Current mode
+    QList <QImage> m_hisImage;//Historical pictures
 };
 
 #endif // IMAGEVIEW_H
