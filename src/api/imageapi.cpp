@@ -70,7 +70,8 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
 
     QImage imgCopy = QImage(img);
 
-    double c = -0.5 / (photometricStandardDeviation * photometricStandardDeviation); 
+    double c = -0.5 / (photometricStandardDeviation * photometricStandardDeviation);
+    double mu = spatialDecay / (2 - spatialDecay);
 
     double *exptable = new double[256];
     double *g_table = new double[256];
@@ -516,7 +517,7 @@ QImage QImageAPI::ContourExtraction(const QImage &origin)
 {
     int width = origin.width();
     int height = origin.height();
-    int pixel[8];  
+    int pixel[8];
     QImage binImg = Binaryzation(origin);
     QImage newImg = QImage(width, height, QImage::Format_RGB888);
     newImg.fill(Qt::white);
