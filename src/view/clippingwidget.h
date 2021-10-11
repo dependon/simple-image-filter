@@ -31,9 +31,9 @@ public:
     void init();
     void setChooseCurrentImage(QPixmap pix);
 private:
-    bool m_draging;//是否拖动
-    QPoint m_startPostion;//拖动前鼠标位置
-    QPoint m_framPostion;//窗体的原始位置
+//    bool m_draging;//is Drag
+//    QPoint m_startPostion;//Mouse position before dragging
+//    QPoint m_framPostion;//The original position of the form
 public slots:
     void onOutputShapeChanged(int idx);
     void onCropperShapeChanged(int idx);
@@ -53,44 +53,38 @@ public slots:
     void onSaveCroppedImage();
 
 private:
-    void setLabelColor(QLabel *label, QColor color)
-    {
-        QPixmap pixmap(QSize(80, 25));
-        pixmap.fill(color);
-        label->setPixmap(pixmap);
-    }
+    void setLabelColor(QLabel *label, QColor color);
 
 private:
-    ClippingLabel *imgCropperLabel;
-    QHBoxLayout *mainLayout;
+    ClippingLabel *m_imgCropperLabel = nullptr;
+    QHBoxLayout *m_mainLayout = nullptr;
 
-    Label *labelPreviewImage;
+    Label *m_labelPreviewImage = nullptr;
+    Label *m_labelRectBorderColor = nullptr;
+    Label *m_labelDragSquareColor = nullptr;
 
-    Combox *comboOutputShape;
-    Combox *comboCropperShape;
+    Combox *m_comboOutputShape = nullptr;
+    Combox *m_comboCropperShape = nullptr;
 
-    LineEdit *editOriginalImagePath;
-    openImageButton *btnChooseOriginalImagePath;
+    LineEdit *m_editOriginalImagePath = nullptr;
+    LineEdit *m_editCropperFixedWidth = nullptr;
+    LineEdit *m_editCropperFixedHeight = nullptr;
+    LineEdit *m_editCropperMinWidth = nullptr;
+    LineEdit *m_editCropperMinHeight = nullptr;
+    QLineEdit *m_editDragSquareEdge = nullptr;
 
-    LineEdit *editCropperFixedWidth;
-    LineEdit *editCropperFixedHeight;
-    LineEdit *editCropperMinWidth;
-    LineEdit *editCropperMinHeight;
+    QCheckBox *m_checkShowDragSquare = nullptr;
+    QCheckBox *m_checkEnableOpacity = nullptr;
+    QCheckBox *m_checkShowRectBorder = nullptr;
 
-    QCheckBox *checkShowDragSquare;
-    QCheckBox *checkEnableOpacity;
-    QSlider *sliderOpacity;
-    QLineEdit *editDragSquareEdge;
+    QSlider *m_sliderOpacity = nullptr;
 
-    QCheckBox *checkShowRectBorder;
-    Label *labelRectBorderColor;
-    openImageButton *btnChooseRectBorderCorlor;
+    openImageButton *m_btnChooseOriginalImagePath = nullptr;
+    openImageButton *m_btnChooseRectBorderCorlor = nullptr;
+    openImageButton *m_btnChooseDragSquareColor = nullptr;
+    openImageButton *m_btnSavePreview = nullptr;
 
-    Label *labelDragSquareColor;
-    openImageButton *btnChooseDragSquareColor;
-
-    openImageButton *btnSavePreview;
-    PushButton *btnQuit;
+    PushButton *m_btnQuit = nullptr;
 
 
 };

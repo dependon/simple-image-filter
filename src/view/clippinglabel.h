@@ -6,26 +6,20 @@
 #include <QPixmap>
 #include <QPen>
 
-enum class CropperShape {
-    UNDEFINED     = 0,
-    RECT          = 1,
-    SQUARE        = 2,
-    FIXED_RECT    = 3,
-    ELLIPSE       = 4,
-    CIRCLE        = 5,
-    FIXED_ELLIPSE = 6
-};
 
 enum class OutputShape {
     RECT    = 0,
     ELLIPSE = 1
 };
 
-enum class SizeType {
-    fixedSize           = 0,
-    fitToMaxWidth       = 1,
-    fitToMaxHeight      = 2,
-    fitToMaxWidthHeight = 3,
+enum class CropperShape {
+    DEFAULT     = 0,
+    RECT          = 1,
+    SQUARE        = 2,
+    FIXED_RECT    = 3,
+    ELLIPSE       = 4,
+    CIRCLE        = 5,
+    FIXED_ELLIPSE = 6
 };
 
 
@@ -35,14 +29,13 @@ class ClippingLabel : public Label
 public:
     ClippingLabel(int width, int height, QWidget *parent);
 
+    //set original image
     void setOriginalImage(const QPixmap &pixmap);
-    void setOutputShape(OutputShape shape) { outputShape = shape; }
+    void setOutputShape(OutputShape shape);
     QPixmap getCroppedImage();
     QPixmap getCroppedImage(OutputShape shape);
 
-    /*****************************************
-     * Set cropper's shape
-    *****************************************/
+    //Set cropper's shape
     void setRectCropper();
     void setSquareCropper();
     void setEllipseCropper();
@@ -51,67 +44,50 @@ public:
     void setFixedEllipseCropper(QSize size);
     void setCropper(CropperShape shape, QSize size);    // not recommended
 
-    /*****************************************************************************
-     * Set cropper's fixed size
-    *****************************************************************************/
+    // Set cropper's fixed size
     void setCropperFixedSize(int fixedWidth, int fixedHeight);
     void setCropperFixedWidth(int fixedWidht);
     void setCropperFixedHeight(int fixedHeight);
 
-    /*****************************************************************************
-     * Set cropper's minimum size
-     * default: the twice of minimum of the edge lenght of drag square
-    *****************************************************************************/
-    void setCropperMinimumSize(int minWidth, int minHeight)
-    { cropperMinimumWidth = minWidth; cropperMinimumHeight = minHeight; }
-    void setCropperMinimumWidth(int minWidth) { cropperMinimumWidth = minWidth; }
-    void setCropperMinimumHeight(int minHeight) { cropperMinimumHeight = minHeight; }
 
-    /*************************************************
-     * Set the size, color, visibility of rectangular border
-    *************************************************/
-    void setShowRectBorder(bool show) { isShowRectBorder = show; }
-    QPen getBorderPen() { return borderPen; }
-    void setBorderPen(const QPen &pen) { borderPen = pen; }
+    //Set cropper's minimum size
+    //default: the twice of minimum of the edge lenght of drag square
+    void setCropperMinimumSize(int minWidth, int minHeight);
+    void setCropperMinimumWidth(int minWidth);
+    void setCropperMinimumHeight(int minHeight);
 
-    /*************************************************
-     * Set the size, color of drag square
-    *************************************************/
-    void setShowDragSquare(bool show) { isShowDragSquare = show; }
-    void setDragSquareEdge(int edge) { dragSquareEdge = (edge >= 3 ? edge : 3); }
-    void setDragSquareColor(const QColor &color) { dragSquareColor = color; }
+    //Set the size, color, visibility of rectangular border
+    void setShowRectBorder(bool show);
+    QPen getBorderPen();
+    void setBorderPen(const QPen &pen);
 
-    /*****************************************
-     *  Opacity Effect
-    *****************************************/
-    void enableOpacity(bool b = true) { isShowOpacityEffect = b; }
-    void setOpacity(double newOpacity) { opacity = newOpacity; }
+    //Set the size, color of drag square
+    void setShowDragSquare(bool show);
+    void setDragSquareEdge(int edge);
+    void setDragSquareColor(const QColor &color);
+
+    //Opacity Effect
+    void setEnableOpacity(bool b = true);
+    void setOpacity(double newOpacity);
 
 signals:
-    void croppedImageChanged();
+    void sigCroppedImageChanged();
 
 protected:
-    /*****************************************
-     * Event
-    *****************************************/
     virtual void paintEvent(QPaintEvent *event) override;
     virtual void mousePressEvent(QMouseEvent *e) override;
     virtual void mouseMoveEvent(QMouseEvent *e) override;
     virtual void mouseReleaseEvent(QMouseEvent *e) override;
 
 private:
-    /***************************************
-     * Draw shapes
-    ***************************************/
+    //Draw shapes
     void drawFillRect(QPoint centralPoint, int edge, QColor color);
     void drawRectOpacity();
     void drawEllipseOpacity();
     void drawOpacity(const QPainterPath &path);     // shadow effect
     void drawSquareEdge(bool onlyFourCorners);
 
-    /***************************************
-     * Other utility methods
-    ***************************************/
+    //Other utility methods
     int getPosInCropperRect(const QPoint &pt);
     bool isPosNearDragSquare(const QPoint &pt1, const QPoint &pt2);
     void resetCropperPos();
@@ -120,42 +96,54 @@ private:
     enum {
         RECT_OUTSIZD = 0,
         RECT_INSIDE = 1,
-        RECT_TOP_LEFT, RECT_TOP, RECT_TOP_RIGHT, RECT_RIGHT,
-        RECT_BOTTOM_RIGHT, RECT_BOTTOM, RECT_BOTTOM_LEFT, RECT_LEFT
+        RECT_TOP_LEFT,
+        RECT_TOP,
+        RECT_TOP_RIGHT,
+        RECT_RIGHT,
+        RECT_BOTTOM_RIGHT,
+        RECT_BOTTOM,
+        RECT_BOTTOM_LEFT,
+        RECT_LEFT
     };
 
-    const bool ONLY_FOUR_CORNERS = true;
+
 
 private:
-    QPixmap originalImage;
-    QPixmap tempImage;
+    bool m_onlyFourCorners = true;
+    bool m_isShowRectBorder = true;
+    bool m_isLButtonPressed = false;
+    bool m_isCursorPosCalculated = false;
+    bool m_isShowDragSquare = true;
+    bool m_isShowOpacityEffect = false;
 
-    bool isShowRectBorder = true;
-    QPen borderPen;
+    QPixmap m_originalImage;
+    QPixmap m_tempImage;
 
-    CropperShape cropperShape = CropperShape::UNDEFINED;
-    OutputShape  outputShape  = OutputShape::RECT;
+    QPen m_borderPen;
 
-    QRect imageRect;     // the whole image area in the label (not real size)
-    QRect cropperRect;     // a rectangle frame to choose image area (not real size)
-    QRect cropperRect_;     // cropper rect (real size)
-    double scaledRate = 1.0;
+    CropperShape m_cropperShape = CropperShape::DEFAULT;
+    OutputShape  m_outputShape  = OutputShape::RECT;
 
-    bool isLButtonPressed = false;
-    bool isCursorPosCalculated = false;
-    int  cursorPosInCropperRect = RECT_OUTSIZD;
-    QPoint lastPos;
-    QPoint currPos;
+    QRect m_imageRect;     // the whole image area in the label (not real size)
+    QRect m_cropperNormalRect;     // a rectangle frame to choose image area (not real size)
+    QRect m_cropperRealRect;     // cropper rect (real size)
 
-    bool isShowDragSquare = true;
-    int dragSquareEdge = 8;
-    QColor dragSquareColor = Qt::white;
+    double m_opacity = 0.6;
+    double m_scaledRate = 1.0;
 
-    int cropperMinimumWidth = dragSquareEdge * 2;
-    int cropperMinimumHeight = dragSquareEdge * 2;
+    int m_cursorPosInCropperRect = RECT_OUTSIZD;
+    int m_dragSquareEdge = 8;
+    int m_cropperMinimumWidth = m_dragSquareEdge * 2;
+    int m_cropperMinimumHeight = m_dragSquareEdge * 2;
 
-    bool isShowOpacityEffect = false;
-    double opacity = 0.6;
+    QPoint m_lastPos;
+    QPoint m_currPos;
+
+    QColor m_dragSquareColor = Qt::white;
+
+
+
+
 };
 
 #endif // ClippingLabel_H

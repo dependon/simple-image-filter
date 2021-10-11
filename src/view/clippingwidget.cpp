@@ -30,82 +30,82 @@ ClippingWidget::~ClippingWidget()
 
 void ClippingWidget::setupLayout()
 {
-    imgCropperLabel = new ClippingLabel(600, 500, this);
-    imgCropperLabel->setFrameStyle(1);
+    m_imgCropperLabel = new ClippingLabel(600, 500, this);
+    m_imgCropperLabel->setFrameStyle(1);
 
-    comboOutputShape = new Combox(this);
-    comboCropperShape = new Combox(this);
+    m_comboOutputShape = new Combox(this);
+    m_comboCropperShape = new Combox(this);
 
-    labelPreviewImage = new Label(this);
+    m_labelPreviewImage = new Label(this);
 
-    editOriginalImagePath = new LineEdit(this);
-    btnChooseOriginalImagePath = new openImageButton(this);
+    m_editOriginalImagePath = new LineEdit(this);
+    m_btnChooseOriginalImagePath = new openImageButton(this);
     QHBoxLayout *hOriginalImagePathLayout = new QHBoxLayout();
-    hOriginalImagePathLayout->addWidget(editOriginalImagePath);
-    hOriginalImagePathLayout->addWidget(btnChooseOriginalImagePath);
+    hOriginalImagePathLayout->addWidget(m_editOriginalImagePath);
+    hOriginalImagePathLayout->addWidget(m_btnChooseOriginalImagePath);
 
-    editCropperFixedWidth = new LineEdit(this);
-    editCropperFixedHeight = new LineEdit(this);
+    m_editCropperFixedWidth = new LineEdit(this);
+    m_editCropperFixedHeight = new LineEdit(this);
     QHBoxLayout *hCropperFixedSizeLayout = new QHBoxLayout();
-    hCropperFixedSizeLayout->addWidget(editCropperFixedWidth);
-    hCropperFixedSizeLayout->addWidget(editCropperFixedHeight);
+    hCropperFixedSizeLayout->addWidget(m_editCropperFixedWidth);
+    hCropperFixedSizeLayout->addWidget(m_editCropperFixedHeight);
 
-    editCropperMinWidth = new LineEdit(this);
-    editCropperMinWidth->setText("8");
-    editCropperMinHeight = new LineEdit(this);
-    editCropperMinHeight->setText("8");
+    m_editCropperMinWidth = new LineEdit(this);
+    m_editCropperMinWidth->setText("8");
+    m_editCropperMinHeight = new LineEdit(this);
+    m_editCropperMinHeight->setText("8");
     QHBoxLayout *hCropperMinSizeLayout = new QHBoxLayout();
-    hCropperMinSizeLayout->addWidget(editCropperMinWidth);
-    hCropperMinSizeLayout->addWidget(editCropperMinHeight);
+    hCropperMinSizeLayout->addWidget(m_editCropperMinWidth);
+    hCropperMinSizeLayout->addWidget(m_editCropperMinHeight);
 
-    checkEnableOpacity = new QCheckBox(this);
-    sliderOpacity = new QSlider(Qt::Horizontal, this);
+    m_checkEnableOpacity = new QCheckBox(this);
+    m_sliderOpacity = new QSlider(Qt::Horizontal, this);
 
-    checkShowDragSquare = new QCheckBox(this);
-    editDragSquareEdge = new QLineEdit("8", this);
-    checkShowRectBorder = new QCheckBox(this);
+    m_checkShowDragSquare = new QCheckBox(this);
+    m_editDragSquareEdge = new QLineEdit("8", this);
+    m_checkShowRectBorder = new QCheckBox(this);
 
-    labelRectBorderColor = new Label(this);
+    m_labelRectBorderColor = new Label(this);
 
-    btnChooseRectBorderCorlor = new openImageButton(this);
+    m_btnChooseRectBorderCorlor = new openImageButton(this);
     QHBoxLayout *hRectBorderColorLayout = new QHBoxLayout();
-    hRectBorderColorLayout->addWidget(labelRectBorderColor);
-    hRectBorderColorLayout->addWidget(btnChooseRectBorderCorlor);
+    hRectBorderColorLayout->addWidget(m_labelRectBorderColor);
+    hRectBorderColorLayout->addWidget(m_btnChooseRectBorderCorlor);
 
-    labelDragSquareColor = new Label(this);
-    btnChooseDragSquareColor = new openImageButton(this);
+    m_labelDragSquareColor = new Label(this);
+    m_btnChooseDragSquareColor = new openImageButton(this);
     QHBoxLayout *hDragSquareColorLayout = new QHBoxLayout();
-    hDragSquareColorLayout->addWidget(labelDragSquareColor);
-    hDragSquareColorLayout->addWidget(btnChooseDragSquareColor);
+    hDragSquareColorLayout->addWidget(m_labelDragSquareColor);
+    hDragSquareColorLayout->addWidget(m_btnChooseDragSquareColor);
 
     QFormLayout *formLayout1 = new QFormLayout();
-    formLayout1->addRow(new QLabel(tr("Preview:")), labelPreviewImage);
+    formLayout1->addRow(new QLabel(tr("Preview:")), m_labelPreviewImage);
     formLayout1->addRow(new QLabel(tr("OriginalImage:"), this), hOriginalImagePathLayout);
-    formLayout1->addRow(new QLabel(tr("OutputShape:"), this), comboOutputShape);
-    formLayout1->addRow(new QLabel(tr("CropperShape:"), this), comboCropperShape);
+    formLayout1->addRow(new QLabel(tr("OutputShape:"), this), m_comboOutputShape);
+    formLayout1->addRow(new QLabel(tr("CropperShape:"), this), m_comboCropperShape);
     formLayout1->addRow(new QLabel(tr("FixedSize:"), this), hCropperFixedSizeLayout);
     formLayout1->addRow(new QLabel(tr("MinimumSize:"), this), hCropperMinSizeLayout);
 
     QFormLayout *formLayout2 = new QFormLayout();
-    formLayout2->addRow(new QLabel(tr("EnableOpacity:"), this), checkEnableOpacity);
-    formLayout2->addRow(new QLabel(tr("Opacity:"), this), sliderOpacity);
+    formLayout2->addRow(new QLabel(tr("EnableOpacity:"), this), m_checkEnableOpacity);
+    formLayout2->addRow(new QLabel(tr("Opacity:"), this), m_sliderOpacity);
 
     QFormLayout *formLayout3 = new QFormLayout();
-    formLayout3->addRow(new QLabel(tr("ShowDragSquare:"), this), checkShowDragSquare);
-    formLayout3->addRow(new QLabel(tr("DragSquareEdge:"), this), editDragSquareEdge);
+    formLayout3->addRow(new QLabel(tr("ShowDragSquare:"), this), m_checkShowDragSquare);
+    formLayout3->addRow(new QLabel(tr("DragSquareEdge:"), this), m_editDragSquareEdge);
     formLayout3->addRow(new QLabel(tr("DragSquareColor:"), this), hDragSquareColorLayout);
 
     QFormLayout *formLayout4 = new QFormLayout();
-    formLayout4->addRow(new QLabel(tr("ShowRectBorder:"), this), checkShowRectBorder);
+    formLayout4->addRow(new QLabel(tr("ShowRectBorder:"), this), m_checkShowRectBorder);
     formLayout4->addRow(new QLabel(tr("RectBorderColor:"), this), hRectBorderColorLayout);
 
-    btnSavePreview = new openImageButton(tr("Save"), this);
-    btnQuit = new PushButton(tr("Quit"), this);
+    m_btnSavePreview = new openImageButton(tr("Save"), this);
+    m_btnQuit = new PushButton(tr("Quit"), this);
     QHBoxLayout *btnLayout = new QHBoxLayout();
     btnLayout->addStretch();
-    btnLayout->addWidget(btnSavePreview);
+    btnLayout->addWidget(m_btnSavePreview);
     btnLayout->addStretch();
-    btnLayout->addWidget(btnQuit);
+    btnLayout->addWidget(m_btnQuit);
     btnLayout->addStretch();
 
     QVBoxLayout *vLayout = new QVBoxLayout();
@@ -119,88 +119,88 @@ void ClippingWidget::setupLayout()
     vLayout->addStretch();
     vLayout->addLayout(btnLayout);
 
-    mainLayout = new QHBoxLayout();
-    mainLayout->addWidget(imgCropperLabel);
-    mainLayout->addLayout(vLayout);
-    this->setLayout(mainLayout);
+    m_mainLayout = new QHBoxLayout();
+    m_mainLayout->addWidget(m_imgCropperLabel);
+    m_mainLayout->addLayout(vLayout);
+    this->setLayout(m_mainLayout);
 }
 
 void ClippingWidget::init()
 {
-    imgCropperLabel->setRectCropper();
-    editCropperFixedWidth->setEnabled(false);
-    editCropperFixedHeight->setEnabled(false);
+    m_imgCropperLabel->setRectCropper();
+    m_editCropperFixedWidth->setEnabled(false);
+    m_editCropperFixedHeight->setEnabled(false);
 
-    labelPreviewImage->setFixedSize(96, 96);
-    labelPreviewImage->setAlignment(Qt::AlignCenter);
-    labelPreviewImage->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-    connect(imgCropperLabel, &ClippingLabel::croppedImageChanged,
+    m_labelPreviewImage->setFixedSize(96, 96);
+    m_labelPreviewImage->setAlignment(Qt::AlignCenter);
+    m_labelPreviewImage->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    connect(m_imgCropperLabel, &ClippingLabel::sigCroppedImageChanged,
             this, &ClippingWidget::onUpdatePreview);
 
-    btnChooseOriginalImagePath->setIcon(QIcon("res/select-file.ico"));
-    btnChooseOriginalImagePath->setFixedWidth(30);
-    connect(btnChooseOriginalImagePath, &QPushButton::clicked,
+    m_btnChooseOriginalImagePath->setIcon(QIcon("res/select-file.ico"));
+    m_btnChooseOriginalImagePath->setFixedWidth(30);
+    connect(m_btnChooseOriginalImagePath, &QPushButton::clicked,
             this, &ClippingWidget::onChooseOriginalImage);
 
-    comboOutputShape->addItem(tr("Rect/Square"));
-    comboOutputShape->addItem(tr("Ellipse/Circle"));
-    connect(comboOutputShape, SIGNAL(currentIndexChanged(int)),
+    m_comboOutputShape->addItem(tr("Rect/Square"));
+    m_comboOutputShape->addItem(tr("Ellipse/Circle"));
+    connect(m_comboOutputShape, SIGNAL(currentIndexChanged(int)),
             this, SLOT(onOutputShapeChanged(int)));
 
-    comboCropperShape->addItem(tr("Rect"));
-    comboCropperShape->addItem(tr("Square"));
-    comboCropperShape->addItem(tr("FixedRect"));
-    comboCropperShape->addItem(tr("Ellipse"));
-    comboCropperShape->addItem(tr("Circle"));
-    comboCropperShape->addItem(tr("FixedEllipse"));
-    connect(comboCropperShape, SIGNAL(currentIndexChanged(int)),
+    m_comboCropperShape->addItem(tr("Rect"));
+    m_comboCropperShape->addItem(tr("Square"));
+    m_comboCropperShape->addItem(tr("FixedRect"));
+    m_comboCropperShape->addItem(tr("Ellipse"));
+    m_comboCropperShape->addItem(tr("Circle"));
+    m_comboCropperShape->addItem(tr("FixedEllipse"));
+    connect(m_comboCropperShape, SIGNAL(currentIndexChanged(int)),
             this, SLOT(onCropperShapeChanged(int)));
 
-    connect(editCropperFixedWidth, &LineEdit::textChanged,
+    connect(m_editCropperFixedWidth, &LineEdit::textChanged,
             this, &ClippingWidget::onFixedWidthChanged);
-    connect(editCropperFixedHeight, &LineEdit::textChanged,
+    connect(m_editCropperFixedHeight, &LineEdit::textChanged,
             this, &ClippingWidget::onFixedHeightChanged);
-    connect(editCropperMinWidth, &LineEdit::textChanged,
+    connect(m_editCropperMinWidth, &LineEdit::textChanged,
             this, &ClippingWidget::onMinWidthChanged);
-    connect(editCropperMinHeight, &LineEdit::textChanged,
+    connect(m_editCropperMinHeight, &LineEdit::textChanged,
             this, &ClippingWidget::onMinHeightChanged);
 
-    checkEnableOpacity->setCheckState(Qt::Checked);
-    imgCropperLabel->enableOpacity(true);
-    connect(checkEnableOpacity, &QCheckBox::stateChanged,
+    m_checkEnableOpacity->setCheckState(Qt::Checked);
+    m_imgCropperLabel->setEnableOpacity(true);
+    connect(m_checkEnableOpacity, &QCheckBox::stateChanged,
             this, &ClippingWidget::onEnableOpacityChanged);
 
-    checkShowDragSquare->setCheckState(Qt::Checked);
-    imgCropperLabel->setShowDragSquare(true);
-    connect(checkShowDragSquare, &QCheckBox::stateChanged,
+    m_checkShowDragSquare->setCheckState(Qt::Checked);
+    m_imgCropperLabel->setShowDragSquare(true);
+    connect(m_checkShowDragSquare, &QCheckBox::stateChanged,
             this, &ClippingWidget::onShowDragSquareChanged);
-    connect(editDragSquareEdge, &QLineEdit::textChanged,
+    connect(m_editDragSquareEdge, &QLineEdit::textChanged,
             this, &ClippingWidget::onDragSquareEdgeChanged);
 
-    sliderOpacity->setRange(0, 100);
-    sliderOpacity->setValue(60);
-    connect(sliderOpacity, &QSlider::valueChanged,
+    m_sliderOpacity->setRange(0, 100);
+    m_sliderOpacity->setValue(60);
+    connect(m_sliderOpacity, &QSlider::valueChanged,
             this, &ClippingWidget::onOpacityChanged);
 
-    checkShowRectBorder->setCheckState(Qt::Checked);
-    connect(checkShowRectBorder, &QCheckBox::stateChanged,
+    m_checkShowRectBorder->setCheckState(Qt::Checked);
+    connect(m_checkShowRectBorder, &QCheckBox::stateChanged,
             this, &ClippingWidget::onShowRectBorder);
 
-    setLabelColor(labelRectBorderColor, Qt::white);
-    btnChooseRectBorderCorlor->setIcon(QIcon("res/color-palette.ico"));
-    btnChooseRectBorderCorlor->setFixedWidth(40);
-    connect(btnChooseRectBorderCorlor, &QPushButton::clicked,
+    setLabelColor(m_labelRectBorderColor, Qt::white);
+    m_btnChooseRectBorderCorlor->setIcon(QIcon("res/color-palette.ico"));
+    m_btnChooseRectBorderCorlor->setFixedWidth(40);
+    connect(m_btnChooseRectBorderCorlor, &QPushButton::clicked,
             this, &ClippingWidget::onChooseRectBorderColor);
 
-    setLabelColor(labelDragSquareColor, Qt::white);
-    btnChooseDragSquareColor->setIcon(QIcon("res/color-palette.ico"));
-    btnChooseDragSquareColor->setFixedWidth(40);
-    connect(btnChooseDragSquareColor, &QPushButton::clicked,
+    setLabelColor(m_labelDragSquareColor, Qt::white);
+    m_btnChooseDragSquareColor->setIcon(QIcon("res/color-palette.ico"));
+    m_btnChooseDragSquareColor->setFixedWidth(40);
+    connect(m_btnChooseDragSquareColor, &QPushButton::clicked,
             this, &ClippingWidget::onChooseDragSquareColor);
 
-    connect(btnSavePreview, &QPushButton::clicked,
+    connect(m_btnSavePreview, &QPushButton::clicked,
             this, &ClippingWidget::onSaveCroppedImage);
-    connect(btnQuit, &QPushButton::clicked,
+    connect(m_btnQuit, &QPushButton::clicked,
     this, [ = ] {
         this->close();
         QWidget *widget = static_cast<QWidget *>(parent());
@@ -210,7 +210,7 @@ void ClippingWidget::init()
         }
     });
 
-    imgCropperLabel->update();
+    m_imgCropperLabel->update();
 }
 
 
@@ -233,53 +233,28 @@ void ClippingWidget::onChooseOriginalImage()
         return;
     }
 
-    editOriginalImagePath->setText(filename);
-    imgCropperLabel->setOriginalImage(pixmap);
-    imgCropperLabel->update();
+    m_editOriginalImagePath->setText(filename);
+    m_imgCropperLabel->setOriginalImage(pixmap);
+    m_imgCropperLabel->update();
     onUpdatePreview();
-    labelPreviewImage->setFrameStyle(0);
+    m_labelPreviewImage->setFrameStyle(0);
 }
 
 void ClippingWidget::setChooseCurrentImage(QPixmap pix)
 {
-    imgCropperLabel->setOriginalImage(pix);
-    imgCropperLabel->update();
+    m_imgCropperLabel->setOriginalImage(pix);
+    m_imgCropperLabel->update();
     onUpdatePreview();
-    labelPreviewImage->setFrameStyle(0);
+    m_labelPreviewImage->setFrameStyle(0);
 }
-
-//void ClippingWidget::mousePressEvent(QMouseEvent *event)
-//{
-//    m_draging = true;
-//    if (event->buttons() & Qt::LeftButton) { //只响应鼠标左键
-//        m_startPostion = event->globalPos();
-//        m_framPostion = frameGeometry().topLeft();
-//    }
-//    QWidget::mousePressEvent(event);//调用父类函数保持原按键行为
-//}
-
-//void ClippingWidget::mouseMoveEvent(QMouseEvent *event)
-//{
-//    if (event->buttons() & Qt::LeftButton) {
-//        //offset 偏移位置
-//        QPoint offset = event->globalPos() - m_startPostion;
-//        move(m_framPostion + offset);
-//    }
-//}
-
-//void ClippingWidget::mouseReleaseEvent(QMouseEvent *event)
-//{
-//    m_draging = false;
-//    QWidget::mouseReleaseEvent(event);
-//}
 
 void ClippingWidget::onOutputShapeChanged(int idx)
 {
     // Output: Rectangular
     if (idx == 0)
-        imgCropperLabel->setOutputShape(OutputShape::RECT);
+        m_imgCropperLabel->setOutputShape(OutputShape::RECT);
     else
-        imgCropperLabel->setOutputShape(OutputShape::ELLIPSE);
+        m_imgCropperLabel->setOutputShape(OutputShape::ELLIPSE);
     onUpdatePreview();
 }
 
@@ -287,169 +262,169 @@ void ClippingWidget::onCropperShapeChanged(int idx)
 {
     switch (CropperShape(idx + 1)) {
     case CropperShape::RECT: {
-        imgCropperLabel->setRectCropper();
-        editCropperFixedWidth->setEnabled(false);
-        editCropperFixedHeight->setEnabled(false);
-        editCropperMinWidth->setEnabled(true);
-        editCropperMinHeight->setEnabled(true);
-        checkShowDragSquare->setEnabled(true);
-        editDragSquareEdge->setEnabled(true);
-        btnChooseDragSquareColor->setEnabled(true);
+        m_imgCropperLabel->setRectCropper();
+        m_editCropperFixedWidth->setEnabled(false);
+        m_editCropperFixedHeight->setEnabled(false);
+        m_editCropperMinWidth->setEnabled(true);
+        m_editCropperMinHeight->setEnabled(true);
+        m_checkShowDragSquare->setEnabled(true);
+        m_editDragSquareEdge->setEnabled(true);
+        m_btnChooseDragSquareColor->setEnabled(true);
         break;
     }
     case CropperShape::SQUARE: {
-        imgCropperLabel->setSquareCropper();
-        editCropperFixedWidth->setEnabled(false);
-        editCropperFixedHeight->setEnabled(false);
-        editCropperMinWidth->setEnabled(true);
-        editCropperMinHeight->setEnabled(true);
-        checkShowDragSquare->setEnabled(true);
-        editDragSquareEdge->setEnabled(true);
-        btnChooseDragSquareColor->setEnabled(true);
+        m_imgCropperLabel->setSquareCropper();
+        m_editCropperFixedWidth->setEnabled(false);
+        m_editCropperFixedHeight->setEnabled(false);
+        m_editCropperMinWidth->setEnabled(true);
+        m_editCropperMinHeight->setEnabled(true);
+        m_checkShowDragSquare->setEnabled(true);
+        m_editDragSquareEdge->setEnabled(true);
+        m_btnChooseDragSquareColor->setEnabled(true);
         break;
     }
     case CropperShape::FIXED_RECT: {
-        imgCropperLabel->setFixedRectCropper(QSize(64, 64));
-        editCropperFixedWidth->setEnabled(true);
-        editCropperFixedHeight->setEnabled(true);
-        editCropperMinWidth->setEnabled(false);
-        editCropperMinHeight->setEnabled(false);
-        editCropperFixedWidth->setText("64");
-        editCropperFixedHeight->setText("64");
-        checkShowDragSquare->setEnabled(false);
-        editDragSquareEdge->setEnabled(false);
-        btnChooseDragSquareColor->setEnabled(false);
+        m_imgCropperLabel->setFixedRectCropper(QSize(64, 64));
+        m_editCropperFixedWidth->setEnabled(true);
+        m_editCropperFixedHeight->setEnabled(true);
+        m_editCropperMinWidth->setEnabled(false);
+        m_editCropperMinHeight->setEnabled(false);
+        m_editCropperFixedWidth->setText("64");
+        m_editCropperFixedHeight->setText("64");
+        m_checkShowDragSquare->setEnabled(false);
+        m_editDragSquareEdge->setEnabled(false);
+        m_btnChooseDragSquareColor->setEnabled(false);
         break;
     }
     case CropperShape::ELLIPSE: {
-        imgCropperLabel->setEllipseCropper();
-        editCropperFixedWidth->setEnabled(false);
-        editCropperFixedHeight->setEnabled(false);
-        editCropperMinWidth->setEnabled(true);
-        editCropperMinHeight->setEnabled(true);
-        checkShowDragSquare->setEnabled(true);
-        editDragSquareEdge->setEnabled(true);
-        btnChooseDragSquareColor->setEnabled(true);
+        m_imgCropperLabel->setEllipseCropper();
+        m_editCropperFixedWidth->setEnabled(false);
+        m_editCropperFixedHeight->setEnabled(false);
+        m_editCropperMinWidth->setEnabled(true);
+        m_editCropperMinHeight->setEnabled(true);
+        m_checkShowDragSquare->setEnabled(true);
+        m_editDragSquareEdge->setEnabled(true);
+        m_btnChooseDragSquareColor->setEnabled(true);
         break;
     }
     case CropperShape::CIRCLE: {
-        imgCropperLabel->setCircleCropper();
-        editCropperFixedWidth->setEnabled(false);
-        editCropperFixedHeight->setEnabled(false);
-        editCropperMinWidth->setEnabled(true);
-        editCropperMinHeight->setEnabled(true);
-        checkShowDragSquare->setEnabled(true);
-        editDragSquareEdge->setEnabled(true);
-        btnChooseDragSquareColor->setEnabled(true);
+        m_imgCropperLabel->setCircleCropper();
+        m_editCropperFixedWidth->setEnabled(false);
+        m_editCropperFixedHeight->setEnabled(false);
+        m_editCropperMinWidth->setEnabled(true);
+        m_editCropperMinHeight->setEnabled(true);
+        m_checkShowDragSquare->setEnabled(true);
+        m_editDragSquareEdge->setEnabled(true);
+        m_btnChooseDragSquareColor->setEnabled(true);
         break;
     }
     case CropperShape::FIXED_ELLIPSE:
-        imgCropperLabel->setFixedEllipseCropper(QSize(64, 64));
-        editCropperFixedWidth->setEnabled(true);
-        editCropperFixedHeight->setEnabled(true);
-        editCropperMinWidth->setEnabled(false);
-        editCropperMinHeight->setEnabled(false);
-        editCropperFixedWidth->setText("64");
-        editCropperFixedHeight->setText("64");
-        checkShowDragSquare->setEnabled(false);
-        editDragSquareEdge->setEnabled(false);
-        btnChooseDragSquareColor->setEnabled(false);
+        m_imgCropperLabel->setFixedEllipseCropper(QSize(64, 64));
+        m_editCropperFixedWidth->setEnabled(true);
+        m_editCropperFixedHeight->setEnabled(true);
+        m_editCropperMinWidth->setEnabled(false);
+        m_editCropperMinHeight->setEnabled(false);
+        m_editCropperFixedWidth->setText("64");
+        m_editCropperFixedHeight->setText("64");
+        m_checkShowDragSquare->setEnabled(false);
+        m_editDragSquareEdge->setEnabled(false);
+        m_btnChooseDragSquareColor->setEnabled(false);
         break;
-    case CropperShape::UNDEFINED:
+    case CropperShape::DEFAULT:
         break;
     }
 
-    imgCropperLabel->update();
+    m_imgCropperLabel->update();
     onUpdatePreview();
 }
 
 void ClippingWidget::onEnableOpacityChanged(int state)
 {
     if (state == Qt::Checked) {
-        sliderOpacity->setEnabled(true);
-        imgCropperLabel->enableOpacity(true);
+        m_sliderOpacity->setEnabled(true);
+        m_imgCropperLabel->setEnableOpacity(true);
     } else {
-        sliderOpacity->setEnabled(false);
-        imgCropperLabel->enableOpacity(false);
+        m_sliderOpacity->setEnabled(false);
+        m_imgCropperLabel->setEnableOpacity(false);
     }
-    imgCropperLabel->update();
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onShowDragSquareChanged(int state)
 {
     if (state == Qt::Checked) {
-        editDragSquareEdge->setEnabled(true);
-        btnChooseDragSquareColor->setEnabled(true);
-        imgCropperLabel->setShowDragSquare(true);
+        m_editDragSquareEdge->setEnabled(true);
+        m_btnChooseDragSquareColor->setEnabled(true);
+        m_imgCropperLabel->setShowDragSquare(true);
     } else {
-        editDragSquareEdge->setEnabled(false);
-        btnChooseDragSquareColor->setEnabled(false);
-        imgCropperLabel->setShowDragSquare(false);
+        m_editDragSquareEdge->setEnabled(false);
+        m_btnChooseDragSquareColor->setEnabled(false);
+        m_imgCropperLabel->setShowDragSquare(false);
     }
-    imgCropperLabel->update();
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onDragSquareEdgeChanged(QString edge)
 {
-    imgCropperLabel->setDragSquareEdge(edge.toInt());
-    imgCropperLabel->update();
+    m_imgCropperLabel->setDragSquareEdge(edge.toInt());
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onOpacityChanged(int val)
 {
-    imgCropperLabel->setOpacity(val / 100.0);
-    imgCropperLabel->update();
+    m_imgCropperLabel->setOpacity(val / 100.0);
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onFixedWidthChanged(QString width)
 {
-    imgCropperLabel->setCropperFixedWidth(width.toInt());
-    imgCropperLabel->update();
+    m_imgCropperLabel->setCropperFixedWidth(width.toInt());
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onFixedHeightChanged(QString height)
 {
-    imgCropperLabel->setCropperFixedHeight(height.toInt());
-    imgCropperLabel->update();
+    m_imgCropperLabel->setCropperFixedHeight(height.toInt());
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onMinWidthChanged(QString width)
 {
-    imgCropperLabel->setCropperMinimumWidth(width.toInt());
-    imgCropperLabel->update();
+    m_imgCropperLabel->setCropperMinimumWidth(width.toInt());
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onMinHeightChanged(QString height)
 {
-    imgCropperLabel->setMinimumHeight(height.toInt());
-    imgCropperLabel->update();
+    m_imgCropperLabel->setMinimumHeight(height.toInt());
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onShowRectBorder(int state)
 {
     if (state == Qt::Checked) {
-        btnChooseRectBorderCorlor->setEnabled(true);
-        imgCropperLabel->setShowRectBorder(true);
+        m_btnChooseRectBorderCorlor->setEnabled(true);
+        m_imgCropperLabel->setShowRectBorder(true);
     } else {
-        btnChooseRectBorderCorlor->setEnabled(false);
-        imgCropperLabel->setShowRectBorder(false);
+        m_btnChooseRectBorderCorlor->setEnabled(false);
+        m_imgCropperLabel->setShowRectBorder(false);
     }
-    imgCropperLabel->update();
+    m_imgCropperLabel->update();
 }
 
 void ClippingWidget::onChooseRectBorderColor()
 {
 #ifdef USE_DTK
-    QColor color = DColorDialog::getColor(imgCropperLabel->getBorderPen().color(), this);
+    QColor color = DColorDialog::getColor(m_imgCropperLabel->getBorderPen().color(), this);
 #else
     QColor color = QColorDialog::getColor(imgCropperLabel->getBorderPen().color(), this);
 #endif
     if (color.isValid()) {
-        setLabelColor(labelRectBorderColor, color);
-        QPen pen = imgCropperLabel->getBorderPen();
+        setLabelColor(m_labelRectBorderColor, color);
+        QPen pen = m_imgCropperLabel->getBorderPen();
         pen.setColor(color);
-        imgCropperLabel->setBorderPen(pen);
-        imgCropperLabel->update();
+        m_imgCropperLabel->setBorderPen(pen);
+        m_imgCropperLabel->update();
     }
 }
 
@@ -462,39 +437,34 @@ void ClippingWidget::onChooseDragSquareColor()
 #endif
 
     if (color.isValid()) {
-        setLabelColor(labelDragSquareColor, color);
-        imgCropperLabel->setDragSquareColor(color);
-        imgCropperLabel->update();
+        setLabelColor(m_labelDragSquareColor, color);
+        m_imgCropperLabel->setDragSquareColor(color);
+        m_imgCropperLabel->update();
     }
 }
 
 void ClippingWidget::onUpdatePreview()
 {
-    QPixmap preview = imgCropperLabel->getCroppedImage();
-    preview = preview.scaled(labelPreviewImage->width(), labelPreviewImage->height(),
+    QPixmap preview = m_imgCropperLabel->getCroppedImage();
+    preview = preview.scaled(m_labelPreviewImage->width(), m_labelPreviewImage->height(),
                              Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    labelPreviewImage->setPixmap(preview);
+    m_labelPreviewImage->setPixmap(preview);
 }
 
 void ClippingWidget::onSaveCroppedImage()
 {
-    App->sigFilterImage(imgCropperLabel->getCroppedImage().toImage());
+    App->sigFilterImage(m_imgCropperLabel->getCroppedImage().toImage());
     close();
     QWidget *widget = static_cast<QWidget *>(parent());
     if (widget) {
         widget->close();
     }
-//    if (!pixmap) {
-//        QMessageBox::information(this, "Error", "There is no cropped image to save.", QMessageBox::Ok);
-//        return ;
-//    }
+}
 
-//    QString filename = QFileDialog::getSaveFileName(this, "Save cropped image", "", "picture (*.png)");
-//    if (!filename.isNull()) {
-//        if (imgCropperLabel->getCroppedImage().save(filename, "PNG"))
-//            QMessageBox::information(this, "Prompt", "Saved successfully", QMessageBox::Ok);
-//        else
-//            QMessageBox::information(this, "Error", "Save image failed!", QMessageBox::Ok);
-//    }
+void ClippingWidget::setLabelColor(QLabel *label, QColor color)
+{
+    QPixmap pixmap(QSize(80, 25));
+    pixmap.fill(color);
+    label->setPixmap(pixmap);
 }
 
