@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2020 ~ 2021 Uniontech Software Technology Co., Ltd.
+ * Copyright (C) 2020 ~ 2021 LiuMingHang.
  *
- * Author:     LiuMingHang <liuminghang@uniontech.com>
+ * Author:     LiuMingHang <liuminghang0821@gmail.com>
  *
- * Maintainer: ZhangYong <ZhangYong@uniontech.com>
+ * Maintainer: LiuMingHang <liuminghang0821@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
