@@ -1,5 +1,5 @@
-#ifndef TESTIMAGECROPPERLABEL_H
-#define TESTIMAGECROPPERLABEL_H
+#ifndef TESTClippingLabel_H
+#define TESTClippingLabel_H
 
 #include <QObject>
 #include <QDialog>
@@ -12,7 +12,7 @@
 #include <QSlider>
 
 #include "application.h"
-#include "imagecropperlabel.h"
+#include "clippinglabel.h"
 #include "control/statusbarwidget.h"
 #include "control/pushbutton.h"
 #include "control/toolbutton.h"
@@ -21,19 +21,15 @@
 #include "control/lineedit.h"
 #include "control/label.h"
 
-class ImageCropperDemo : public QWidget
+class ClippingWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ImageCropperDemo(QWidget *parent = nullptr);
-    ~ImageCropperDemo();
+    ClippingWidget(QWidget *parent = nullptr);
+    ~ClippingWidget();
     void setupLayout();
     void init();
     void setChooseCurrentImage(QPixmap pix);
-protected:
-//    void mousePressEvent(QMouseEvent *event);//按下
-//    void mouseMoveEvent(QMouseEvent *event);//移动
-//    void mouseReleaseEvent(QMouseEvent *event);//抬起
 private:
     bool m_draging;//是否拖动
     QPoint m_startPostion;//拖动前鼠标位置
@@ -65,13 +61,13 @@ private:
     }
 
 private:
-    ImageCropperLabel *imgCropperLabel;
+    ClippingLabel *imgCropperLabel;
     QHBoxLayout *mainLayout;
 
     Label *labelPreviewImage;
 
-    combox *comboOutputShape;
-    combox *comboCropperShape;
+    Combox *comboOutputShape;
+    Combox *comboCropperShape;
 
     LineEdit *editOriginalImagePath;
     openImageButton *btnChooseOriginalImagePath;
@@ -99,4 +95,4 @@ private:
 
 };
 
-#endif // TESTIMAGECROPPERLABEL_H
+#endif // TESTClippingLabel_H

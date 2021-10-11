@@ -9,11 +9,11 @@ typedef  DComboBox MyComboBox;
 #include <QComboBox>
 typedef QComboBox MyComboBox;
 #endif
-class combox: public MyComboBox
+class Combox: public MyComboBox
 {
     Q_OBJECT
 public:
-    explicit combox(QWidget *parent = nullptr);
+    explicit Combox(QWidget *parent = nullptr);
 };
 
 #endif // COMBOX_H

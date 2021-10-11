@@ -9,7 +9,7 @@
 #include <QList>
 class ImageFilterInfo;
 class QGraphicsPixmapItem;
-class ImageCropperDemo;
+class CropperWidget;
 class scaleDialog;
 
 //Normal表示正常模式，Basic模式不会接受全局信号

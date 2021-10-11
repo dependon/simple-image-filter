@@ -1,11 +1,6 @@
-﻿/*************************************************************************
- *  class:          ImageCropperLabel
- *  author:         github@Leopard-C
- *  email:          leopard.c@outlook.com
- *  last change:    2020-03-06
-*************************************************************************/
-#ifndef IMAGECROPPERLABEL_H
-#define IMAGECROPPERLABEL_H
+﻿
+#ifndef ClippingLabel_H
+#define ClippingLabel_H
 
 #include "control/label.h"
 #include <QPixmap>
@@ -34,11 +29,11 @@ enum class SizeType {
 };
 
 
-class ImageCropperLabel : public Label
+class ClippingLabel : public Label
 {
     Q_OBJECT
 public:
-    ImageCropperLabel(int width, int height, QWidget *parent);
+    ClippingLabel(int width, int height, QWidget *parent);
 
     void setOriginalImage(const QPixmap &pixmap);
     void setOutputShape(OutputShape shape) { outputShape = shape; }
@@ -163,4 +158,4 @@ private:
     double opacity = 0.6;
 };
 
-#endif // IMAGECROPPERLABEL_H
+#endif // ClippingLabel_H

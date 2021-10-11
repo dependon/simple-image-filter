@@ -1,7 +1,7 @@
 ﻿#include "imageview.h"
 #include "mainwidget.h"
 #include "imagethread.h"
-#include "imagecropperdemo.h"
+#include "clippingwidget.h"
 #include "scaledialog.h"
 #include "transparencywidget.h"
 
@@ -172,7 +172,7 @@ void ImageView::savecurrentPic()
 
 void ImageView::scaleImage()
 {
-    ImageCropperDemo *dialog = new ImageCropperDemo();
+    ClippingWidget *dialog = new ClippingWidget();
 
     if (m_pixmapItem) {
         dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
@@ -271,7 +271,6 @@ void ImageView::oldIMage()
 void ImageView::resetImage()
 {
 #ifdef USE_DTK
-//    int i = DMessageBox::information(NULL, "Title", "Content", QMessageBox::Yes | QMessageBox::No);
     DDialog *pDDialog = new DDialog(QString(tr("Reset tips")), QString(tr("Reset picture?")), nullptr);
     pDDialog->setIcon(QIcon(":/icon/simple-image-filter.png"));
     pDDialog->setWindowFlags(pDDialog->windowFlags() | Qt::WindowStaysOnTopHint);

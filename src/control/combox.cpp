@@ -1,6 +1,6 @@
 #include "combox.h"
 
-combox::combox(QWidget *parent)
+Combox::Combox(QWidget *parent)
     : MyComboBox(parent)
 {
 

@@ -44,8 +44,6 @@ SOURCES += \
         view/imageview.cpp \
         api/imageapi.cpp \
     control/menu.cpp \
-    view/imagecropperdemo.cpp \
-    view/imagecropperlabel.cpp \
     control/openimagebutton.cpp \
     scaledialog.cpp \
     control/dialog.cpp \
@@ -56,7 +54,9 @@ SOURCES += \
     transparencywidget.cpp \
     control/toolbutton.cpp \
     shortcut/shortcut.cpp \
-    help/helpwidget.cpp
+    help/helpwidget.cpp \
+    view/clippingwidget.cpp \
+    view/clippinglabel.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -67,8 +67,6 @@ HEADERS += \
         view/imageview.h \
         api/imageapi.h \
     control/menu.h \
-    view/imagecropperdemo.h \
-    view/imagecropperlabel.h \
     control/openimagebutton.h \
     scaledialog.h \
     control/dialog.h \
@@ -79,7 +77,9 @@ HEADERS += \
     transparencywidget.h \
     control/toolbutton.h \
     shortcut/shortcut.h \
-    help/helpwidget.h
+    help/helpwidget.h \
+    view/clippingwidget.h \
+    view/clippinglabel.h
 
 FORMS += \
         mainwidget.ui \

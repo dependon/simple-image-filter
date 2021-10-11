@@ -1,4 +1,4 @@
-#include "imagecropperlabel.h"
+#include "clippinglabel.h"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QBitmap>
 
-ImageCropperLabel::ImageCropperLabel(int width, int height, QWidget *parent) :
+ClippingLabel::ClippingLabel(int width, int height, QWidget *parent) :
     Label(parent)
 {
     this->setFixedSize(width, height);
@@ -18,7 +18,7 @@ ImageCropperLabel::ImageCropperLabel(int width, int height, QWidget *parent) :
     borderPen.setDashPattern(QVector<qreal>() << 3 << 3 << 3 << 3);
 }
 
-void ImageCropperLabel::setOriginalImage(const QPixmap &pixmap)
+void ClippingLabel::setOriginalImage(const QPixmap &pixmap)
 {
     originalImage = pixmap;
 
@@ -58,38 +58,38 @@ void ImageCropperLabel::setOriginalImage(const QPixmap &pixmap)
 /*****************************************
  * set cropper's shape (and size)
 *****************************************/
-void ImageCropperLabel::setRectCropper()
+void ClippingLabel::setRectCropper()
 {
     cropperShape = CropperShape::RECT;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setSquareCropper()
+void ClippingLabel::setSquareCropper()
 {
     cropperShape = CropperShape::SQUARE;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setEllipseCropper()
+void ClippingLabel::setEllipseCropper()
 {
     cropperShape = CropperShape::ELLIPSE;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setCircleCropper()
+void ClippingLabel::setCircleCropper()
 {
     cropperShape = CropperShape::CIRCLE;
     resetCropperPos();
 }
 
-void ImageCropperLabel::setFixedRectCropper(QSize size)
+void ClippingLabel::setFixedRectCropper(QSize size)
 {
     cropperShape = CropperShape::FIXED_RECT;
     cropperRect_.setSize(size);
     resetCropperPos();
 }
 
-void ImageCropperLabel::setFixedEllipseCropper(QSize size)
+void ClippingLabel::setFixedEllipseCropper(QSize size)
 {
     cropperShape = CropperShape::FIXED_ELLIPSE;
     cropperRect_.setSize(size);
@@ -97,7 +97,7 @@ void ImageCropperLabel::setFixedEllipseCropper(QSize size)
 }
 
 // not recommended
-void ImageCropperLabel::setCropper(CropperShape shape, QSize size)
+void ClippingLabel::setCropper(CropperShape shape, QSize size)
 {
     cropperShape = shape;
     cropperRect_.setSize(size);
@@ -107,19 +107,19 @@ void ImageCropperLabel::setCropper(CropperShape shape, QSize size)
 /*****************************************************************************
      * Set cropper's fixed size
     *****************************************************************************/
-void ImageCropperLabel::setCropperFixedSize(int fixedWidth, int fixedHeight)
+void ClippingLabel::setCropperFixedSize(int fixedWidth, int fixedHeight)
 {
     cropperRect_.setSize(QSize(fixedWidth, fixedHeight));
     resetCropperPos();
 }
 
-void ImageCropperLabel::setCropperFixedWidth(int fixedWidth)
+void ClippingLabel::setCropperFixedWidth(int fixedWidth)
 {
     cropperRect_.setWidth(fixedWidth);
     resetCropperPos();
 }
 
-void ImageCropperLabel::setCropperFixedHeight(int fixedHeight)
+void ClippingLabel::setCropperFixedHeight(int fixedHeight)
 {
     cropperRect_.setHeight(fixedHeight);
     resetCropperPos();
@@ -129,7 +129,7 @@ void ImageCropperLabel::setCropperFixedHeight(int fixedHeight)
  * Move cropper to the center of the image
  * And resize to default
 **********************************************/
-void ImageCropperLabel::resetCropperPos()
+void ClippingLabel::resetCropperPos()
 {
     int labelWidth = this->width();
     int labelHeight = this->height();
@@ -162,12 +162,12 @@ void ImageCropperLabel::resetCropperPos()
     }
 }
 
-QPixmap ImageCropperLabel::getCroppedImage()
+QPixmap ClippingLabel::getCroppedImage()
 {
     return getCroppedImage(this->outputShape);
 }
 
-QPixmap ImageCropperLabel::getCroppedImage(OutputShape shape)
+QPixmap ClippingLabel::getCroppedImage(OutputShape shape)
 {
     int startX = int((cropperRect.left() - imageRect.left()) / scaledRate);
     int startY = int((cropperRect.top() - imageRect.top()) / scaledRate);
@@ -194,7 +194,7 @@ QPixmap ImageCropperLabel::getCroppedImage(OutputShape shape)
 }
 
 
-void ImageCropperLabel::paintEvent(QPaintEvent *event)
+void ClippingLabel::paintEvent(QPaintEvent *event)
 {
     // Draw original image
     QLabel::paintEvent(event);
@@ -235,7 +235,7 @@ void ImageCropperLabel::paintEvent(QPaintEvent *event)
     }
 }
 
-void ImageCropperLabel::drawSquareEdge(bool onlyFourCorners)
+void ClippingLabel::drawSquareEdge(bool onlyFourCorners)
 {
     if (!isShowDragSquare)
         return;
@@ -257,7 +257,7 @@ void ImageCropperLabel::drawSquareEdge(bool onlyFourCorners)
     }
 }
 
-void ImageCropperLabel::drawFillRect(QPoint centralPoint, int edge, QColor color)
+void ClippingLabel::drawFillRect(QPoint centralPoint, int edge, QColor color)
 {
     QRect rect(centralPoint.x() - edge / 2, centralPoint.y() - edge / 2, edge, edge);
     QPainter painter(this);
@@ -265,14 +265,14 @@ void ImageCropperLabel::drawFillRect(QPoint centralPoint, int edge, QColor color
 }
 
 // Opacity effect
-void ImageCropperLabel::drawOpacity(const QPainterPath &path)
+void ClippingLabel::drawOpacity(const QPainterPath &path)
 {
     QPainter painterOpac(this);
     painterOpac.setOpacity(opacity);
     painterOpac.fillPath(path, QBrush(Qt::black));
 }
 
-void ImageCropperLabel::drawRectOpacity()
+void ClippingLabel::drawRectOpacity()
 {
     if (isShowOpacityEffect) {
         QPainterPath p1, p2, p;
@@ -283,7 +283,7 @@ void ImageCropperLabel::drawRectOpacity()
     }
 }
 
-void ImageCropperLabel::drawEllipseOpacity()
+void ClippingLabel::drawEllipseOpacity()
 {
     if (isShowOpacityEffect) {
         QPainterPath p1, p2, p;
@@ -294,13 +294,13 @@ void ImageCropperLabel::drawEllipseOpacity()
     }
 }
 
-bool ImageCropperLabel::isPosNearDragSquare(const QPoint &pt1, const QPoint &pt2)
+bool ClippingLabel::isPosNearDragSquare(const QPoint &pt1, const QPoint &pt2)
 {
     return abs(pt1.x() - pt2.x()) * 2 <= dragSquareEdge
            && abs(pt1.y() - pt2.y()) * 2 <= dragSquareEdge;
 }
 
-int ImageCropperLabel::getPosInCropperRect(const QPoint &pt)
+int ClippingLabel::getPosInCropperRect(const QPoint &pt)
 {
     if (isPosNearDragSquare(pt, QPoint(cropperRect.right(), cropperRect.center().y())))
         return RECT_RIGHT;
@@ -330,7 +330,7 @@ int ImageCropperLabel::getPosInCropperRect(const QPoint &pt)
  *
 *************************************************/
 
-void ImageCropperLabel::changeCursor()
+void ClippingLabel::changeCursor()
 {
     switch (cursorPosInCropperRect) {
     case RECT_OUTSIZD:
@@ -445,13 +445,13 @@ void ImageCropperLabel::changeCursor()
  *
 *****************************************************/
 
-void ImageCropperLabel::mousePressEvent(QMouseEvent *e)
+void ClippingLabel::mousePressEvent(QMouseEvent *e)
 {
     currPos = lastPos = e->pos();
     isLButtonPressed = true;
 }
 
-void ImageCropperLabel::mouseMoveEvent(QMouseEvent *e)
+void ClippingLabel::mouseMoveEvent(QMouseEvent *e)
 {
     currPos = e->pos();
     if (!isCursorPosCalculated) {
@@ -724,7 +724,7 @@ void ImageCropperLabel::mouseMoveEvent(QMouseEvent *e)
     repaint();
 }
 
-void ImageCropperLabel::mouseReleaseEvent(QMouseEvent *)
+void ClippingLabel::mouseReleaseEvent(QMouseEvent *)
 {
     isLButtonPressed = false;
     isCursorPosCalculated = false;
