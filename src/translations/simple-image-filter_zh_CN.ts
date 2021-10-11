@@ -11,139 +11,139 @@
     </message>
 </context>
 <context>
-    <name>ImageCropperDemo</name>
+    <name>ClippingWidget</name>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="35"/>
+        <location filename="../view/clippingwidget.cpp" line="22"/>
         <source>scale image</source>
         <translation>裁剪图片</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="95"/>
+        <location filename="../view/clippingwidget.cpp" line="82"/>
         <source>Preview:</source>
         <translation>预览:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="96"/>
+        <location filename="../view/clippingwidget.cpp" line="83"/>
         <source>OriginalImage:</source>
         <translation>另外选择图片:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="97"/>
+        <location filename="../view/clippingwidget.cpp" line="84"/>
         <source>OutputShape:</source>
         <translation>输出形状:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="98"/>
+        <location filename="../view/clippingwidget.cpp" line="85"/>
         <source>CropperShape:</source>
         <translation>裁剪形状:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="99"/>
+        <location filename="../view/clippingwidget.cpp" line="86"/>
         <source>FixedSize:</source>
         <translation>固定尺寸:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="100"/>
+        <location filename="../view/clippingwidget.cpp" line="87"/>
         <source>MinimumSize:</source>
         <translation>最小的尺寸:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="103"/>
+        <location filename="../view/clippingwidget.cpp" line="90"/>
         <source>EnableOpacity:</source>
         <translation>是否支持透明:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="104"/>
+        <location filename="../view/clippingwidget.cpp" line="91"/>
         <source>Opacity:</source>
         <translation>透明度:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="107"/>
+        <location filename="../view/clippingwidget.cpp" line="94"/>
         <source>ShowDragSquare:</source>
         <translation>显示拖动方块:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="108"/>
+        <location filename="../view/clippingwidget.cpp" line="95"/>
         <source>DragSquareEdge:</source>
         <translation>拖动方块大小:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="109"/>
+        <location filename="../view/clippingwidget.cpp" line="96"/>
         <source>DragSquareColor:</source>
         <translation>拖动方块颜色:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="112"/>
+        <location filename="../view/clippingwidget.cpp" line="99"/>
         <source>ShowRectBorder:</source>
         <translation>显示矩形边框:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="113"/>
+        <location filename="../view/clippingwidget.cpp" line="100"/>
         <source>RectBorderColor:</source>
         <translation>矩形边框颜色:</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="115"/>
+        <location filename="../view/clippingwidget.cpp" line="102"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="116"/>
+        <location filename="../view/clippingwidget.cpp" line="103"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="158"/>
+        <location filename="../view/clippingwidget.cpp" line="145"/>
         <source>Rect/Square</source>
         <translation>矩形/方形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="159"/>
+        <location filename="../view/clippingwidget.cpp" line="146"/>
         <source>Ellipse/Circle</source>
         <translation>椭圆/圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="163"/>
+        <location filename="../view/clippingwidget.cpp" line="150"/>
         <source>Rect</source>
         <translation>矩形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="164"/>
+        <location filename="../view/clippingwidget.cpp" line="151"/>
         <source>Square</source>
         <translation>正方形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="165"/>
+        <location filename="../view/clippingwidget.cpp" line="152"/>
         <source>FixedRect</source>
         <translation>固定矩形</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="166"/>
+        <location filename="../view/clippingwidget.cpp" line="153"/>
         <source>Ellipse</source>
         <translation>椭圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="167"/>
+        <location filename="../view/clippingwidget.cpp" line="154"/>
         <source>Circle</source>
         <translation>圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="168"/>
+        <location filename="../view/clippingwidget.cpp" line="155"/>
         <source>FixedEllipse</source>
         <translation>固定椭圆</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="238"/>
+        <location filename="../view/clippingwidget.cpp" line="225"/>
         <source>Select a picture</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="245"/>
+        <location filename="../view/clippingwidget.cpp" line="232"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../view/imagecropperdemo.cpp" line="245"/>
+        <location filename="../view/clippingwidget.cpp" line="232"/>
         <source>Load image failed</source>
         <translation>加载图片失败</translation>
     </message>
@@ -154,10 +154,6 @@
         <location filename="../view/imageview.cpp" line="166"/>
         <source>Save Image</source>
         <translation>保存图片</translation>
-    </message>
-    <message>
-        <source>Images (*.png *.bmp *.jpg)</source>
-        <translation type="vanished">图片 (*.png *.bmp *.jpg)</translation>
     </message>
     <message>
         <location filename="../view/imageview.cpp" line="166"/>
@@ -185,22 +181,22 @@
         <translation>打开文件失败</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="275"/>
+        <location filename="../view/imageview.cpp" line="274"/>
         <source>Reset tips</source>
         <translation>重置提示</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="275"/>
+        <location filename="../view/imageview.cpp" line="274"/>
         <source>Reset picture?</source>
         <translation>是否重置图片?</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="278"/>
+        <location filename="../view/imageview.cpp" line="277"/>
         <source>ok</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../view/imageview.cpp" line="279"/>
+        <location filename="../view/imageview.cpp" line="278"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
@@ -216,43 +212,6 @@
         <location filename="../mainwidget.ui" line="64"/>
         <source>openPicture</source>
         <translation>打开图片</translation>
-    </message>
-    <message>
-        <source>open</source>
-        <translation type="vanished">打开</translation>
-    </message>
-    <message>
-        <source>reset</source>
-        <translation type="vanished">重置图片</translation>
-    </message>
-    <message>
-        <source>fitImage</source>
-        <translation type="vanished">适应图片</translation>
-    </message>
-    <message>
-        <source>fitWindow</source>
-        <translation type="vanished">适应窗口</translation>
-    </message>
-    <message>
-        <source>rotate-90</source>
-        <translation type="vanished">旋转-90</translation>
-    </message>
-    <message>
-        <source>rotate+90</source>
-        <translation type="vanished">旋转90</translation>
-    </message>
-    <message>
-        <source>save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-    <message>
-        <source>scaleImage</source>
-        <translatorcomment>裁剪图片</translatorcomment>
-        <translation type="vanished">裁剪图片</translation>
-    </message>
-    <message>
-        <source>filter</source>
-        <translation type="vanished">滤镜</translation>
     </message>
     <message>
         <location filename="../mainwidget.cpp" line="258"/>
@@ -348,62 +307,6 @@
         <location filename="../mainwidget.cpp" line="391"/>
         <source>Set Transparency</source>
         <translation>设置透明度</translation>
-    </message>
-    <message>
-        <source>oldFilter</source>
-        <translation type="vanished">老照片滤镜</translation>
-    </message>
-    <message>
-        <source>beepFilter</source>
-        <translation type="vanished">磨皮滤镜</translation>
-    </message>
-    <message>
-        <source>warnFilter</source>
-        <translation type="vanished">暖色滤镜</translation>
-    </message>
-    <message>
-        <source>coolFilter</source>
-        <translation type="vanished">冷色滤镜</translation>
-    </message>
-    <message>
-        <source>grayScaleFilter</source>
-        <translation type="vanished">灰度滤镜</translation>
-    </message>
-    <message>
-        <source>inverseColorFilter</source>
-        <translation type="vanished">反色滤镜</translation>
-    </message>
-    <message>
-        <source>metalFilter</source>
-        <translation type="vanished">金属拉丝滤镜</translation>
-    </message>
-    <message>
-        <source>sharpening</source>
-        <translation type="vanished">锐化</translation>
-    </message>
-    <message>
-        <source>LaplaceSharpen</source>
-        <translation type="vanished">拉普拉斯锐化</translation>
-    </message>
-    <message>
-        <source>soder</source>
-        <translation type="vanished">soder锐化</translation>
-    </message>
-    <message>
-        <source>flip</source>
-        <translation type="vanished">翻转</translation>
-    </message>
-    <message>
-        <source>flipVertical</source>
-        <translation type="vanished">垂直翻转</translation>
-    </message>
-    <message>
-        <source>flipHorizontal</source>
-        <translation type="vanished">水平翻转</translation>
-    </message>
-    <message>
-        <source>scale</source>
-        <translation type="vanished">裁剪宽高</translation>
     </message>
 </context>
 <context>
@@ -720,10 +623,6 @@
         <location filename="../scaledialog.ui" line="41"/>
         <source>cancel</source>
         <translation>取消</translation>
-    </message>
-    <message>
-        <source>scale window</source>
-        <translation type="vanished">裁剪窗口</translation>
     </message>
     <message>
         <location filename="../scaledialog.cpp" line="14"/>
