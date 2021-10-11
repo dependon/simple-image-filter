@@ -1,5 +1,5 @@
-#ifndef TESTClippingLabel_H
-#define TESTClippingLabel_H
+#ifndef CLIPPINGWIDGET_H
+#define CLIPPINGWIDGET_H
 
 #include <QObject>
 #include <QDialog>
@@ -30,10 +30,7 @@ public:
     void setupLayout();
     void init();
     void setChooseCurrentImage(QPixmap pix);
-private:
-//    bool m_draging;//is Drag
-//    QPoint m_startPostion;//Mouse position before dragging
-//    QPoint m_framPostion;//The original position of the form
+
 public slots:
     void onOutputShapeChanged(int idx);
     void onCropperShapeChanged(int idx);
@@ -58,35 +55,26 @@ private:
 private:
     ClippingLabel *m_imgCropperLabel = nullptr;
     QHBoxLayout *m_mainLayout = nullptr;
-
     Label *m_labelPreviewImage = nullptr;
     Label *m_labelRectBorderColor = nullptr;
     Label *m_labelDragSquareColor = nullptr;
-
     Combox *m_comboOutputShape = nullptr;
     Combox *m_comboCropperShape = nullptr;
-
     LineEdit *m_editOriginalImagePath = nullptr;
     LineEdit *m_editCropperFixedWidth = nullptr;
     LineEdit *m_editCropperFixedHeight = nullptr;
     LineEdit *m_editCropperMinWidth = nullptr;
     LineEdit *m_editCropperMinHeight = nullptr;
     QLineEdit *m_editDragSquareEdge = nullptr;
-
     QCheckBox *m_checkShowDragSquare = nullptr;
     QCheckBox *m_checkEnableOpacity = nullptr;
     QCheckBox *m_checkShowRectBorder = nullptr;
-
     QSlider *m_sliderOpacity = nullptr;
-
     openImageButton *m_btnChooseOriginalImagePath = nullptr;
     openImageButton *m_btnChooseRectBorderCorlor = nullptr;
     openImageButton *m_btnChooseDragSquareColor = nullptr;
     openImageButton *m_btnSavePreview = nullptr;
-
     PushButton *m_btnQuit = nullptr;
-
-
 };
 
-#endif // TESTClippingLabel_H
+#endif // CLIPPINGWIDGET_H

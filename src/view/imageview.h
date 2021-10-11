@@ -7,6 +7,7 @@
 
 #include <QGraphicsView>
 #include <QList>
+
 class ImageFilterInfo;
 class QGraphicsPixmapItem;
 class CropperWidget;
@@ -35,7 +36,6 @@ public:
     void autoFit();
     //鼠标移动事件
     void mouseMoveEvent(QMouseEvent *event) override;
-
     //返回当前图片img
     const QImage image();
     //设置view模式
@@ -78,29 +78,22 @@ public slots:
     void LaplaceSharpenImage();
     //soder
     void soderImage();
-
     //垂直翻转
     void flipVertical();
-
     //水平翻转
     void flipHorizontal();
-
     //轮廓获取
     void ContourExtraction();
-
     //金属拉丝
     void Metal();
     //裁剪图片分辨率
     void scaled();
     //设置图片透明度
     void SetTransparency();
-
     //设置为上一次处理的图片
     void setLastImage();
-
     //add新的缓存
     void addhisImage(QImage img, isChange is = Change);
-
     //二值化
     void Binaryzation();
 protected:
@@ -108,7 +101,6 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
     //鼠标滚轮事件
     void wheelEvent(QWheelEvent *event) override;
-
 private:
     QString m_currentPath;//当前图片路径
     QGraphicsPixmapItem *m_pixmapItem{nullptr};//当前图像的item
@@ -121,7 +113,6 @@ private:
     QImage m_lightContrastImage{nullptr};//亮度曝光度图像
     ViewId m_cureentId{Normal};//当前模式
     QList <QImage> m_hisImage;//历史图片
-//    scaleDialog m_scaleWidget{nullptr};
 };
 
 #endif // IMAGEVIEW_H

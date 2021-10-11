@@ -24,7 +24,7 @@ ClippingWidget::ClippingWidget(QWidget *parent) :
 
 ClippingWidget::~ClippingWidget()
 {
-    qDebug() << "1";
+
 }
 
 

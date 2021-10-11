@@ -1,11 +1,10 @@
-﻿
-#ifndef ClippingLabel_H
-#define ClippingLabel_H
+﻿#ifndef CLIPPINGLABEL_H
+#define CLIPPINGLABEL_H
 
 #include "control/label.h"
+
 #include <QPixmap>
 #include <QPen>
-
 
 enum class OutputShape {
     RECT    = 0,
@@ -140,10 +139,6 @@ private:
     QPoint m_currPos;
 
     QColor m_dragSquareColor = Qt::white;
-
-
-
-
 };
 
-#endif // ClippingLabel_H
+#endif // CLIPPINGLABEL_H
