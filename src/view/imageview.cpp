@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2020 ~ 2021 LiuMingHang.
  *
  * Author:     LiuMingHang <liuminghang0821@gmail.com>
