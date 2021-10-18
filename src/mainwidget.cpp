@@ -210,15 +210,15 @@ void MainWidget::initBtn()
         m_Hlayout->addWidget(m_saveBtn);
         connect(m_saveBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::savecurrentPic);
 
-
-        m_scaleImageBtn = new ToolButton();
-        m_scaleImageBtn->setShortcut(QKeySequence("Ctrl+Y"));
-        m_scaleImageBtn->setFixedSize(60, 60);
-        m_scaleImageBtn->setToolTip(QObject::tr("ScaleImage"));
-        m_scaleImageBtn->setIcon(QIcon(":/icon/scale.svg"));
-        m_scaleImageBtn->setIconSize(QSize(36, 36));
-        m_Hlayout->addWidget(m_scaleImageBtn);
-        connect(m_scaleImageBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::scaleImage);
+//delete scale
+//        m_scaleImageBtn = new ToolButton();
+//        m_scaleImageBtn->setShortcut(QKeySequence("Ctrl+Y"));
+//        m_scaleImageBtn->setFixedSize(60, 60);
+//        m_scaleImageBtn->setToolTip(QObject::tr("ScaleImage"));
+//        m_scaleImageBtn->setIcon(QIcon(":/icon/scale.svg"));
+//        m_scaleImageBtn->setIconSize(QSize(36, 36));
+//        m_Hlayout->addWidget(m_scaleImageBtn);
+//        connect(m_scaleImageBtn, &QToolButton::clicked, ui->mainImageView, &ImageView::scaleImage);
 
 
 
