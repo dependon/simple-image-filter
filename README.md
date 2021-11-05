@@ -2,14 +2,16 @@
 What is simple-image-filter？
 At present, simple-image-filter is a QT software that can handle image rotation, clipping, basic beauty, filter and other functions
 ImageProcess，using Qt,filter
+# dowload windows release
 
+https://github.com/dependon/simple-image-filter/releases/download/1.1.0/simple_image.exe
 
 
 ## arch linux install 
 yay -s simple-image-filter-git
 
 ## deepin/debian build
-sudo apt install libdtkwidget5-dev libdtkcore5-dev qtcreator 
+sudo apt install qtcreator 
 
 git clone https://github.com/dependon/simple-image-filter.git
 
