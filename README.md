@@ -6,6 +6,9 @@ ImageProcess，using Qt,filter
 
 https://github.com/dependon/simple-image-filter/releases/download/1.1.0/simple_image.exe
 
+chineseweb:
+https://depend.lanzouo.com/i6tCpxdfg6d
+password:8s3b
 
 ## arch linux install 
 yay -s simple-image-filter-git
