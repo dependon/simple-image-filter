@@ -389,7 +389,7 @@ QImage QImageAPI::LaplaceSharpen(const QImage &origin)
             int sumB = 0;
 
 
-            for (int m = x - 1; m <= x + 1; m++)
+            for (int m = x - 1; m <= x + 1; m++) {
                 for (int n = y - 1; n <= y + 1; n++) {
                     if (m >= 0 && m < width && n < height) {
                         sumR += QColor(origin.pixel(m, n)).red() * window[n - y + 1][m - x + 1];
@@ -397,6 +397,7 @@ QImage QImageAPI::LaplaceSharpen(const QImage &origin)
                         sumB += QColor(origin.pixel(m, n)).blue() * window[n - y + 1][m - x + 1];
                     }
                 }
+            }
 
 
             int old_r = QColor(origin.pixel(x, y)).red();
@@ -411,7 +412,6 @@ QImage QImageAPI::LaplaceSharpen(const QImage &origin)
             sumB += old_b;
             sumB = qBound(0, sumB, 255);
 
-
             newImage.setPixel(x, y, qRgb(sumR, sumG, sumB));
         }
     }
@@ -425,9 +425,9 @@ QImage QImageAPI::SobelEdge(const QImage &origin)
     double *Gy = new double[9];
 
     /* Sobel */
-    Gx[0] = 1.0; Gx[1] = 0.0; Gx[2] = -1.0;
-    Gx[3] = 2.0; Gx[4] = 0.0; Gx[5] = -2.0;
-    Gx[6] = 1.0; Gx[7] = 0.0; Gx[8] = -1.0;
+    Gx[0] = -1.0; Gx[1] = 0.0; Gx[2] = 1.0;
+    Gx[3] = -2.0; Gx[4] = 0.0; Gx[5] = 2.0;
+    Gx[6] = -1.0; Gx[7] = 0.0; Gx[8] = 1.0;
 
     Gy[0] = -1.0; Gy[1] = -2.0; Gy[2] = - 1.0;
     Gy[3] = 0.0; Gy[4] = 0.0; Gy[5] = 0.0;
@@ -522,8 +522,8 @@ QImage QImageAPI::ContourExtraction(const QImage &origin)
     QImage newImg = QImage(width, height, QImage::Format_RGB888);
     newImg.fill(Qt::white);
 
-    for (int y = 1; y < height; y++) {
-        for (int x = 1; x < width; x++) {
+    for (int y = 1; y < height - 1; y++) {
+        for (int x = 1; x < width - 1; x++) {
             memset(pixel, 0, 8);
 
             if (QColor(binImg.pixel(x, y)).red() == 0) {
@@ -537,6 +537,17 @@ QImage QImageAPI::ContourExtraction(const QImage &origin)
                 pixel[6] = QColor(binImg.pixel(x + 1, y)).red();
                 pixel[7] = QColor(binImg.pixel(x + 1, y + 1)).red();
                 if (pixel[0] + pixel[1] + pixel[2] + pixel[3] + pixel[4] + pixel[5] + pixel[6] + pixel[7] == 0)
+                    newImg.setPixel(x, y, qRgb(255, 255, 255));
+            } else {
+                pixel[0] = QColor(binImg.pixel(x - 1, y - 1)).red();
+                pixel[1] = QColor(binImg.pixel(x - 1, y)).red();
+                pixel[2] = QColor(binImg.pixel(x - 1, y + 1)).red();
+                pixel[3] = QColor(binImg.pixel(x, y - 1)).red();
+                pixel[4] = QColor(binImg.pixel(x, y + 1)).red();
+                pixel[5] = QColor(binImg.pixel(x + 1, y - 1)).red();
+                pixel[6] = QColor(binImg.pixel(x + 1, y)).red();
+                pixel[7] = QColor(binImg.pixel(x + 1, y + 1)).red();
+                if (pixel[0] + pixel[1] + pixel[2] + pixel[3] + pixel[4] + pixel[5] + pixel[6] + pixel[7] == 8 * 255)
                     newImg.setPixel(x, y, qRgb(255, 255, 255));
             }
         }
