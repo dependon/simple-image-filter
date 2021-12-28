@@ -54,7 +54,9 @@ SOURCES += \
     transparencywidget.cpp \
     control/toolbutton.cpp \
     shortcut/shortcut.cpp \
-    help/helpwidget.cpp
+    help/helpwidget.cpp \
+    view/clippinglabel.cpp \
+    view/clippingwidget.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -75,7 +77,9 @@ HEADERS += \
     transparencywidget.h \
     control/toolbutton.h \
     shortcut/shortcut.h \
-    help/helpwidget.h
+    help/helpwidget.h \
+    view/clippinglabel.h \
+    view/clippingwidget.h
 
 FORMS += \
         mainwidget.ui \
