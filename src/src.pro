@@ -101,21 +101,30 @@ CONFIG(release, debug|release) {
     }
 }
 
-APPSHAREDIR = /usr/share/simple-image-filter
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /usr/bin
+target.path=/opt/apps/com.github.imagefilter/files/bin/
 
-translations.path = $$APPSHAREDIR/translations
+#translations.path = $$APPSHAREDIR/translations
+#translations.files = $$PWD/translations/*.qm
+
+translations.path = /opt/apps/com.github.imagefilter/files/bin/translations
 translations.files = $$PWD/translations/*.qm
 
-desktop.path = /usr/share/applications/
-desktop.files = $$PWD/install/simple-image-filter.desktop
+#desktop.path = /usr/share/applications/
+#desktop.files = $$PWD/install/simple-image-filter.desktop
 
-icon.path =/usr/share/icons
+desktop.path=/opt/apps/com.github.imagefilter/entries/applications
+desktop.files=$$PWD/install/com.github.imagefilter.desktop
+
+#icon.path =/usr/share/icons
+#icon.files=$$PWD/icon/simple-image-filter.png
+
+icon.path=/opt/apps/com.github.imagefilter/entries/icons
 icon.files=$$PWD/icon/simple-image-filter.png
 
-!isEmpty(target.path): INSTALLS += target translations icon desktop
+info.path=/opt/apps/com.github.imagefilter/
+info.files= $$PWD/info/*
+
+!isEmpty(target.path): INSTALLS += target translations icon desktop info
 
 RESOURCES += \
     qrc.qrc

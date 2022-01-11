@@ -2,7 +2,7 @@
 Categories=Application;
 Comment=simple-image-filter
 Comment[zh_CN]=简单图像处理工具
-Exec=simple-image-filter %F
+Exec=/opt/apps/com.github.imagefilter/files/bin/simple-image-filter %F
 GenericName=simple-image-filter
 GenericName[zh_CN]=简单图像处理工具
 Icon=simple-image-filter
