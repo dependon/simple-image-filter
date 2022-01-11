@@ -273,39 +273,85 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
 
 QImage QImageAPI::warnImage(const QImage &img, int index)
 {
-    QImage imgCopy = QImage(img);
-
+    QImage imgCopy;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
+    }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    }
     QColor frontColor;
-    for (int y = 0; y < img.height(); y++) {
-        for (int x = 0; x < img.width(); x++) {
-            frontColor = img.pixel(x, y);
-            float r = frontColor.red() + index;
-            float g = frontColor.green() + index;
-            float b = frontColor.blue();
-            r = Bound(0, r, 255);
-            g = Bound(0, g, 255);
-            imgCopy.setPixel(x, y, qRgb(r, g, b));
-        }
+    int size = img.width() * img.height();
 
+    for (int i = 0; i < size ; i++) {
+        int r = rgb[i * 3] + index;
+        int g = rgb[i * 3 + 1] + index;
+        int b = rgb[i * 3 + 2] ;
+
+        rgb[i * 3] = r > 255 ? 255 : r;
+        rgb[i * 3 + 1] = g > 255 ? 255 : g;
+        rgb[i * 3 + 2] = b > 255 ? 255 : b;
     }
     return imgCopy;
+    //    QImage imgCopy = QImage(img);
+
+    //    QColor frontColor;
+    //    for (int y = 0; y < img.height(); y++) {
+    //        for (int x = 0; x < img.width(); x++) {
+    //            frontColor = img.pixel(x, y);
+    //            float r = frontColor.red()+ index;
+    //            float g = frontColor.green()+ index;
+    //            float b = frontColor.blue() ;
+    //            b = Bound(0, b, 255);
+    //            imgCopy.setPixel(x, y, qRgb(r, g, b));
+    //        }
+
+    //    }
+    //    return imgCopy;
 }
 
 QImage QImageAPI::coolImage(const QImage &img,  int index)
 {
-    QImage imgCopy = QImage(img);
+//    QImage imgCopy = QImage(img);
 
+//    QColor frontColor;
+//    for (int y = 0; y < img.height(); y++) {
+//        for (int x = 0; x < img.width(); x++) {
+//            frontColor = img.pixel(x, y);
+//            float r = frontColor.red();
+//            float g = frontColor.green();
+//            float b = frontColor.blue() + index;
+//            b = Bound(0, b, 255);
+//            imgCopy.setPixel(x, y, qRgb(r, g, b));
+//        }
+
+//    }
+//    return imgCopy;
+
+    QImage imgCopy;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
+    }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    }
     QColor frontColor;
-    for (int y = 0; y < img.height(); y++) {
-        for (int x = 0; x < img.width(); x++) {
-            frontColor = img.pixel(x, y);
-            float r = frontColor.red();
-            float g = frontColor.green();
-            float b = frontColor.blue() + index;
-            b = Bound(0, b, 255);
-            imgCopy.setPixel(x, y, qRgb(r, g, b));
-        }
+    int size = img.width() * img.height();
 
+    for (int i = 0; i < size ; i++) {
+        int r = rgb[i * 3] ;
+        int g = rgb[i * 3 + 1] ;
+        int b = rgb[i * 3 + 2] + index;
+
+        rgb[i * 3] = r > 255 ? 255 : r;
+        rgb[i * 3 + 1] = g > 255 ? 255 : g;
+        rgb[i * 3 + 2] = b > 255 ? 255 : b;
     }
     return imgCopy;
 }

@@ -1,12 +1,13 @@
-Source: simple-image-filter
-Section: utils
+Source: com.github.imagefilter
+Version: 1.1.3
+Section: application
 Priority: optional
 Maintainer: liuminghang  <liuminghang0821@gmail.com>
 Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qtbase5-dev,qttools5-dev-tools
 Standards-Version: 0.0-3
-Homepage: simple-image-filter
+Homepage: http://github.com/dependon/simple-image-filter
 
-Package: simple-image-filter
+Package: com.github.imagefilter
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: libqt5libqgtk2, kimageformat-plugins
