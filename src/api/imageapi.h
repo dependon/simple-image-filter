@@ -58,34 +58,34 @@ public:
     static QImage oldImage(const QImage &img);
 
     //laplacian sharpening
-    static QImage LaplaceSharpen(const QImage &origin);
+    static QImage LaplaceSharpen(const QImage &img);
 
     //Sobel Edge Detector
-    static QImage SobelEdge(const QImage &origin);
+    static QImage SobelEdge(const QImage &img);
 
     //Greyscale
-    static QImage GreyScale(QImage origin);
+    static QImage GreyScale(const QImage &img);
 
     //Contour acquisition
-    static QImage ContourExtraction(const QImage &origin);
+    static QImage ContourExtraction(const QImage &img);
 
     //Flip horizontally
-    static QImage Horizontal(const QImage &origin);
+    static QImage Horizontal(const QImage &img);
 
     //Flip vertical
     static QImage Vertical(const QImage &origin);
 
     //Binarization
-    static QImage Binaryzation(const QImage &origin);
+    static QImage Binaryzation(const QImage &img);
 
     //Metal wire drawing effect
-    static QImage Metal(QImage origin);
+    static QImage Metal(const QImage &img);
 
     //Adjust image brightness
-    static QImage Brightness(int delta, QImage origin);
+    static QImage Brightness(int delta, const QImage &img);
 
     //Transparency
-    static QImage transparencyImg(int delta, QImage origin);
+    static QImage transparencyImg(int delta, const QImage &img);
 
     //Saturation (- 100 - 100)
     static QImage StaurationImg(const QImage &origin, int saturation);
