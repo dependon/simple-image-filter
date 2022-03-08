@@ -19,7 +19,132 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "imageapi.h"
+
 #include <QPainter>
+#include <QDebug>
+#include <QDateTime>
+typedef struct  {
+    uint8_t R;
+    uint8_t G;
+    uint8_t B;
+    uint8_t L;
+} RGBL;
+
+typedef struct {
+    float H;
+    float S;
+    float V;
+} HSV;
+
+static void RGB_TO_HSV(const RGBL *input, HSV *output) // convert RGB value to HSV value
+{
+    float r, g, b, minRGB, maxRGB, deltaRGB;
+
+    r = input->R / 255.0f;
+    g = input->G / 255.0f;
+    b = input->B / 255.0f;
+    minRGB = QImageAPI::RgbMin(r, g, b);
+    maxRGB = QImageAPI::RgbMax(r, g, b);
+    deltaRGB = maxRGB - minRGB;
+
+    output->V = maxRGB;
+    if (maxRGB != 0.0f)
+        output->S = deltaRGB / maxRGB;
+    else
+        output->S = 0.0f;
+    if (output->S <= 0.0f) {
+        output->H = 0.0f;
+    } else {
+        if (r == maxRGB) {
+            output->H = (g - b) / deltaRGB;
+        } else {
+            if (g == maxRGB) {
+                output->H = 2.0f + (b - r) / deltaRGB;
+            } else {
+                if (b == maxRGB) {
+                    output->H = 4.0f + (r - g) / deltaRGB;
+                }
+            }
+        }
+        output->H = output->H * 60.0f;
+        if (output->H < 0.0f) {
+            output->H += 360;
+        }
+        output->H /= 360;
+    }
+
+}
+
+static void HSV_TO_RGB(HSV *input, RGBL *output) //convert HSV value to RGB value
+{
+    float R, G, B;
+    int k;
+    float aa, bb, cc, f;
+    if (input->S <= 0.0f)
+        R = G = B = input->V;
+    else {
+        if (input->H == 1.0f)
+            input->H = 0.0f;
+        input->H *= 6.0f;
+        k = (int)floor(input->H);
+        f = input->H - k;
+        aa = input->V * (1.0f - input->S);
+        bb = input->V * (1.0f - input->S * f);
+        cc = input->V * (1.0f - (input->S * (1.0f - f)));
+        switch (k) {
+        case 0:
+            R = input->V;
+            G = cc;
+            B = aa;
+            break;
+        case 1:
+            R = bb;
+            G = input->V;
+            B = aa;
+            break;
+        case 2:
+            R = aa;
+            G = input->V;
+            B = cc;
+            break;
+        case 3:
+            R = aa;
+            G = bb;
+            B = input->V;
+            break;
+        case 4:
+            R = cc;
+            G = aa;
+            B = input->V;
+            break;
+        case 5:
+            R = input->V;
+            G = aa;
+            B = bb;
+            break;
+        }
+    }
+    output->R = (unsigned char)(R * 255);
+    output->G = (unsigned char)(G * 255);
+    output->B = (unsigned char)(B * 255);
+}
+
+void adjustBrightness(RGBL &rgb_v, int step)
+{
+    HSV hsv_v;
+    RGB_TO_HSV(&rgb_v, &hsv_v);
+    rgb_v.L = hsv_v.V;
+    rgb_v.L += step;
+    if (rgb_v.L <= 0) {
+        rgb_v.L = 1;
+    } else if (rgb_v.L >= 100) {
+        rgb_v.L = 100;
+    }
+
+    hsv_v.V = rgb_v.L / 100.0;
+    HSV_TO_RGB(&hsv_v, &rgb_v);
+}
+
 
 QImageAPI::QImageAPI()
 {
@@ -67,8 +192,8 @@ int QImageAPI::Bound(int range_left, int data, int range_right)
 
 QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double spatialDecay, double photometricStandardDeviation)
 {
-
-    QImage imgCopy = QImage(img);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+    QImage imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
 
     double c = -0.5 / (photometricStandardDeviation * photometricStandardDeviation);
     double mu = spatialDecay / (2 - spatialDecay);
@@ -86,16 +211,13 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     double *data2Green = new double[length];
     double *data2Blue = new double[length];
 
-    int i = 0;
 
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            QRgb rgb = imgCopy.pixel(x, y);
-            data2Red[i] = qRed(rgb);
-            data2Green[i] = qGreen(rgb);
-            data2Blue[i] = qBlue(rgb);
-            i++;
-        }
+    int size = imgCopy.width() * imgCopy.height();
+    uint8_t *rgb = imgCopy.bits();
+    for (int i = 0; i < size; i++) {
+        data2Red[i] = rgb[i * 3];
+        data2Green[i] = rgb[i * 3 + 1];
+        data2Blue[i] = rgb[i * 3 + 2];
     }
 
 
@@ -222,6 +344,8 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     }
 
     m = 0;
+    int nRowBytes = (width * 24 + 31) / 32 * 4;
+    int  lineNum_24 = 0;
     for (int k1 = 0; k1 < width; ++k1) {
         int n = k1;
         for (int k2 = 0; k2 < height; ++k2) {
@@ -229,7 +353,10 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
             data2Red[n] = rRed[m];
             data2Green[n] = rGreen[m];
             data2Blue[n] = rBlue[m];
-            imgCopy.setPixel(k1, k2, qRgb(data2Red[n], data2Green[n], data2Blue[n]));
+            lineNum_24 = k2 * nRowBytes;
+            rgb[lineNum_24 + k1 * 3] = data2Red[n];
+            rgb[lineNum_24 + k1 * 3 + 1] = data2Green[n];
+            rgb[lineNum_24 + k1 * 3 + 2] = data2Blue[n];
             m++;
             n += width;
         }
@@ -267,12 +394,14 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     delete []g_table;
     g_table = nullptr;
 
-
+    qDebug() << "磨皮结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
 }
 
 QImage QImageAPI::warnImage(const QImage &img, int index)
 {
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+
     QImage imgCopy;
     if (img.format() != QImage::Format_RGB888) {
         imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
@@ -295,41 +424,13 @@ QImage QImageAPI::warnImage(const QImage &img, int index)
         rgb[i * 3 + 1] = g > 255 ? 255 : g;
         rgb[i * 3 + 2] = b > 255 ? 255 : b;
     }
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
-    //    QImage imgCopy = QImage(img);
-
-    //    QColor frontColor;
-    //    for (int y = 0; y < img.height(); y++) {
-    //        for (int x = 0; x < img.width(); x++) {
-    //            frontColor = img.pixel(x, y);
-    //            float r = frontColor.red()+ index;
-    //            float g = frontColor.green()+ index;
-    //            float b = frontColor.blue() ;
-    //            b = Bound(0, b, 255);
-    //            imgCopy.setPixel(x, y, qRgb(r, g, b));
-    //        }
-
-    //    }
-    //    return imgCopy;
 }
 
 QImage QImageAPI::coolImage(const QImage &img,  int index)
 {
-//    QImage imgCopy = QImage(img);
-
-//    QColor frontColor;
-//    for (int y = 0; y < img.height(); y++) {
-//        for (int x = 0; x < img.width(); x++) {
-//            frontColor = img.pixel(x, y);
-//            float r = frontColor.red();
-//            float g = frontColor.green();
-//            float b = frontColor.blue() + index;
-//            b = Bound(0, b, 255);
-//            imgCopy.setPixel(x, y, qRgb(r, g, b));
-//        }
-
-//    }
-//    return imgCopy;
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
     QImage imgCopy;
     if (img.format() != QImage::Format_RGB888) {
@@ -353,137 +454,212 @@ QImage QImageAPI::coolImage(const QImage &img,  int index)
         rgb[i * 3 + 1] = g > 255 ? 255 : g;
         rgb[i * 3 + 2] = b > 255 ? 255 : b;
     }
+
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
 }
 
 QImage QImageAPI::GrayScaleImage(const QImage &img)
 {
-    QImage imgCopy = QImage(img);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    for (int y = 0; y < img.height(); y++) {
-        for (int x = 0; x < img.width(); x++) {
-            int average = (qRed(img.pixel(x, y)) + qGreen(img.pixel(x, y)) + qBlue(img.pixel(x, y))) / 3;
-            imgCopy.setPixel(x, y, qRgb(average, average, average));
-        }
-
+    QImage imgCopy;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
     }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    }
+    QColor frontColor;
+    int size = img.width() * img.height();
+
+    for (int i = 0; i < size ; i++) {
+        int average = (rgb[i * 3] + rgb[i * 3 + 1] + rgb[i * 3 + 2]) / 3;
+        rgb[i * 3] = average > 255 ? 255 : average;
+        rgb[i * 3 + 1] = average > 255 ? 255 : average;
+        rgb[i * 3 + 2] = average > 255 ? 255 : average;
+    }
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
 }
 
 QImage QImageAPI::lightContrastImage(const QImage &img,  int light, int Contrast)
 {
-    QImage imgCopy = QImage(img);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    for (int y = 0; y < img.height(); y++) {
-        for (int x = 0; x < img.width(); x++) {
-            float r = light * 0.01 * qRed(img.pixel(x, y)) - 150 + Contrast;
-            float g = light * 0.01 * qGreen(img.pixel(x, y)) - 150 + Contrast;
-            float b = light * 0.01 * qBlue(img.pixel(x, y)) - 150 + Contrast;
-            r = Bound(0, r, 255);
-            g = Bound(0, g, 255);
-            b = Bound(0, b, 255);
-            imgCopy.setPixel(x, y, qRgb(r, g, b));
-        }
-
+    QImage imgCopy;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
     }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    }
+    int r;
+    int g;
+    int b;
+    int size = img.width() * img.height();
+    for (int i = 0; i < size ; i++) {
+        r = light * 0.01 * rgb[i * 3] - 150 + Contrast;
+        g = light * 0.01 * rgb[i * 3 + 1] - 150 + Contrast;
+        b = light * 0.01 * rgb[i * 3 + 2]  - 150 + Contrast;
+        r = Bound(0, r, 255);
+        g = Bound(0, g, 255);
+        b = Bound(0, b, 255);
+        rgb[i * 3] = r;
+        rgb[i * 3 + 1] = g;
+        rgb[i * 3 + 2] = b;
+    }
+
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
 }
 
 QImage QImageAPI::InverseColorImage(const QImage &img)
 {
-    QImage imgCopy = QImage(img);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    for (int y = 0; y < img.height(); y++) {
-        for (int x = 0; x < img.width(); x++) {
-            imgCopy.setPixel(x, y, qRgb(255 - qRed(img.pixel(x, y)), 255 - qGreen(img.pixel(x, y)), 255 - qBlue(img.pixel(x, y))));
-        }
-
+    QImage imgCopy;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
     }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    } int size = img.width() * img.height();
+    for (int i = 0; i < size ; i++) {
+        rgb[i * 3] = 255 - rgb[i * 3] ;
+        rgb[i * 3 + 1] = 255 - rgb[i * 3 + 1]  ;
+        rgb[i * 3 + 2] = 255 - rgb[i * 3 + 2]  ;
+    }
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
 }
 
 QImage QImageAPI::oldImage(const QImage &img)
 {
-    QImage imgCopy = QImage(img);
-    for (int y = 0; y < img.height(); y++) {
-        for (int x = 0; x < img.width(); x++) {
-            float r = 0.393 * qRed(img.pixel(x, y)) + 0.769 * qGreen(img.pixel(x, y)) + 0.189 * qBlue(img.pixel(x, y));
-            float g = 0.349 * qRed(img.pixel(x, y)) + 0.686 * qGreen(img.pixel(x, y)) + 0.168 * qBlue(img.pixel(x, y));
-            float b = 0.272 * qRed(img.pixel(x, y)) + 0.534 * qGreen(img.pixel(x, y)) + 0.131 * qBlue(img.pixel(x, y));
-            r = Bound(0, r, 255);
-            g = Bound(0, g, 255);
-            b = Bound(0, b, 255);
-            imgCopy.setPixel(x, y, qRgb(r, g, b));
-        }
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
+    QImage imgCopy;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
     }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    } int size = img.width() * img.height();
+    for (int i = 0; i < size ; i++) {
+        float r = 0.393 * rgb[i * 3] + 0.769 * rgb[i * 3 + 1] + 0.189 * rgb[i * 3 + 2];
+        float g = 0.349 * rgb[i * 3] + 0.686 * rgb[i * 3 + 1] + 0.168 * rgb[i * 3 + 2];
+        float b = 0.272 * rgb[i * 3] + 0.534 * rgb[i * 3 + 1] + 0.131 * rgb[i * 3 + 2];
+        r = Bound(0, r, 255);
+        g = Bound(0, g, 255);
+        b = Bound(0, b, 255);
+        rgb[i * 3] = r;
+        rgb[i * 3 + 1] = g ;
+        rgb[i * 3 + 2] = b  ;
+    }
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return imgCopy;
 }
 
 
-QImage QImageAPI::LaplaceSharpen(const QImage &origin)
+QImage QImageAPI::LaplaceSharpen(const QImage &img)
 {
-    int width = origin.width();
-    int height = origin.height();
-    QImage newImage = QImage(width, height, QImage::Format_RGB888);
-    int window[3][3] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    for (int x = 1; x < width; x++) {
-        for (int y = 1; y < height; y++) {
+    QImage imgCopy;
+    int width = img.width();
+    int height = img.height();
+    int window[3][3] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(width, height, QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
+    }
+    QImage imgCopyrgbImg = QImage(img).convertToFormat(QImage::Format_RGB888);
+    uint8_t *rgbImg = imgCopyrgbImg.bits();
+    uint8_t *rgb = imgCopy.bits();
+
+    int nRowBytes = (width * 24 + 31) / 32 * 4;
+    int  lineNum_24 = 0;
+    for (int x = 1; x < img.width(); x++) {
+        for (int y = 1; y < img.height(); y++) {
             int sumR = 0;
             int sumG = 0;
             int sumB = 0;
 
 
-            for (int m = x - 1; m <= x + 1; m++) {
+
+            for (int m = x - 1; m <= x + 1; m++)
                 for (int n = y - 1; n <= y + 1; n++) {
                     if (m >= 0 && m < width && n < height) {
-                        sumR += QColor(origin.pixel(m, n)).red() * window[n - y + 1][m - x + 1];
-                        sumG += QColor(origin.pixel(m, n)).green() * window[n - y + 1][m - x + 1];
-                        sumB += QColor(origin.pixel(m, n)).blue() * window[n - y + 1][m - x + 1];
+                        lineNum_24 = n * nRowBytes;
+                        sumR += rgbImg[lineNum_24 + m * 3] * window[n - y + 1][m - x + 1];
+                        sumG += rgbImg[lineNum_24 + m * 3 + 1] * window[n - y + 1][m - x + 1];
+                        sumB += rgbImg[lineNum_24 + m * 3 + 2] * window[n - y + 1][m - x + 1];
                     }
                 }
-            }
 
 
-            int old_r = QColor(origin.pixel(x, y)).red();
+            int old_r = rgbImg[lineNum_24 + x * 3];
             sumR += old_r;
             sumR = qBound(0, sumR, 255);
 
-            int old_g = QColor(origin.pixel(x, y)).green();
+            int old_g = rgbImg[lineNum_24 + x * 3 + 1];
             sumG += old_g;
             sumG = qBound(0, sumG, 255);
 
-            int old_b = QColor(origin.pixel(x, y)).blue();
+            int old_b = rgbImg[lineNum_24 + x * 3 + 2];
             sumB += old_b;
             sumB = qBound(0, sumB, 255);
-
-            newImage.setPixel(x, y, qRgb(sumR, sumG, sumB));
+            lineNum_24 = y * nRowBytes;
+            rgb[lineNum_24 + x * 3] = sumR;
+            rgb[lineNum_24 + x * 3 + 1] = sumG;
+            rgb[lineNum_24 + x * 3 + 2] = sumB;
         }
     }
 
-    return newImage;
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return imgCopy;
 }
 
-QImage QImageAPI::SobelEdge(const QImage &origin)
+QImage QImageAPI::SobelEdge(const QImage &img)
 {
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+
     double *Gx = new double[9];
     double *Gy = new double[9];
 
     /* Sobel */
-    Gx[0] = -1.0; Gx[1] = 0.0; Gx[2] = 1.0;
-    Gx[3] = -2.0; Gx[4] = 0.0; Gx[5] = 2.0;
-    Gx[6] = -1.0; Gx[7] = 0.0; Gx[8] = 1.0;
+    Gx[0] = 1.0; Gx[1] = 0.0; Gx[2] = -1.0;
+    Gx[3] = 2.0; Gx[4] = 0.0; Gx[5] = -2.0;
+    Gx[6] = 1.0; Gx[7] = 0.0; Gx[8] = -1.0;
 
     Gy[0] = -1.0; Gy[1] = -2.0; Gy[2] = - 1.0;
     Gy[3] = 0.0; Gy[4] = 0.0; Gy[5] = 0.0;
     Gy[6] = 1.0; Gy[7] = 2.0; Gy[8] = 1.0;
 
     QRgb pixel;
-    QImage grayImage = GreyScale(origin);
+    QImage grayImage = GreyScale(img);
     int height = grayImage.height();
     int width = grayImage.width();
-    QImage newImage = QImage(width, height, QImage::Format_RGB888);
+    QImage imgCopy = QImage(width, height, QImage::Format_RGB888);
+
+    uint8_t *rgbImg = grayImage.bits();
+    uint8_t *rgb = imgCopy.bits();
+
+    int nRowBytes = (width * 24 + 31) / 32 * 4;
+    int  lineNum_24 = 0;
 
     float *sobel_norm = new float[width * height];
     float max = 0.0;
@@ -498,8 +674,9 @@ QImage QImageAPI::SobelEdge(const QImage &origin)
                 for (int p = 0; p < 3; p++) {
                     if ((x + 1 + 1 - k < width) && (y + 1 + 1 - p < height)) {
                         pixel = grayImage.pixel(x + 1 + 1 - k, y + 1 + 1 - p);
-                        value_gx += Gx[p * 3 + k] * qRed(pixel);
-                        value_gy += Gy[p * 3 + k] * qRed(pixel);
+                        lineNum_24 = (y + 1 + 1 - p) * nRowBytes;
+                        value_gx += Gx[p * 3 + k] * rgbImg[lineNum_24 + (x + 1 + 1 - k) * 3];
+                        value_gy += Gy[p * 3 + k] * rgbImg[lineNum_24 + (x + 1 + 1 - k) * 3];
                     }
                 }
                 sobel_norm[x + y * width] = abs(value_gx) + abs(value_gy);
@@ -512,93 +689,117 @@ QImage QImageAPI::SobelEdge(const QImage &origin)
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             my_color.setHsv(0, 0, 255 - int(255.0 * sobel_norm[i + j * width] / max));
-            newImage.setPixel(i, j, my_color.rgb());
+
+            lineNum_24 = j * nRowBytes;
+            rgb[lineNum_24 + i * 3] = my_color.red();
+            rgb[lineNum_24 + i * 3 + 1] = my_color.green();
+            rgb[lineNum_24 + i * 3 + 2] = my_color.blue();
         }
     }
     delete[] sobel_norm;
-    return newImage;
+
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return imgCopy;
 }
 
 
-QImage QImageAPI::GreyScale(QImage origin)
+QImage QImageAPI::GreyScale(const QImage &img)
 {
-    QImage newImage(origin.width(), origin.height(), QImage::Format_ARGB32);
-    QColor oldColor;
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    for (int x = 0; x < newImage.width(); x++) {
-        for (int y = 0; y < newImage.height(); y++) {
-            oldColor = QColor(origin.pixel(x, y));
-            int average = (oldColor.red() * 299 + oldColor.green() * 587 + oldColor.blue() * 114 + 500) / 1000;
-            newImage.setPixel(x, y, qRgb(average, average, average));
-        }
+    QImage imgCopy;
+
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
     }
-
-    return newImage;
-
-}
-
-
-QImage QImageAPI::Binaryzation(const QImage &origin)
-{
-    int width = origin.width();
-    int height = origin.height();
-    QImage newImg = QImage(width, height, QImage::Format_RGB888);
-
-    for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            int gray = qGray(origin.pixel(x, y));
-            int newGray;
-            if (gray > 128)
-                newGray = 255;
-            else
-                newGray = 0;
-            newImg.setPixel(x, y, qRgb(newGray, newGray, newGray));
-        }
+    uint8_t *rgb = imgCopy.bits();
+    int size = img.width() * img.height();
+    for (int i = 0; i < size ; i++) {
+        int average = (rgb[i * 3] * 299 + rgb[i * 3 + 1] * 587 + rgb[i * 3 + 1] * 114 + 500) / 1000;
+        rgb[i * 3] = average;
+        rgb[i * 3 + 1] = average;
+        rgb[i * 3 + 2] = average;
     }
-    return newImg;
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return imgCopy;
+
 }
 
 
-QImage QImageAPI::ContourExtraction(const QImage &origin)
+QImage QImageAPI::Binaryzation(const QImage &img)
 {
-    int width = origin.width();
-    int height = origin.height();
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+
+    QImage imgCopy;
+
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
+    }
+    uint8_t *rgb = imgCopy.bits();
+    int newGray = 0;
+    int gray = 0;
+    int size = img.width() * img.height();
+    for (int i = 0; i < size ; i++) {
+        gray = (rgb[i * 3] + rgb[i * 3 + 1] + rgb[i * 3 + 2]) / 3;
+        if (gray > 128)
+            newGray = 255;
+        else
+            newGray = 0;
+        rgb[i * 3] = newGray;
+        rgb[i * 3 + 1] = newGray;
+        rgb[i * 3 + 2] = newGray;
+    }
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+
+    return imgCopy;
+}
+
+
+QImage QImageAPI::ContourExtraction(const QImage &img)
+{
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+    int width = img.width();
+    int height = img.height();
     int pixel[8];
-    QImage binImg = Binaryzation(origin);
+    QImage binImg = Binaryzation(img);
     QImage newImg = QImage(width, height, QImage::Format_RGB888);
     newImg.fill(Qt::white);
 
+    uint8_t *rgb = newImg.bits();
+    uint8_t *binrgb = binImg.bits();
+    int nRowBytes = (width * 24 + 31) / 32 * 4;
+    int  lineNum_24 = 0;
     for (int y = 1; y < height - 1; y++) {
         for (int x = 1; x < width - 1; x++) {
             memset(pixel, 0, 8);
+            lineNum_24 = y * nRowBytes;
+            if (binrgb[lineNum_24 + x * 3] == 0) {
+                rgb[lineNum_24 + x * 3] = 0;
+                rgb[lineNum_24 + x * 3 + 1] = 0;
+                rgb[lineNum_24 + x * 3 + 2] = 0;
+                pixel[0] = binrgb[(y - 1) * nRowBytes + (x - 1) * 3];
+                pixel[1] = binrgb[(y) * nRowBytes + (x - 1) * 3];
+                pixel[2] = binrgb[(y + 1) * nRowBytes + (x - 1) * 3];
+                pixel[3] = binrgb[(y - 1) * nRowBytes + (x) * 3];
+                pixel[4] = binrgb[(y + 1) * nRowBytes + (x) * 3];
+                pixel[5] = binrgb[(y - 1) * nRowBytes + (x + 1) * 3];
+                pixel[6] = binrgb[(y) * nRowBytes + (x + 1) * 3];
+                pixel[7] = binrgb[(y + 1) * nRowBytes + (x + 1) * 3];
 
-            if (QColor(binImg.pixel(x, y)).red() == 0) {
-                newImg.setPixel(x, y, qRgb(0, 0, 0));
-                pixel[0] = QColor(binImg.pixel(x - 1, y - 1)).red();
-                pixel[1] = QColor(binImg.pixel(x - 1, y)).red();
-                pixel[2] = QColor(binImg.pixel(x - 1, y + 1)).red();
-                pixel[3] = QColor(binImg.pixel(x, y - 1)).red();
-                pixel[4] = QColor(binImg.pixel(x, y + 1)).red();
-                pixel[5] = QColor(binImg.pixel(x + 1, y - 1)).red();
-                pixel[6] = QColor(binImg.pixel(x + 1, y)).red();
-                pixel[7] = QColor(binImg.pixel(x + 1, y + 1)).red();
-                if (pixel[0] + pixel[1] + pixel[2] + pixel[3] + pixel[4] + pixel[5] + pixel[6] + pixel[7] == 0)
-                    newImg.setPixel(x, y, qRgb(255, 255, 255));
-            } else {
-                pixel[0] = QColor(binImg.pixel(x - 1, y - 1)).red();
-                pixel[1] = QColor(binImg.pixel(x - 1, y)).red();
-                pixel[2] = QColor(binImg.pixel(x - 1, y + 1)).red();
-                pixel[3] = QColor(binImg.pixel(x, y - 1)).red();
-                pixel[4] = QColor(binImg.pixel(x, y + 1)).red();
-                pixel[5] = QColor(binImg.pixel(x + 1, y - 1)).red();
-                pixel[6] = QColor(binImg.pixel(x + 1, y)).red();
-                pixel[7] = QColor(binImg.pixel(x + 1, y + 1)).red();
-                if (pixel[0] + pixel[1] + pixel[2] + pixel[3] + pixel[4] + pixel[5] + pixel[6] + pixel[7] == 8 * 255)
-                    newImg.setPixel(x, y, qRgb(255, 255, 255));
+                if (pixel[0] + pixel[1] + pixel[2] + pixel[3] + pixel[4] + pixel[5] + pixel[6] + pixel[7] == 0) {
+                    rgb[lineNum_24 + x * 3] = 255;
+                    rgb[lineNum_24 + x * 3 + 1] = 255;
+                    rgb[lineNum_24 + x * 3 + 2] = 255;
+                }
+
             }
         }
     }
-
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return newImg;
 }
 
@@ -606,83 +807,92 @@ QImage QImageAPI::ContourExtraction(const QImage &origin)
 /*****************************************************************************
  *                                   Flip
  * **************************************************************************/
-QImage QImageAPI::Horizontal(const QImage &origin)
+QImage QImageAPI::Horizontal(const QImage &img)
 {
-    QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
-    newImage = origin.mirrored(true, false);
-    return newImage;
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+    QImage copyImage(QSize(img.width(), img.height()), QImage::Format_ARGB32);
+    copyImage = img.mirrored(true, false);
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return copyImage;
 
 }
 
 
-QImage QImageAPI::Metal(QImage origin)
+QImage QImageAPI::Metal(const QImage &img)
 {
-    QImage *baseImage = new QImage(origin);
-    QImage darkImage = QImageAPI::Brightness(-100, origin);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+    QImage *baseImage = new QImage(img);
+    QImage darkImage = QImageAPI::Brightness(-100, img);
     QImage greyImage = QImageAPI::GreyScale(darkImage);
     QPainter painter;
 
-    QImage newImage = baseImage->scaled(QSize(origin.width(), origin.height()));
+    QImage newImage = baseImage->scaled(QSize(img.width(), img.height()));
 
     painter.begin(&newImage);
     painter.setOpacity(0.5);
     painter.drawImage(0, 0, greyImage);
     painter.end();
-
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return newImage;
 }
 
 
-QImage QImageAPI::Brightness(int delta, QImage origin)
+QImage QImageAPI::Brightness(int delta, const QImage &img)
 {
-    QImage *newImage = new QImage(origin.width(), origin.height(),
-                                  QImage::Format_ARGB32);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    QColor oldColor;
+
     int r, g, b;
+    QImage imgCopy;
 
-    for (int x = 0; x < newImage->width(); x++) {
-        for (int y = 0; y < newImage->height(); y++) {
-            oldColor = QColor(origin.pixel(x, y));
-
-            r = oldColor.red() + delta;
-            g = oldColor.green() + delta;
-            b = oldColor.blue() + delta;
-
-            // Check if the new values are between 0 and 255
-            r = qBound(0, r, 255);
-            g = qBound(0, g, 255);
-            b = qBound(0, b, 255);
-
-            newImage->setPixel(x, y, qRgb(r, g, b));
-        }
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
     }
-    return *newImage;
+    uint8_t *rgb = imgCopy.bits();
+    int size = img.width() * img.height();
+    for (int i = 0; i < size ; i++) {
+        r = rgb[i * 3] + delta;
+        g = rgb[i * 3 + 1] + delta;
+        b = rgb[i * 3 + 2] + delta;
+        r = qBound(0, r, 255);
+        g = qBound(0, g, 255);
+        b = qBound(0, b, 255);
+        rgb[i * 3] = r ;
+        rgb[i * 3 + 1] =  g ;
+        rgb[i * 3 + 2] =  b ;
+    }
+
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return imgCopy;
 }
 
-QImage QImageAPI::transparencyImg(int delta, QImage origin)
+QImage QImageAPI::transparencyImg(int delta, const QImage &img)
 {
-    QImage *newImage = new QImage(origin.width(), origin.height(),
-                                  QImage::Format_ARGB32);
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+    QImage newImage(img.width(), img.height(),
+                    QImage::Format_ARGB32);
     QColor oldColor;
     int r, g, b;
-    for (int x = 0; x < newImage->width(); x++) {
-        for (int y = 0; y < newImage->height(); y++) {
-            oldColor = QColor(origin.pixel(x, y));
+    for (int x = 0; x < newImage.width(); x++) {
+        for (int y = 0; y < newImage.height(); y++) {
+            oldColor = QColor(img.pixel(x, y));
 
             r = oldColor.red() ;
             g = oldColor.green() ;
             b = oldColor.blue() ;
 
-            newImage->setPixel(x, y, qRgba(r, g, b, delta));
+            newImage.setPixel(x, y, qRgba(r, g, b, delta));
         }
     }
-
-    return *newImage;
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return newImage;
 }
 
 QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
 {
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
     int r, g, b, rgbMin, rgbMax;
     float k = saturation / 100.0f * 128;
     int alpha = 0;
@@ -722,6 +932,7 @@ QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
 
         }
     }
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return newImage;
 
 }
@@ -729,7 +940,9 @@ QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
 
 QImage QImageAPI::Vertical(const QImage &origin)
 {
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
     QImage newImage(QSize(origin.width(), origin.height()), QImage::Format_ARGB32);
     newImage = origin.mirrored(false, true);
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return newImage;
 }
