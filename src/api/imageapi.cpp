@@ -18,11 +18,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include <omp.h>
+
 #include "imageapi.h"
 
 #include <QPainter>
 #include <QDebug>
 #include <QDateTime>
+
+
 typedef struct  {
     uint8_t R;
     uint8_t G;
@@ -200,6 +205,7 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
 
     double *exptable = new double[256];
     double *g_table = new double[256];
+    #pragma omp parallel for
     for (int i = 0; i <= 255; i++) {
         exptable[i] = (1 - spatialDecay) * exp(c * i * i);
         g_table[i] = mu * i;
@@ -214,6 +220,7 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
 
     int size = imgCopy.width() * imgCopy.height();
     uint8_t *rgb = imgCopy.bits();
+    #pragma omp parallel for
     for (int i = 0; i < size; i++) {
         data2Red[i] = rgb[i * 3];
         data2Green[i] = rgb[i * 3 + 1];
@@ -243,9 +250,11 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
 
 
     double rho0 = 1.0 / (2 - spatialDecay);
+    #pragma omp parallel for
     for (int k2 = 0; k2 < height; ++k2) {
         int startIndex = k2 * width;
         double mu = 0.0;
+
         for (int k = startIndex + 1, K = startIndex + width; k < K; ++k) {
             int div0Red = fabs(pRed[k] - pRed[k - 1]);
             mu = exptable[div0Red];
@@ -274,6 +283,7 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
             mu = exptable[div0Blue];
             rBlue[k] = rBlue[k + 1] * mu + rBlue[k] * (1.0 - mu);
         }
+
         for (int k = startIndex, K = startIndex + width; k < K; k++) {
             rRed[k] = (rRed[k] + pRed[k]) * rho0 - g_table[(int)data2Red[k]];
             rGreen[k] = (rGreen[k] + pGreen[k]) * rho0 - g_table[(int)data2Green[k]];
@@ -282,8 +292,10 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     }
 
     int m = 0;
+
     for (int k2 = 0; k2 < height; k2++) {
         int n = k2;
+
         for (int k1 = 0; k1 < width; k1++) {
             gRed[n] = rRed[m];
             gGreen[n] = rGreen[m];
@@ -302,9 +314,11 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     memcpy(pBlue, gBlue, sizeof(double) * height * width);
     memcpy(rBlue, gBlue, sizeof(double) * height * width);
 
+    #pragma omp parallel for
     for (int k1 = 0; k1 < width; ++k1) {
         int startIndex = k1 * height;
         double mu = 0.0;
+
         for (int k = startIndex + 1, K = startIndex + height; k < K; ++k) {
             int div0Red = fabs(pRed[k] - pRed[k - 1]);
             mu = exptable[div0Red];
@@ -318,6 +332,7 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
             mu = exptable[div0Blue];
             pBlue[k] = pBlue[k - 1] * mu + pBlue[k] * (1.0 - mu);
         }
+
         for (int k = startIndex + height - 2; startIndex <= k; --k) {
             int div0Red = fabs(rRed[k] - rRed[k + 1]);
             mu = exptable[div0Red];
@@ -334,6 +349,8 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     }
 
     double init_gain_mu = spatialDecay / (2 - spatialDecay);
+
+    #pragma omp parallel for
     for (int k = 0; k < length; ++k) {
         rRed[k] = (rRed[k] + pRed[k]) * rho0 - gRed[k] * init_gain_mu;
 
@@ -346,10 +363,10 @@ QImage QImageAPI::QImageD_RunBEEPSHorizontalVertical(const QImage &img, double s
     m = 0;
     int nRowBytes = (width * 24 + 31) / 32 * 4;
     int  lineNum_24 = 0;
+
     for (int k1 = 0; k1 < width; ++k1) {
         int n = k1;
         for (int k2 = 0; k2 < height; ++k2) {
-
             data2Red[n] = rRed[m];
             data2Green[n] = rGreen[m];
             data2Blue[n] = rBlue[m];
@@ -414,7 +431,7 @@ QImage QImageAPI::warnImage(const QImage &img, int index)
     }
     QColor frontColor;
     int size = img.width() * img.height();
-
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
         int r = rgb[i * 3] + index;
         int g = rgb[i * 3 + 1] + index;
@@ -444,7 +461,7 @@ QImage QImageAPI::coolImage(const QImage &img,  int index)
     }
     QColor frontColor;
     int size = img.width() * img.height();
-
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
         int r = rgb[i * 3] ;
         int g = rgb[i * 3 + 1] ;
@@ -476,6 +493,7 @@ QImage QImageAPI::GrayScaleImage(const QImage &img)
     QColor frontColor;
     int size = img.width() * img.height();
 
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
         int average = (rgb[i * 3] + rgb[i * 3 + 1] + rgb[i * 3 + 2]) / 3;
         rgb[i * 3] = average > 255 ? 255 : average;
@@ -500,20 +518,21 @@ QImage QImageAPI::lightContrastImage(const QImage &img,  int light, int Contrast
     if (nullptr == rgb) {
         return QImage();
     }
-    int r;
-    int g;
-    int b;
+
     int size = img.width() * img.height();
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
+        int r;
+        int g;
+        int b;
         r = light * 0.01 * rgb[i * 3] - 150 + Contrast;
         g = light * 0.01 * rgb[i * 3 + 1] - 150 + Contrast;
         b = light * 0.01 * rgb[i * 3 + 2]  - 150 + Contrast;
-        r = Bound(0, r, 255);
-        g = Bound(0, g, 255);
-        b = Bound(0, b, 255);
-        rgb[i * 3] = r;
-        rgb[i * 3 + 1] = g;
-        rgb[i * 3 + 2] = b;
+
+        rgb[i * 3] = Bound(0, r, 255);
+        rgb[i * 3 + 1] = Bound(0, g, 255);
+        rgb[i * 3 + 2] = Bound(0, b, 255);
+
     }
 
     qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
@@ -534,6 +553,7 @@ QImage QImageAPI::InverseColorImage(const QImage &img)
     if (nullptr == rgb) {
         return QImage();
     } int size = img.width() * img.height();
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
         rgb[i * 3] = 255 - rgb[i * 3] ;
         rgb[i * 3 + 1] = 255 - rgb[i * 3 + 1]  ;
@@ -557,6 +577,7 @@ QImage QImageAPI::oldImage(const QImage &img)
     if (nullptr == rgb) {
         return QImage();
     } int size = img.width() * img.height();
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
         float r = 0.393 * rgb[i * 3] + 0.769 * rgb[i * 3 + 1] + 0.189 * rgb[i * 3 + 2];
         float g = 0.349 * rgb[i * 3] + 0.686 * rgb[i * 3 + 1] + 0.168 * rgb[i * 3 + 2];
@@ -591,14 +612,14 @@ QImage QImageAPI::LaplaceSharpen(const QImage &img)
     uint8_t *rgb = imgCopy.bits();
 
     int nRowBytes = (width * 24 + 31) / 32 * 4;
-    int  lineNum_24 = 0;
+
+    #pragma omp parallel for
     for (int x = 1; x < img.width(); x++) {
         for (int y = 1; y < img.height(); y++) {
             int sumR = 0;
             int sumG = 0;
             int sumB = 0;
-
-
+            int lineNum_24 = 0;
 
             for (int m = x - 1; m <= x + 1; m++)
                 for (int n = y - 1; n <= y + 1; n++) {
@@ -659,11 +680,11 @@ QImage QImageAPI::SobelEdge(const QImage &img)
     uint8_t *rgb = imgCopy.bits();
 
     int nRowBytes = (width * 24 + 31) / 32 * 4;
-    int  lineNum_24 = 0;
 
     float *sobel_norm = new float[width * height];
     float max = 0.0;
     QColor my_color;
+
 
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
@@ -674,7 +695,7 @@ QImage QImageAPI::SobelEdge(const QImage &img)
                 for (int p = 0; p < 3; p++) {
                     if ((x + 1 + 1 - k < width) && (y + 1 + 1 - p < height)) {
                         pixel = grayImage.pixel(x + 1 + 1 - k, y + 1 + 1 - p);
-                        lineNum_24 = (y + 1 + 1 - p) * nRowBytes;
+                        int  lineNum_24 = (y + 1 + 1 - p) * nRowBytes;
                         value_gx += Gx[p * 3 + k] * rgbImg[lineNum_24 + (x + 1 + 1 - k) * 3];
                         value_gy += Gy[p * 3 + k] * rgbImg[lineNum_24 + (x + 1 + 1 - k) * 3];
                     }
@@ -690,7 +711,7 @@ QImage QImageAPI::SobelEdge(const QImage &img)
         for (int j = 0; j < height; j++) {
             my_color.setHsv(0, 0, 255 - int(255.0 * sobel_norm[i + j * width] / max));
 
-            lineNum_24 = j * nRowBytes;
+            int lineNum_24 = j * nRowBytes;
             rgb[lineNum_24 + i * 3] = my_color.red();
             rgb[lineNum_24 + i * 3 + 1] = my_color.green();
             rgb[lineNum_24 + i * 3 + 2] = my_color.blue();
@@ -716,6 +737,7 @@ QImage QImageAPI::GreyScale(const QImage &img)
     }
     uint8_t *rgb = imgCopy.bits();
     int size = img.width() * img.height();
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
         int average = (rgb[i * 3] * 299 + rgb[i * 3 + 1] * 587 + rgb[i * 3 + 1] * 114 + 500) / 1000;
         rgb[i * 3] = average;
@@ -740,11 +762,12 @@ QImage QImageAPI::Binaryzation(const QImage &img)
         imgCopy = QImage(img);
     }
     uint8_t *rgb = imgCopy.bits();
-    int newGray = 0;
-    int gray = 0;
+
     int size = img.width() * img.height();
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
-        gray = (rgb[i * 3] + rgb[i * 3 + 1] + rgb[i * 3 + 2]) / 3;
+        int  gray = (rgb[i * 3] + rgb[i * 3 + 1] + rgb[i * 3 + 2]) / 3;
+        int newGray = 0;
         if (gray > 128)
             newGray = 255;
         else
@@ -764,7 +787,7 @@ QImage QImageAPI::ContourExtraction(const QImage &img)
     qint64 startTime = QDateTime::currentMSecsSinceEpoch();
     int width = img.width();
     int height = img.height();
-    int pixel[8];
+
     QImage binImg = Binaryzation(img);
     QImage newImg = QImage(width, height, QImage::Format_RGB888);
     newImg.fill(Qt::white);
@@ -772,11 +795,12 @@ QImage QImageAPI::ContourExtraction(const QImage &img)
     uint8_t *rgb = newImg.bits();
     uint8_t *binrgb = binImg.bits();
     int nRowBytes = (width * 24 + 31) / 32 * 4;
-    int  lineNum_24 = 0;
+    #pragma omp parallel for
     for (int y = 1; y < height - 1; y++) {
         for (int x = 1; x < width - 1; x++) {
+            int pixel[8];
             memset(pixel, 0, 8);
-            lineNum_24 = y * nRowBytes;
+            int lineNum_24 = y * nRowBytes;
             if (binrgb[lineNum_24 + x * 3] == 0) {
                 rgb[lineNum_24 + x * 3] = 0;
                 rgb[lineNum_24 + x * 3 + 1] = 0;
@@ -842,7 +866,7 @@ QImage QImageAPI::Brightness(int delta, const QImage &img)
     qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
 
-    int r, g, b;
+
     QImage imgCopy;
 
     if (img.format() != QImage::Format_RGB888) {
@@ -852,10 +876,11 @@ QImage QImageAPI::Brightness(int delta, const QImage &img)
     }
     uint8_t *rgb = imgCopy.bits();
     int size = img.width() * img.height();
+    #pragma omp parallel for
     for (int i = 0; i < size ; i++) {
-        r = rgb[i * 3] + delta;
-        g = rgb[i * 3 + 1] + delta;
-        b = rgb[i * 3 + 2] + delta;
+        int r = rgb[i * 3] + delta;
+        int g = rgb[i * 3 + 1] + delta;
+        int b = rgb[i * 3 + 2] + delta;
         r = qBound(0, r, 255);
         g = qBound(0, g, 255);
         b = qBound(0, b, 255);
