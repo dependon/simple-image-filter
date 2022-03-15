@@ -13,6 +13,9 @@ TEMPLATE = app
 CONFIG -= app_bundle
 CONFIG += c++11 link_pkgconfig
 
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
+
 qtHaveModule(dtkwidget){
    PKGCONFIG += dtkwidget
    DEFINES += USE_DTK
