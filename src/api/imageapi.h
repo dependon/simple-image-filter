@@ -88,7 +88,10 @@ public:
     static QImage transparencyImg(int delta, const QImage &img);
 
     //Saturation (- 100 - 100)
-    static QImage StaurationImg(const QImage &origin, int saturation);
+    static QImage StaurationImg(const QImage &img, int saturation);
+
+    //改变颜色
+    static QImage changePointColor(const QImage &img, QColor oldColor, QColor newColor);
 };
 
 

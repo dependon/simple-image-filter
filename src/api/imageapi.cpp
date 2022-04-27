@@ -915,19 +915,19 @@ QImage QImageAPI::transparencyImg(int delta, const QImage &img)
     return newImage;
 }
 
-QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
+QImage QImageAPI::StaurationImg(const QImage &img, int saturation)
 {
     qint64 startTime = QDateTime::currentMSecsSinceEpoch();
     int r, g, b, rgbMin, rgbMax;
     float k = saturation / 100.0f * 128;
     int alpha = 0;
 
-    QImage newImage(origin);
+    QImage newImage(img);
     QColor tmpColor;
 
     for (int x = 0; x < newImage.width(); x++) {
         for (int y = 0; y < newImage.height(); y++) {
-            tmpColor = QColor(origin.pixel(x, y));
+            tmpColor = QColor(img.pixel(x, y));
             r = tmpColor.red();
             g = tmpColor.green();
             b = tmpColor.blue();
@@ -960,6 +960,36 @@ QImage QImageAPI::StaurationImg(const QImage &origin, int saturation)
     qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
     return newImage;
 
+}
+
+QImage QImageAPI::changePointColor(const QImage &img, QColor oldColor, QColor newColor)
+{
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+
+    QImage imgCopy = img;
+    if (img.format() != QImage::Format_RGB888) {
+        imgCopy = QImage(img).convertToFormat(QImage::Format_RGB888);
+    } else {
+        imgCopy = QImage(img);
+    }
+    uint8_t *rgb = imgCopy.bits();
+    if (nullptr == rgb) {
+        return QImage();
+    }
+    QColor frontColor;
+
+    for (int x = 0; x < img.width(); ++x) {
+
+        for (int y = 0; y < img.height(); ++y) {
+            if (imgCopy.pixelColor(x, y) == oldColor) {
+                imgCopy.setPixelColor(x, y, newColor);
+            }
+
+        }
+    }
+
+    qDebug() << "结束:" << QDateTime::currentMSecsSinceEpoch() - startTime;
+    return imgCopy;
 }
 
 
