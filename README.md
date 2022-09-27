@@ -36,4 +36,4 @@ make
 ## License
 simple-image-filter is released under GPLv3+. 
 
-Copyright (C) 2020 ~ 2021 LiuMingHang. 
+Copyright (C) 2020 ~ 2022 LiuMingHang. 
