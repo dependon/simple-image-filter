@@ -208,7 +208,9 @@ void ImageView::scaleImage()
 #endif
     ss.setFixedSize(1050, 610);
     dialog->setParent(&ss);
+    dialog->move(0,0);
     ss.exec();
+    dialog->show();
 
 }
 void ImageView::savecurrentPicAs()
@@ -456,6 +458,7 @@ void ImageView::scaled()
 //    ss.setTitle(tr("Scaled image"));
     ss.setFixedSize(374, 214);
     scaleWidget->setParent(&ss);
+    scaleWidget->move(0,0);
     ss.exec();
 
 }
@@ -480,6 +483,7 @@ void ImageView::SetTransparency()
 //    ss.setTitle(tr("Set picture transparency"));
     ss.setFixedSize(374, 120);
     widget->setParent(&ss);
+    widget->move(0,0);
     ss.exec();
 }
 

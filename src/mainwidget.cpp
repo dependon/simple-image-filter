@@ -508,6 +508,7 @@ void MainWidget::initShortcut()
 #endif
         ss.setFixedSize(430, 520);
         widget->setParent(&ss);
+        widget->move(0,0);
         ss.exec();
     });
 
@@ -523,6 +524,7 @@ void MainWidget::initShortcut()
 #endif
         ss.setFixedSize(430, 520);
         widget->setParent(&ss);
+        widget->move(0,0);
         ss.exec();
     });
 }
