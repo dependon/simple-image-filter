@@ -99,19 +99,22 @@ CONFIG(release, debug|release) {
         system(lrelease $$tsfile -qm $$qmfile) | error("Failed to lrelease")
     }
 }
+isEmpty(PREFIX){
+    PREFIX = /usr
+}
 
-APPSHAREDIR = /usr/share/simple-image-filter
+APPSHAREDIR = $${PREFIX}/share/simple-image-filter
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /usr/bin
+else: unix:!android: target.path = $${PREFIX}/bin
 
 translations.path = $$APPSHAREDIR/translations
 translations.files = $$PWD/translations/*.qm
 
-desktop.path = /usr/share/applications/
+desktop.path = $${PREFIX}/share/applications/
 desktop.files = $$PWD/install/simple-image-filter.desktop
 
-icon.path =/usr/share/icons
+icon.path =$${PREFIX}/share/icons
 icon.files=$$PWD/icon/simple-image-filter.png
 
 !isEmpty(target.path): INSTALLS += target translations icon desktop
