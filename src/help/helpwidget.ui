@@ -75,6 +75,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_12">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+O</string>
        </property>
@@ -99,6 +102,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_28">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+Z</string>
        </property>
@@ -123,6 +129,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_14">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+E</string>
        </property>
@@ -147,6 +156,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_13">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+R</string>
        </property>
@@ -171,6 +183,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_17">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+T</string>
        </property>
@@ -186,7 +201,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Rotate-90</string>
+        <string>Rotate -90</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -195,6 +210,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_16">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+Left</string>
        </property>
@@ -210,7 +228,7 @@
      <item>
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Rotate+90</string>
+        <string>Rotate +90</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -219,6 +237,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_15">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+Right</string>
        </property>
@@ -243,6 +264,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_18">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+S</string>
        </property>
@@ -267,6 +291,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_19">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+Y</string>
        </property>
@@ -291,6 +318,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_20">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+ '+'</string>
        </property>
@@ -315,6 +345,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_21">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl+ '-'</string>
        </property>
@@ -339,6 +372,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_22">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Ctrl + Shift + ?</string>
        </property>

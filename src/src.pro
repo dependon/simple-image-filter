@@ -122,4 +122,29 @@ icon.files=$$PWD/icon/simple-image-filter.png
 RESOURCES += \
     qrc.qrc
 TRANSLATIONS += \
-    translations/simple-image-filter_zh_CN.ts
+    translations/simple-image-filter_en.ts \ #English
+    translations/simple-image-filter_zh_CN.ts \ #中文
+    translations/simple-image-filter_zh_TW.ts \ #中文繁体
+    translations/simple-image-filter_zh_HK.ts \ #粤语
+    translations/simple-image-filter_es.ts \ #西班牙语
+    translations/simple-image-filter_pl.ts \ #波兰语
+    translations/simple-image-filter_ja.ts \ #日语
+    translations/simple-image-filter_de.ts \ #德语
+    translations/simple-image-filter_ko.ts \ #韩语
+    translations/simple-image-filter_it.ts \ #意大利语
+    translations/simple-image-filter_fr.ts \ #法语
+    translations/simple-image-filter_ru.ts \ #俄语
+    translations/simple-image-filter_pt.ts \ #葡萄牙语
+    translations/simple-image-filter_pt_BR.ts \  #葡萄牙-巴西
+    translations/simple-image-filter_fi.ts \ #芬兰语
+    translations/simple-image-filter_vi.ts \ #越南
+    translations/simple-image-filter_tr.ts \ #土耳其
+    translations/simple-image-filter_th.ts \ #泰国
+    translations/simple-image-filter_hu.ts \ #匈牙利
+    translations/simple-image-filter_ro.ts \ #罗马尼亚
+    translations/simple-image-filter_nl.ts \ #荷兰语
+    translations/simple-image-filter_et.ts \ #爱沙尼亚语
+    translations/simple-image-filter_bg.ts \ #保加利亚语
+    translations/simple-image-filter_cs.ts \ #捷克语
+    translations/simple-image-filter_da.ts \ #丹麦语
+    translations/simple-image-filter_el.ts \ #希腊语

@@ -180,7 +180,7 @@ void MainWidget::initBtn()
         m_rotateLeft = new ToolButton();
         m_rotateLeft->setShortcut(QKeySequence("Ctrl+Left"));
         m_rotateLeft->setFixedSize(60, 60);
-        m_rotateLeft->setToolTip(QObject::tr("Rotate-90"));
+        m_rotateLeft->setToolTip(QObject::tr("Rotate -90"));
         m_rotateLeft->setIcon(QIcon(":/icon/dcc_left_36px.svg"));
         m_rotateLeft->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_rotateLeft);
@@ -191,7 +191,7 @@ void MainWidget::initBtn()
         m_rotateRight = new ToolButton();
         m_rotateRight->setShortcut(QKeySequence("Ctrl+Right"));
         m_rotateRight->setFixedSize(60, 60);
-        m_rotateRight->setToolTip(QObject::tr("Rotate+90"));
+        m_rotateRight->setToolTip(QObject::tr("Rotate +90"));
         m_rotateRight->setIcon(QIcon(":/icon/dcc_right_36px.svg"));
         m_rotateRight->setIconSize(QSize(36, 36));
         m_Hlayout->addWidget(m_rotateRight);
