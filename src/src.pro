@@ -90,7 +90,7 @@ FORMS += \
 
 #./translation/
 #TRANSLATIONS += simple-image-filter_zh_CN.ts
-
+unix {
 CONFIG(release, debug|release) {
     TRANSLATIONS = $$files($$PWD/translations/*.ts)
     #遍历目录中的ts文件，调用lrelease将其生成为qm文件
@@ -101,6 +101,7 @@ CONFIG(release, debug|release) {
 }
 isEmpty(PREFIX){
     PREFIX = /usr
+}
 }
 
 APPSHAREDIR = $${PREFIX}/share/simple-image-filter

@@ -51,8 +51,20 @@
      </item>
      <item>
       <widget class="QLabel" name="label_24">
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>F2</string>
+        <string notr="true">F2</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -75,11 +87,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_12">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+O</string>
+        <string notr="true">Ctrl+O</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -102,11 +126,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_28">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+Z</string>
+        <string notr="true">Ctrl+Z</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -129,11 +165,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_14">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+E</string>
+        <string notr="true">Ctrl+E</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -156,11 +204,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_13">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+R</string>
+        <string notr="true">Ctrl+R</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -183,11 +243,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_17">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+T</string>
+        <string notr="true">Ctrl+T</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -210,11 +282,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_16">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+Left</string>
+        <string notr="true">Ctrl+Left</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -237,11 +321,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_15">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+Right</string>
+        <string notr="true">Ctrl+Right</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -264,11 +360,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_18">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+S</string>
+        <string notr="true">Ctrl+S</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -291,11 +399,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_19">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+Y</string>
+        <string notr="true">Ctrl+Y</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -318,11 +438,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_20">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+ '+'</string>
+        <string notr="true">Ctrl+ '+'</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -345,11 +477,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_21">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl+ '-'</string>
+        <string notr="true">Ctrl+ '-'</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -372,11 +516,23 @@
      </item>
      <item>
       <widget class="QLabel" name="label_22">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="statusTip">
+        <string notr="true"/>
+       </property>
        <property name="whatsThis">
         <string notr="true"/>
        </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleDescription">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Ctrl + Shift + ?</string>
+        <string notr="true">Ctrl + Shift + ?</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
