@@ -44,6 +44,8 @@ SOURCES += \
         control/statusbarwidget.cpp \
         control/pushbutton.cpp \
         thread/imagethread.cpp \
+    view/clippinglabel.cpp \
+    view/clippingwidget.cpp \
         view/imageview.cpp \
         api/imageapi.cpp \
     control/menu.cpp \
@@ -65,6 +67,8 @@ HEADERS += \
         control/statusbarwidget.h \
         control/pushbutton.h \
         thread/imagethread.h \
+    view/clippinglabel.h \
+    view/clippingwidget.h \
         view/imageview.h \
         api/imageapi.h \
     control/menu.h \

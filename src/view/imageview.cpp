@@ -44,6 +44,10 @@
 #ifdef Q_OS_LINUX
 #include <malloc.h>
 #endif
+
+#include "clippinglabel.h"
+#include "clippingwidget.h"
+
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.029;
 #define devicePixelRatioF  devicePixelRatio
@@ -191,23 +195,23 @@ void ImageView::savecurrentPic()
 
 void ImageView::scaleImage()
 {
-//    ClippingWidget *dialog = new ClippingWidget();
+    ClippingWidget *dialog = new ClippingWidget();
 
-//    if (m_pixmapItem) {
-//        dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
-//    }
+    if (m_pixmapItem) {
+        dialog->setChooseCurrentImage(m_pixmapItem->pixmap());
+    }
 
-//    dialog->show();
+    dialog->show();
 
-//#ifdef USE_DTK
-//    DDialog ss;
-//    ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
-//#else
-//    QDialog ss;
-//#endif
-//    ss.setFixedSize(1050, 610);
-//    dialog->setParent(&ss);
-//    ss.exec();
+#ifdef USE_DTK
+    DDialog ss;
+    ss.setIcon(QIcon(":/icon/simple-image-filter.png"));
+#else
+    QDialog ss;
+#endif
+    ss.setFixedSize(1050, 610);
+    dialog->setParent(&ss);
+    ss.exec();
 
 }
 void ImageView::savecurrentPicAs()
