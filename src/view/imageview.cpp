@@ -210,7 +210,9 @@ void ImageView::scaleImage()
     QDialog ss;
 #endif
     ss.setFixedSize(1050, 610);
-    dialog->setParent(&ss);
+    QHBoxLayout *layout1 = new QHBoxLayout(&ss);
+    ss.setLayout(layout1);
+    layout1->addWidget(dialog);
     ss.exec();
 
 }
@@ -458,7 +460,9 @@ void ImageView::scaled()
 #endif
 //    ss.setTitle(tr("Scaled image"));
     ss.setFixedSize(374, 214);
-    scaleWidget->setParent(&ss);
+    QHBoxLayout *layout1 = new QHBoxLayout(&ss);
+    ss.setLayout(layout1);
+    layout1->addWidget(scaleWidget);
     ss.exec();
 
 }
@@ -482,7 +486,9 @@ void ImageView::SetTransparency()
 #endif
 //    ss.setTitle(tr("Set picture transparency"));
     ss.setFixedSize(374, 120);
-    widget->setParent(&ss);
+    QHBoxLayout *layout1 = new QHBoxLayout(&ss);
+    ss.setLayout(layout1);
+    layout1->addWidget(widget);
     ss.exec();
 }
 

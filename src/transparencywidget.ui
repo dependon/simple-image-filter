@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>357</width>
-    <height>107</height>
+    <width>307</width>
+    <height>106</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,14 +57,14 @@
    <header>openimagebutton.h</header>
   </customwidget>
   <customwidget>
+   <class>Label</class>
+   <extends>QLabel</extends>
+   <header location="global">label.h</header>
+  </customwidget>
+  <customwidget>
    <class>SpinBox</class>
    <extends>QSpinBox</extends>
    <header location="global">spinbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Label</class>
-   <extends>QLabel</extends>
-   <header>label.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

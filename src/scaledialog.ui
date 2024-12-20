@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
-    <height>212</height>
+    <width>372</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,14 +20,14 @@
       <widget class="openImageButton" name="okBtn">
        <property name="minimumSize">
         <size>
-         <width>176</width>
-         <height>36</height>
+         <width>0</width>
+         <height>30</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
          <width>1111111</width>
-         <height>1111111</height>
+         <height>30</height>
         </size>
        </property>
        <property name="text">
@@ -37,6 +37,12 @@
      </item>
      <item>
       <widget class="PushButton" name="cancelBtn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="text">
         <string>cancel</string>
        </property>
