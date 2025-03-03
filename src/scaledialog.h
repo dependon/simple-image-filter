@@ -40,9 +40,14 @@ private slots:
 
     void on_cancelBtn_clicked();
 
+    void on_widthSpinBox_valueChanged(int arg1);
+
+    void on_heightSpinBox_valueChanged(int arg1);
+
 private:
     Ui::scaleDialog *ui;
     QImage m_img;
+    double wHbi = 1.0;
 };
 
 #endif // SCALEDIALOG_H
