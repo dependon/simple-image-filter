@@ -1,4 +1,8 @@
 # simple-image-filter
+chinese website ,build in manus
+
+[https//image.fantacy.online](https//image.fantacy.online)
+
 What is simple-image-filter？
 At present, simple-image-filter is a QT software that can handle image rotation, clipping, basic beauty, filter and other functions
 ImageProcess，using Qt,filter
